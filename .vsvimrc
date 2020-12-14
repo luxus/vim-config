@@ -1,0 +1,8 @@
+nnoremap gp `[v`]
+vmap y y`]
+
+nnoremap <leader><CR> i<CR><Esc>
+nnoremap gp `[v`]
+
+:set smartcase
+:set ignorecase
