@@ -17,7 +17,7 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 
 " Use release branch (recommend)
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'bkad/CamelCaseMotion'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
