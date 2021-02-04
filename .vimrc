@@ -9,7 +9,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " LSP
-Plug 'neovim/nvim-lsp'
+" Plug 'neovim/nvim-lsp'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
 " Plug 'terryma/vim-multiple-cursors'
@@ -21,7 +21,9 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'bkad/CamelCaseMotion'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'asvetliakov/vim-easymotion'
+Plug 'lfilho/cosco.vim'
 
 Plug 'vim-scripts/ReplaceWithRegister'
 
@@ -61,3 +63,6 @@ omap gc  <Plug>VSCodeCommentary
 nmap gcc <Plug>VSCodeCommentaryLine
 
 nnoremap gp `[v`]
+
+autocmd FileType javascript,css nmap <silent> <Leader>; <Plug>(cosco-commaOrSemiColon)
+autocmd FileType javascript,css imap <silent> <Leader>; <c-o><Plug>(cosco-commaOrSemiColon)
