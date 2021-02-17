@@ -22,8 +22,10 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sensible'
 Plug 'asvetliakov/vim-easymotion'
 Plug 'lfilho/cosco.vim'
+Plug 'chamindra/marvim'
 
 Plug 'vim-scripts/ReplaceWithRegister'
 
@@ -66,3 +68,8 @@ nnoremap gp `[v`]
 
 autocmd FileType javascript,css nmap <silent> <Leader>; <Plug>(cosco-commaOrSemiColon)
 autocmd FileType javascript,css imap <silent> <Leader>; <c-o><Plug>(cosco-commaOrSemiColon)
+
+
+" Marvim
+let g:marvim_find_key = '<Space>' " change find key from <F2> to 'space'
+let g:marvim_store_key = 'ms'     " change store key from <F3> to 'ms'
