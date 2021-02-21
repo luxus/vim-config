@@ -75,3 +75,25 @@ autocmd FileType javascript,css imap <silent> <Leader>; <c-o><Plug>(cosco-commaO
 " Marvim
 let g:marvim_find_key = '<Space>' " change find key from <F2> to 'space'
 let g:marvim_store_key = 'ms'     " change store key from <F3> to 'ms'
+
+
+nmap <nowait> q <plug>(Mac_Play)
+nmap <nowait> gq <plug>(Mac_RecordNew)
+
+nmap <leader>mh :DisplayMacroHistory<cr>
+
+nmap [m <plug>(Mac_RotateBack)
+nmap ]m <plug>(Mac_RotateForward)
+
+nmap <leader>ma <plug>(Mac_Append)
+nmap <leader>mp <plug>(Mac_Prepend)
+
+nmap <leader>mng <plug>(Mac_NameCurrentMacro)
+nmap <leader>mnf <plug>(Mac_NameCurrentMacroForFileType)
+nmap <leader>mns <plug>(Mac_NameCurrentMacroForCurrentSession)
+
+nmap <leader>mo <plug>(Mac_SearchForNamedMacroAndOverwrite)
+nmap <leader>mr <plug>(Mac_SearchForNamedMacroAndRename)
+nmap <leader>md <plug>(Mac_SearchForNamedMacroAndDelete)
+nmap <leader>me <plug>(Mac_SearchForNamedMacroAndPlay)
+nmap <leader>ms <plug>(Mac_SearchForNamedMacroAndSelect)
