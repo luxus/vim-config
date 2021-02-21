@@ -26,7 +26,7 @@ Plug 'tpope/vim-sensible'
 Plug 'asvetliakov/vim-easymotion'
 Plug 'lfilho/cosco.vim'
 Plug 'chamindra/marvim'
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'svermeulen/vim-macrobatics'
 
 Plug 'vim-scripts/ReplaceWithRegister'
