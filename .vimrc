@@ -26,6 +26,7 @@ Plug 'tpope/vim-sensible'
 Plug 'asvetliakov/vim-easymotion'
 Plug 'lfilho/cosco.vim'
 Plug 'chamindra/marvim'
+Plug 'unblevable/quick-scope'
 
 Plug 'vim-scripts/ReplaceWithRegister'
 
@@ -73,3 +74,7 @@ autocmd FileType javascript,css imap <silent> <Leader>; <c-o><Plug>(cosco-commaO
 " Marvim
 let g:marvim_find_key = '<Space>' " change find key from <F2> to 'space'
 let g:marvim_store_key = 'ms'     " change store key from <F3> to 'ms'
+
+" Quick scope - Make highlight groups work in vscode
+highlight QuickScopePrimary guifg='#6B9F1E' gui=underline ctermfg=155 cterm=underline
+highlight QuickScopeSecondary guifg='#075B9F' gui=underline ctermfg=81 cterm=underline
