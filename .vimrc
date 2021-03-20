@@ -1,12 +1,13 @@
 " Plug {{{
 " Install vim-plug if missing
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+ " shellescape(fnamemodify('~/.vim/autoload/plug.vim', ':p'))
+if empty(shellescape(fnamemodify('~/.vim/autoload/plug.vim', ':p')))
+  silent !curl -fLo shellescape(fnamemodify('~/.vim/autoload/plug.vim', ':p')) --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin(shellescape(fnamemodify('~/.vim/autoload/plug.vim', ':p')))
 
 " LSP
 " Plug 'neovim/nvim-lsp'
