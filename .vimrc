@@ -27,8 +27,10 @@ Plug 'asvetliakov/vim-easymotion'
 Plug 'lfilho/cosco.vim'
 Plug 'chamindra/marvim'
 Plug 'unblevable/quick-scope'
-
 Plug 'vim-scripts/ReplaceWithRegister'
+
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+
 
 call plug#end()
 
@@ -78,3 +80,28 @@ let g:marvim_store_key = 'ms'     " change store key from <F3> to 'ms'
 " Quick scope - Make highlight groups work in vscode
 highlight QuickScopePrimary guifg='#6B9F1E' gui=underline ctermfg=155 cterm=underline
 highlight QuickScopeSecondary guifg='#075B9F' gui=underline ctermfg=81 cterm=underline
+
+" Find in files
+command! FindInFileS call VSCodeNotify('workbench.action.findInFiles', {'query': @p})
+xnoremap <silent> <Leader>f "py<Esc>:FindInFileS<CR>
+
+command! FindVSCode call VSCodeNotify('actions.find', {'query': @p})
+xnoremap <silent> <C-f> "py<Esc>:FindVSCode<CR>
+" command! ReplaceVSCode call VSCodeNotify('editor.action.startFindReplaceAction', {'query': @p})
+" xnoremap <silent> <C-h> "py<Esc>:ReplaceVSCode<CR>
+
+
+function! s:openVSCodeCommandsInVisualMode()
+    normal! gv
+    let visualmode = visualmode()
+    if visualmode == "V"
+        let startLine = line("v")
+        let endLine = line(".")
+        call VSCodeNotifyRange("actions.find", startLine, endLine, 1)
+    else
+        let startPos = getpos("v")
+        let endPos = getpos(".")
+        call VSCodeNotifyRangePos("actions.find", startPos[1], endPos[1], startPos[2], endPos[2], 1)
+    endif
+endfunction
+xnoremap <silent> <C-h> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
