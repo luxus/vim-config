@@ -28,6 +28,7 @@ Plug 'lfilho/cosco.vim'
 Plug 'chamindra/marvim'
 Plug 'unblevable/quick-scope'
 Plug 'vim-scripts/ReplaceWithRegister'
+" Plug 'andymass/vim-matchup'
 
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
@@ -90,6 +91,8 @@ xnoremap <silent> <C-f> "py<Esc>:FindVSCode<CR>
 " command! ReplaceVSCode call VSCodeNotify('editor.action.startFindReplaceAction', {'query': @p})
 " xnoremap <silent> <C-h> "py<Esc>:ReplaceVSCode<CR>
 
+" command! EvalulateInDebugConsoleVscode call VSCodeNotify('editor.debug.action.selectionToRepl', {'query': @p})
+" xnoremap <silent> <Leader>d "py<Esc>:EvalulateInDebugConsoleVscode<CR>
 
 function! s:openVSCodeCommandsInVisualMode()
     normal! gv
@@ -104,4 +107,22 @@ function! s:openVSCodeCommandsInVisualMode()
         call VSCodeNotifyRangePos("actions.find", startPos[1], endPos[1], startPos[2], endPos[2], 1)
     endif
 endfunction
+
+function! s:openVSCodeCommandsInVisualModeAction(action)
+    echom :action
+    normal! gv
+    let visualmode = visualmode()
+    if visualmode == "V"
+        let startLine = line("v")
+        let endLine = line(".")
+        call VSCodeNotifyRange(a:action, startLine, endLine, 1)
+    else
+        let startPos = getpos("v")
+        let endPos = getpos(".")
+        call VSCodeNotifyRangePos(a:action, startPos[1], endPos[1], startPos[2], endPos[2], 1)
+    endif
+endfunction
+
+xnoremap <silent> <Leader>` :<C-u>call <SID>openVSCodeCommandsInVisualModeAction('editor.debug.action.selectionToRepl')<CR>
+
 xnoremap <silent> <C-h> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
