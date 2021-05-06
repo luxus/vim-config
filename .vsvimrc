@@ -6,3 +6,5 @@ nnoremap gp `[v`]
 
 :set smartcase
 :set ignorecase
+
+:set clipboard=unnamed
