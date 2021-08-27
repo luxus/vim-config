@@ -4,6 +4,8 @@ vmap y y`]
 nnoremap <leader><CR> i<CR><Esc>
 nnoremap gp `[v`]
 
+inoremap jk <esc>
+
 :set smartcase
 :set ignorecase
 

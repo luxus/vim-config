@@ -28,6 +28,7 @@ Plug 'lfilho/cosco.vim'
 Plug 'chamindra/marvim'
 Plug 'unblevable/quick-scope'
 Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'AndrewRadev/sideways.vim'
 " Plug 'andymass/vim-matchup'
 
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
@@ -126,3 +127,19 @@ endfunction
 xnoremap <silent> <Leader>` :<C-u>call <SID>openVSCodeCommandsInVisualModeAction('editor.debug.action.selectionToRepl')<CR>
 
 xnoremap <silent> <C-h> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
+
+inoremap jk <esc>
+
+" Sideways
+nnoremap <, :SidewaysLeft<cr>
+nnoremap >, :SidewaysRight<cr>
+" nnoremap <c-l> :SidewaysRight<cr>
+" nnoremap <c-l> :SidewaysRight<cr>
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
+nmap <leader>si <Plug>SidewaysArgumentInsertBefore
+nmap <leader>sa <Plug>SidewaysArgumentAppendAfter
+nmap <leader>sI <Plug>SidewaysArgumentInsertFirst
+nmap <leader>sA <Plug>SidewaysArgumentAppendLast
