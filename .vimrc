@@ -29,6 +29,7 @@ Plug 'chamindra/marvim'
 Plug 'unblevable/quick-scope'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/sideways.vim'
+Plug 'terryma/vim-expand-region'
 " Plug 'andymass/vim-matchup'
 
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
@@ -129,6 +130,9 @@ xnoremap <silent> <Leader>` :<C-u>call <SID>openVSCodeCommandsInVisualModeAction
 xnoremap <silent> <C-h> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
 
 inoremap jk <esc>
+
+set inccommand=nosplit
+nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " Sideways
 nnoremap <, :SidewaysLeft<cr>
