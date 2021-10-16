@@ -1,0 +1,4 @@
+#!/bin/bash
+ ln -fs $PWD/.vimrc ~/.config/nvim/init.vim
+
+

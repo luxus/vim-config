@@ -7,12 +7,13 @@
 "   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 " endif
 
-call plug#begin('~/AppData/Local/nvim/autoload')
+" call plug#begin('~/AppData/Local/nvim/autoload')
+call plug#begin('~/.vim/plugged')
 
 " LSP
 " Plug 'neovim/nvim-lsp'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'rakr/vim-one'
+" Plug 'NLKNguyen/papercolor-theme'
+" Plug 'rakr/vim-one'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
@@ -30,6 +31,7 @@ Plug 'chamindra/marvim'
 Plug 'unblevable/quick-scope'
 
 Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'terryma/vim-expand-region'
 
 call plug#end()
 
@@ -79,3 +81,8 @@ let g:marvim_store_key = 'ms'     " change store key from <F3> to 'ms'
 " Quick scope - Make highlight groups work in vscode
 highlight QuickScopePrimary guifg='#6B9F1E' gui=underline ctermfg=155 cterm=underline
 highlight QuickScopeSecondary guifg='#075B9F' gui=underline ctermfg=81 cterm=underline
+
+:set inccommand=nosplit
+:imap jk <Esc>
+:set clipboard=unnamedplus
+
