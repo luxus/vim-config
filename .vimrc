@@ -131,7 +131,7 @@ xnoremap <silent> <C-h> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
 
 inoremap jk <esc>
 
-set inccommand=nosplit
+:set inccommand=nosplit
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " Sideways
