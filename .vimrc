@@ -32,10 +32,16 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'terryma/vim-expand-region'
 " Plug 'andymass/vim-matchup'
 
+Plug 'Olical/aniseed', { 'tag': 'v3.23.0' }
+Plug 'Olical/conjure', {'tag': 'v4.25.0'}
+
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 
 call plug#end()
+
+let g:aniseed#env = v:true
+:let maplocalleader = ','
 
 :set background=light
 :set smartcase
