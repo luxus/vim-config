@@ -37,6 +37,9 @@ Plug 'terryma/vim-expand-region'
 
 Plug 'tpope/vim-vinegar'
 
+Plug 'jiangmiao/auto-pairs'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'fannheyward/telescope-coc.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
