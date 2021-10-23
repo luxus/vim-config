@@ -20,6 +20,7 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'bkad/CamelCaseMotion'
 Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
@@ -38,9 +39,11 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend upda
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-project.nvim'
+Plug 'rmagatti/auto-session'
+Plug 'rmagatti/session-lens'
 
-Plug 'guns/vim-sexp'
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'guns/vim-sexp'
 
 Plug 'Olical/aniseed', { 'tag': 'v3.23.0' }
 Plug 'Olical/conjure', {'tag': 'v4.25.0'}
@@ -101,6 +104,8 @@ nmap <leader>sA <Plug>SidewaysArgumentAppendLast
 
 " Vscode
 if !exists('g:vscode')
+
+else
 
   " Vscode neovim
   " Search for selection
@@ -164,9 +169,6 @@ if !exists('g:vscode')
   xnoremap <silent> <Leader>` :<C-u>call <SID>openVSCodeCommandsInVisualModeAction('editor.debug.action.selectionToRepl')<CR>
 
   xnoremap <silent> <C-h> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
-
-
-else
 
 endif
 
