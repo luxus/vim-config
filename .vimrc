@@ -1,4 +1,4 @@
-" Plug {{{
+
 " Install vim-plug if missing
  " shellescape(fnamemodify('~/.vim/autoload/plug.vim', ':p'))
 " if empty(shellescape(fnamemodify('~/AppData/Local/nvim/autoload/plug.vim', ':p')))
@@ -32,9 +32,15 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'terryma/vim-expand-region'
 " Plug 'andymass/vim-matchup'
 
+Plug 'tpope/vim-vinegar'
+
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-project.nvim'
+
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
 
 Plug 'Olical/aniseed', { 'tag': 'v3.23.0' }
 Plug 'Olical/conjure', {'tag': 'v4.25.0'}
@@ -44,7 +50,7 @@ call plug#end()
 
 
 
-" Non-public config
+" Non-plugin config
 :let maplocalleader = ','
 
 " :set background=light
@@ -93,20 +99,6 @@ nmap <leader>si <Plug>SidewaysArgumentInsertBefore
 nmap <leader>sa <Plug>SidewaysArgumentAppendAfter
 nmap <leader>sI <Plug>SidewaysArgumentInsertFirst
 nmap <leader>sA <Plug>SidewaysArgumentAppendLast
-
-" Telescope
-" Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-" Using Lua functions
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-
 
 " Vscode
 if !exists('g:vscode')
