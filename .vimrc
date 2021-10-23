@@ -32,6 +32,10 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'terryma/vim-expand-region'
 " Plug 'andymass/vim-matchup'
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 Plug 'Olical/aniseed', { 'tag': 'v3.23.0' }
 Plug 'Olical/conjure', {'tag': 'v4.25.0'}
 
@@ -43,7 +47,8 @@ call plug#end()
 " Non-public config
 :let maplocalleader = ','
 
-:set background=light
+" :set background=light
+:set background=dark
 :set smartcase
 :set ignorecase
 :set scrolloff=10
@@ -88,6 +93,19 @@ nmap <leader>si <Plug>SidewaysArgumentInsertBefore
 nmap <leader>sa <Plug>SidewaysArgumentAppendAfter
 nmap <leader>sI <Plug>SidewaysArgumentInsertFirst
 nmap <leader>sA <Plug>SidewaysArgumentAppendLast
+
+" Telescope
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 
 " Vscode
