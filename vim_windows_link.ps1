@@ -1,6 +1,6 @@
 Write-Output "Current dir: " $PSScriptRoot
 cmd /c mklink $HOME"\AppData\Local\nvim\init.vim" $PSScriptRoot"\.vimrc"
-cmd /c mklink $HOME"\AppData\Local\nvim\coc-settings.json" $PSScriptRoot"\.coc-settings.json"
+cmd /c mklink $HOME"\AppData\Local\nvim\coc-settings.json" $PSScriptRoot"\coc-settings.json"
 
 Write-Output $env:APPDATA"\..\Local\nvim\fnl"
 
