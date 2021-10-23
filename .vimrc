@@ -29,24 +29,36 @@ Plug 'asvetliakov/vim-easymotion'
 Plug 'lfilho/cosco.vim'
 Plug 'chamindra/marvim'
 Plug 'unblevable/quick-scope'
-
 Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'AndrewRadev/sideways.vim'
 Plug 'terryma/vim-expand-region'
+" Plug 'andymass/vim-matchup'
+
+Plug 'Olical/aniseed', { 'tag': 'v3.23.0' }
+Plug 'Olical/conjure', {'tag': 'v4.25.0'}
+
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+
 
 call plug#end()
+
+let g:aniseed#env = v:true
+:let maplocalleader = ','
 
 :set background=light
 :set smartcase
 :set ignorecase
+:set scrolloff=10
+:set clipboard=unnamedplus
+:set inccommand=nosplit
 " colorscheme one
 
+let g:camelcasemotion_key = '<leader>'
 nnoremap gp `[v`]
 vmap y y`]
-
+nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader><CR> i<CR><Esc>
-:set scrolloff=10
-
-let g:camelcasemotion_key = '<leader>'
+:imap jk <Esc>
 
 
 " Search for selection
@@ -59,9 +71,6 @@ function! s:VSetSearch(cmdtype)
   let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
   let @s = temp
 endfunction
-
-:set clipboard=unnamedplus
-
 
 xmap gc  <Plug>VSCodeCommentary
 nmap gc  <Plug>VSCodeCommentary
@@ -82,7 +91,67 @@ let g:marvim_store_key = 'ms'     " change store key from <F3> to 'ms'
 highlight QuickScopePrimary guifg='#6B9F1E' gui=underline ctermfg=155 cterm=underline
 highlight QuickScopeSecondary guifg='#075B9F' gui=underline ctermfg=81 cterm=underline
 
-:set inccommand=nosplit
-:imap jk <Esc>
-:set clipboard=unnamedplus
 
+" Find in files
+command! FindInFileS call VSCodeNotify('workbench.action.findInFiles', {'query': @p})
+xnoremap <silent> <Leader>f "py<Esc>:FindInFileS<CR>
+
+command! FindVSCode call VSCodeNotify('actions.find', {'query': @p})
+xnoremap <silent> <C-f>
+
+"py<Esc>:FindVSCode<CR>
+" command! ReplaceVSCode call VSCodeNotify('editor.action.startFindReplaceAction', {'query': @p})
+" xnoremap <silent> <C-h> "py<Esc>:ReplaceVSCode<CR>
+
+" command! EvalulateInDebugConsoleVscode call VSCodeNotify('editor.debug.action.selectionToRepl', {'query': @p})
+" xnoremap <silent> <Leader>d "py<Esc>:EvalulateInDebugConsoleVscode<CR>
+
+function! s:openVSCodeCommandsInVisualMode()
+    normal! gv
+    let visualmode = visualmode()
+    if visualmode == "V"
+        let startLine = line("v")
+        let endLine = line(".")
+        call VSCodeNotifyRange("actions.find", startLine, endLine, 1)
+    else
+        let startPos = getpos("v")
+        let endPos = getpos(".")
+        call VSCodeNotifyRangePos("actions.find", startPos[1], endPos[1], startPos[2], endPos[2], 1)
+    endif
+endfunction
+
+function! s:openVSCodeCommandsInVisualModeAction(action)
+    echom :action
+    normal! gv
+    let visualmode = visualmode()
+    if visualmode == "V"
+        let startLine = line("v")
+        let endLine = line(".")
+        call VSCodeNotifyRange(a:action, startLine, endLine, 1)
+    else
+        let startPos = getpos("v")
+        let endPos = getpos(".")
+        call VSCodeNotifyRangePos(a:action, startPos[1], endPos[1], startPos[2], endPos[2], 1)
+    endif
+endfunction
+
+xnoremap <silent> <Leader>` :<C-u>call <SID>openVSCodeCommandsInVisualModeAction('editor.debug.action.selectionToRepl')<CR>
+
+xnoremap <silent> <C-h> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
+
+
+
+
+" Sideways
+nnoremap <, :SidewaysLeft<cr>
+nnoremap >, :SidewaysRight<cr>
+" nnoremap <c-l> :SidewaysRight<cr>
+" nnoremap <c-l> :SidewaysRight<cr>
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
+nmap <leader>si <Plug>SidewaysArgumentInsertBefore
+nmap <leader>sa <Plug>SidewaysArgumentAppendAfter
+nmap <leader>sI <Plug>SidewaysArgumentInsertFirst
+nmap <leader>sA <Plug>SidewaysArgumentAppendLast
