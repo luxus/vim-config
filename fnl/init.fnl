@@ -12,10 +12,11 @@
 (set nvim.o.mouse "a")
 
 ;; Colours for floating window
-(nvim.ex.highlight "NormalFloat ctermbg=grey guibg=grey")
+(nvim.ex.highlight "NormalFloat ctermbg=grey guibg=black")
 
 ;; Telescope
-(nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').find_files()<CR>" {:noremap true})
+(nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').git_files({ hidden = fale })<CR>" {:noremap true})
+(nvim.set_keymap :n :<leader>fa ":lua require('telescope.builtin').find_files({})<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fg ":lua require('telescope.builtin').live_grep()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fb ":lua require('telescope.builtin').buffers()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fh ":lua require('telescope.builtin').help_tags()<CR>" {:noremap true})
@@ -30,6 +31,3 @@
 
 ;; Sexp
 (set nvim.g.sexp_filetypes "clojure,scheme,lisp,timl,fennel,janet")
-
-(a.println "Fennel init loaded")
-

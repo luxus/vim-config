@@ -14,6 +14,8 @@ call plug#begin('~/.vim/plugged')
 " Plug 'neovim/nvim-lsp'
 " Plug 'rakr/vim-one'
 " Plug 'terryma/vim-multiple-cursors'
+
+Plug 'morhetz/gruvbox'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Use release branch (recommend)
@@ -56,6 +58,7 @@ call plug#end()
 :let maplocalleader = ','
 
 " :set background=light
+colorscheme gruvbox
 :set background=dark
 :set smartcase
 :set ignorecase
