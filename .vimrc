@@ -49,7 +49,6 @@ call plug#end()
 
 
 
-
 " Non-plugin config
 :let maplocalleader = ','
 
@@ -105,15 +104,15 @@ if !exists('g:vscode')
 
   " Vscode neovim
   " Search for selection
-  xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
-  xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
-
   function! s:VSetSearch(cmdtype)
     let temp = @s
     norm! gv"sy
     let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
     let @s = temp
   endfunction
+
+  xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+  xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 
   xmap gc  <Plug>VSCodeCommentary
   nmap gc  <Plug>VSCodeCommentary
@@ -125,9 +124,8 @@ if !exists('g:vscode')
   xnoremap <silent> <Leader>f "py<Esc>:FindInFileS<CR>
 
   command! FindVSCode call VSCodeNotify('actions.find', {'query': @p})
-  xnoremap <silent> <C-f>
+  xnoremap <silent> <C-f> "py<Esc>:FindVSCode<CR>
 
-  "py<Esc>:FindVSCode<CR>
   " command! ReplaceVSCode call VSCodeNotify('editor.action.startFindReplaceAction', {'query': @p})
   " xnoremap <silent> <C-h> "py<Esc>:ReplaceVSCode<CR>
 
