@@ -21,7 +21,6 @@
 (nvim.set_keymap :n :<leader>fh ":lua require('telescope.builtin').help_tags()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fc ":lua require('telescope.builtin').commands()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fd ":lua require('telescope.builtin').file_browser()<CR>" {:noremap true})
-(nvim.set_keymap :n :<leader>fd ":lua require('telescope.builtin').file_browser()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fz ":lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>" {:noremap true})
 (nvim.set_keymap :n :<C-p>      ":lua require'telescope'.extensions.project.project{}<CR>" {:noremap true :silent true})
 
