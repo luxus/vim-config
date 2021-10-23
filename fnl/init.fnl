@@ -23,7 +23,7 @@
 (nvim.set_keymap :n :<leader>fc ":lua require('telescope.builtin').commands()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fd ":lua require('telescope.builtin').file_browser()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fz ":lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>" {:noremap true})
-(nvim.set_keymap :n :<C-p>      ":lua require'telescope'.extensions.project.project{}<CR>" {:noremap true :silent true})
+(nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.project.project{}<CR>" {:noremap true :silent true})
 (nvim.set_keymap :n :<leader>fs ":lua require('session-lens').search_session()<CR>" {:noremap true :silent true})
 
 ;; Sessions

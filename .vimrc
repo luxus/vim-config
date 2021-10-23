@@ -34,6 +34,12 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'terryma/vim-expand-region'
 " Plug 'andymass/vim-matchup'
+"
+" Clojure
+Plug 'tpope/vim-dispatch'
+Plug 'clojure-vim/vim-jack-in'
+" Only in Neovim:
+Plug 'radenling/vim-dispatch-neovim'
 
 Plug 'tpope/vim-vinegar'
 
@@ -109,6 +115,9 @@ nmap <leader>sI <Plug>SidewaysArgumentInsertFirst
 nmap <leader>sA <Plug>SidewaysArgumentAppendLast
 
 " Vscode
+
+" :command! OpenInVSCode exe "silent !code --goto '" . expand("%") . ":" . line(".") . ":" . col(".") . "'" | redraw!
+
 if !exists('g:vscode')
 
 else
