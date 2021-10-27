@@ -33,7 +33,15 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'terryma/vim-expand-region'
 " Plug 'andymass/vim-matchup'
-"
+Plug 'tpope/vim-unimpaired'
+
+if !exists('g:vscode')
+  Plug 'folke/which-key.nvim'
+  
+else
+
+endif
+
 " Clojure
 Plug 'tpope/vim-dispatch'
 Plug 'clojure-vim/vim-jack-in'
@@ -120,6 +128,14 @@ nmap <leader>sA <Plug>SidewaysArgumentAppendLast
 
 if !exists('g:vscode')
 
+lua << EOF
+  require("which-key").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+EOF
+
 else
 
   " Vscode neovim
@@ -186,4 +202,5 @@ else
   xnoremap <silent> <C-h> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
 
 endif
+
 
