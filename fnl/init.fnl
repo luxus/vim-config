@@ -31,3 +31,59 @@
 
 ;; Sexp
 (set nvim.g.sexp_filetypes "clojure,scheme,lisp,timl,fennel,janet")
+
+;; (nvim.command "echo \"hi\"")
+
+(defn test-function [] 
+  (vim.api.cmd "norm viw"))
+
+; (nvim.command ":norm vi(")
+; (vim.cmd "norm diw")
+; (vim.cmd "<C-U> norm viw")
+
+
+; (nvim.exec ":norm $")
+
+; (vim.api.normal "viw")
+
+; function! Foo()
+;     execute "normal! vi)\<Esc>"
+;     '<,'>s/abc/def/g
+; endfunction
+
+(defn aa [] 
+
+  (vim.api.nvim_exec "normal! vi)\\<Esc>" true))
+
+(defn replace-in-parens [] 
+
+  (vim.api.nvim_exec "normal! va)\\<Esc>" true)
+  (vim.api.nvim_command "s/bb/cc/g")
+  
+  )
+
+
+(defn replace-injection []
+  
+  ;;(vim.api.nvim_command "norm va<\\<Esc>")
+(vim.api.nvim_command "norm viwd")
+  ;;(vim.api.nvim_command "norm viwdvatva<gr")
+  )
+
+(nvim.set_keymap :n :<leader>fi ":lua replace_injection()<CR>" {:noremap true :silent true})
+
+(comment
+
+(replace-injection)
+
+  <%= aaa %>
+
+  (aa)
+
+  (bb)
+  
+  (vim.api.nvim_command "norm va)\\<Esc>")
+
+  )
+
+

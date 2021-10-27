@@ -37,7 +37,7 @@ Plug 'tpope/vim-unimpaired'
 
 if !exists('g:vscode')
   Plug 'folke/which-key.nvim'
-  
+
 else
 
 endif
@@ -73,9 +73,9 @@ call plug#end()
 " Non-plugin config
 :let maplocalleader = ','
 
- :set background=light
 " colorscheme gruvbox
 colorscheme github-light
+:set background=light
 ":set background=dark
 :set smartcase
 :set ignorecase
@@ -202,5 +202,4 @@ else
   xnoremap <silent> <C-h> :<C-u>call <SID>openVSCodeCommandsInVisualMode()<CR>
 
 endif
-
 
