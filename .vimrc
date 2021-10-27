@@ -13,13 +13,12 @@ call plug#begin('~/.vim/plugged')
 " LSP
 " Plug 'neovim/nvim-lsp'
 " Plug 'rakr/vim-one'
-" Plug 'terryma/vim-multiple-cursors'
 
+Plug 'romgrk/github-light.vim'
 Plug 'morhetz/gruvbox'
+Plug 'mhinz/vim-startify'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
-" Use release branch (recommend)
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'bkad/CamelCaseMotion'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -66,9 +65,10 @@ call plug#end()
 " Non-plugin config
 :let maplocalleader = ','
 
-" :set background=light
-colorscheme gruvbox
-:set background=dark
+ :set background=light
+" colorscheme gruvbox
+colorscheme github-light
+":set background=dark
 :set smartcase
 :set ignorecase
 :set scrolloff=10
