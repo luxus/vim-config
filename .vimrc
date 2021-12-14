@@ -35,9 +35,13 @@ Plug 'terryma/vim-expand-region'
 " Plug 'andymass/vim-matchup'
 Plug 'tpope/vim-unimpaired'
 
+"colour schemes
+Plug 'romgrk/doom-one.vim'
+Plug 'bluz71/vim-nightfly-guicolors'
+
 if !exists('g:vscode')
   Plug 'folke/which-key.nvim'
-
+  Plug 'akinsho/toggleterm.nvim'
 else
 
 endif
@@ -74,14 +78,23 @@ call plug#end()
 :let maplocalleader = ','
 
 " colorscheme gruvbox
-colorscheme github-light
-:set background=light
-":set background=dark
+" colorscheme github-light
+" :set background=light
+colorscheme nightfly
+:set background=dark
 :set smartcase
+:set smartindent
+:set autoindent
 :set ignorecase
 :set scrolloff=10
 :set clipboard=unnamedplus
 :set inccommand=nosplit
+:set expandtab
+:set tabstop=8
+:set softtabstop=0
+:set shiftwidth=4
+:set smarttab
+"
 " colorscheme one
 
 " Non-plugin keymapping
@@ -121,6 +134,9 @@ nmap <leader>si <Plug>SidewaysArgumentInsertBefore
 nmap <leader>sa <Plug>SidewaysArgumentAppendAfter
 nmap <leader>sI <Plug>SidewaysArgumentInsertFirst
 nmap <leader>sA <Plug>SidewaysArgumentAppendLast
+
+
+
 
 " Vscode
 
