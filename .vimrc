@@ -58,6 +58,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-lua/plenary.nvim'
@@ -71,6 +72,8 @@ Plug 'guns/vim-sexp'
 
 Plug 'Olical/aniseed', { 'tag': 'v3.23.0' }
 Plug 'Olical/conjure', {'tag': 'v4.25.0'}
+
+Plug 'coddingtonbear/neomake-platformio'
 
 call plug#end()
 
