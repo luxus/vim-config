@@ -83,6 +83,9 @@ Plug 'coddingtonbear/neomake-platformio'
 
 " git
 Plug 'TimUntersberger/neogit'
+Plug 'mbbill/undotree'
+
+
 
 
 call plug#end()

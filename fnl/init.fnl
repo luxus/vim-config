@@ -28,6 +28,10 @@
 (nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.project.project{}<CR>" {:noremap true :silent true})
 (nvim.set_keymap :n :<leader>fs ":lua require('session-lens').search_session()<CR>" {:noremap true :silent true})
 
+;; Undo tree
+(nvim.set_keymap :n :<F5> ":UndotreeToggle<CR>" {:noremap true})
+
+
 ;; Sessions
 (set vim.o.sessionoptions "blank,buffers,curdir,folds,help,options,tabpages,winsize,resize,winpos,terminal")
 
