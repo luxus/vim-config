@@ -1,4 +1,5 @@
 #!/bin/bash
- ln -fs $PWD/.vimrc ~/.config/nvim/init.vim
+ln -fs $PWD/.vimrc ~/.config/nvim/init.vim
 
-
+ln -fs $PWD/fnl ~/.config/nvim/fnl
+ln -fs $PWD/coc-settings.json ~/.config/nvim/coc-settings.json
