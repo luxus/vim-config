@@ -80,6 +80,11 @@ Plug 'hrsh7th/nvim-cmp'
 
 Plug 'coddingtonbear/neomake-platformio'
 
+
+" git
+Plug 'TimUntersberger/neogit'
+
+
 call plug#end()
 
 
