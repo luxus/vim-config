@@ -13,6 +13,7 @@ call plug#begin('~/.vim/plugged')
 " LSP
 " Plug 'neovim/nvim-lsp'
 " Plug 'rakr/vim-one'
+Plug 'chrisbra/SudoEdit.vim'
 
 Plug 'romgrk/github-light.vim'
 Plug 'morhetz/gruvbox'
