@@ -3,6 +3,7 @@
   {autoload {a aniseed.core
              nvim aniseed.nvim
              mapping dotfiles.mapping
+             cmp dotfiles.cmp
              }})
 
 (mapping.setup)

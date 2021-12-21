@@ -74,6 +74,10 @@ Plug 'guns/vim-sexp'
 Plug 'Olical/aniseed', { 'tag': 'v3.23.0' }
 Plug 'Olical/conjure', {'tag': 'v4.25.0'}
 
+Plug 'hrsh7th/cmp-buffer'
+Plug 'PaterJason/cmp-conjure'
+Plug 'hrsh7th/nvim-cmp'
+
 Plug 'coddingtonbear/neomake-platformio'
 
 call plug#end()
