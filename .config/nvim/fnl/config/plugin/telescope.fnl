@@ -27,6 +27,8 @@
 (nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.project.project{}<CR>" {:noremap true :silent true})
 (nvim.set_keymap :n :<leader>ft ":lua require('telescope').extensions.tele_tabby.list()<CR>" {:noremap true :silent true})
 (nvim.set_keymap :n :- ":lua require('telescope').extensions.vinegar.file_browser()<cr>" {:noremap true})
+(nvim.set_keymap :n :<leader>fs ":lua require('session-lens').search_session()<CR>" {:noremap true})
+
 
 
 ;; disable netrw

@@ -11,10 +11,11 @@ do
   _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local autoload = (require("aniseed.autoload")).autoload
-local cmplsp, lsp, nvim = autoload("cmp_nvim_lsp"), autoload("lspconfig"), autoload("aniseed.nvim")
+local cmplsp, lsp, nvim, nvim_lsp_installer = autoload("cmp_nvim_lsp"), autoload("lspconfig"), autoload("aniseed.nvim"), autoload("nvim-lsp-installer")
 do end (_2amodule_locals_2a)["cmplsp"] = cmplsp
 _2amodule_locals_2a["lsp"] = lsp
 _2amodule_locals_2a["nvim"] = nvim
+_2amodule_locals_2a["nvim-lsp-installer"] = nvim_lsp_installer
 local function define_signs(prefix)
   local error = (prefix .. "SignError")
   local warn = (prefix .. "SignWarn")
@@ -54,4 +55,7 @@ local function _2_(client, bufnr)
   return nvim.buf_set_keymap(bufnr, "n", "<leader>li", ":lua require('telescope.builtin').lsp_implementations()<cr>", {noremap = true})
 end
 on_attach = _2_
-return lsp.clojure_lsp.setup({on_attach = on_attach, handlers = handlers, capabilities = capabilities})
+local function on_server_ready_handler(server)
+  return server:setup({on_attach = on_attach, handlers = handlers, capabilities = capabilities})
+end
+return nvim_lsp_installer.on_server_ready(on_server_ready_handler)
