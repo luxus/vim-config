@@ -23,8 +23,11 @@ _2amodule_locals_2a["noremap"] = noremap
 nvim.set_keymap("n", "<space>", "<nop>", {noremap = true})
 nvim.g.mapleader = " "
 nvim.g.maplocalleader = ","
+vim.o.clipboard = "unnamedplus"
+vim.api.nvim_exec(":set clipboard=unnamedplus", true)
 nvim.set_keymap("n", "<leader>sv", ":source $MYVIMRC<CR>", {noremap = true})
 noremap("i", "jk", "<esc>")
+nvim.o.mouse = "a"
 nvim.ex.set("nowrap")
 do
   local options = {completeopt = "menuone,noselect", ignorecase = true, smartcase = true, clipboard = "unnamedplus"}
