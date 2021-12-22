@@ -1,13 +1,6 @@
-(module dotfiles.cmp
+(module config.plugin.cmp
   {autoload {nvim aniseed.nvim
              cmp cmp}})
-
-; (defn setup [] 
-;   (print "cmp was loaded"))
-
-(defn setup [] 
-  (print "cmp being used"))
-
 
 (def- cmp-src-menu-items
   {:buffer "buff"
