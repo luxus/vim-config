@@ -16,9 +16,15 @@ do end (_2amodule_locals_2a)["core"] = core
 _2amodule_locals_2a["nvim"] = nvim
 _2amodule_locals_2a["str"] = str
 _2amodule_locals_2a["util"] = util
+local function noremap(mode, from, to)
+  return nvim.set_keymap(mode, from, to, {noremap = true})
+end
+_2amodule_locals_2a["noremap"] = noremap
 nvim.set_keymap("n", "<space>", "<nop>", {noremap = true})
 nvim.g.mapleader = " "
 nvim.g.maplocalleader = ","
+nvim.set_keymap("n", "<leader>sv", ":source $MYVIMRC<CR>", {noremap = true})
+noremap("i", "jk", "<esc>")
 nvim.ex.set("nowrap")
 do
   local options = {completeopt = "menuone,noselect", ignorecase = true, smartcase = true, clipboard = "unnamedplus"}

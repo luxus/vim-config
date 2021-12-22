@@ -3,7 +3,12 @@
              telescope telescope}})
 
 (telescope.setup {:defaults {:file_ignore_patterns ["node_modules"]}
-                  :pickers {:find_files {:find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}}})
+                  :pickers {:find_files {:find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}}
+                  :extensions {:fzf {:fuzzy true
+                                     :override-generic-sorter true
+                                     :override-file-sorter true
+                                     :case-mode "smart_case"}}})
+(telescope.load_extension "fzf")
 
 (nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').find_files()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fg ":lua require('telescope.builtin').live_grep()<CR>" {:noremap true})

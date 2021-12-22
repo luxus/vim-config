@@ -32,6 +32,7 @@
   ;clojure
   :Olical/conjure {:branch :master :mod :conjure}
   ;file searching
+  :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
   :nvim-telescope/telescope.nvim {:requires [:nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim]
                                   :mod :telescope}
