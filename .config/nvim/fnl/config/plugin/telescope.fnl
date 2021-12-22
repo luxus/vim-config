@@ -10,7 +10,7 @@
                                      :case-mode "smart_case"}
                                :tele_tabby { :use_highlighter true }
                                :project {
-                                  :base_dirs  ["~/repos"]
+                                  :base_dirs  ["~/repos" "~/source/repos"  "C:/repos"]
                                   :hidden_files true }}})
 
 (telescope.load_extension "fzf")
@@ -36,21 +36,11 @@
 
 ;;- create function to open file browser when opening a directory
 
-(comment 
- )
-
-
 (fn pl-is-dir [] 
   (let [pl (require "plenary.path")
         path (vim.fn.expand "%:p") 
         new-thing (pl.new path) ]
     (new-thing:is_dir)))
-
-(comment 
-  
-  (pl-is-dir)
-  )
-
 
 (set _G.browse_if_dir 
      (fn [] 
