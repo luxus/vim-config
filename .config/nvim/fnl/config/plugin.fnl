@@ -33,7 +33,7 @@
   :Olical/conjure {:branch :master :mod :conjure}
   ; which-key
   :folke/which-key.nvim {:mod :whichkey}
-  ; tpop
+  ; tpope
   :tpope/vim-abolish {}
   :tpope/vim-commentary {}
   :tpope/vim-surround {}
