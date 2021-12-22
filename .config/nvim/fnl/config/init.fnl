@@ -13,6 +13,11 @@
 (set nvim.g.mapleader " ")
 (set nvim.g.maplocalleader ",")
 
+; shared clipboard (neither work yet)
+(set vim.o.clipboard :unnamedplus)
+(vim.api.nvim_exec ":set clipboard=unnamedplus" true)
+
+
 ; source config
 (nvim.set_keymap :n :<leader>sv ":source $MYVIMRC<CR>" {:noremap true})
 ; normal mode key
