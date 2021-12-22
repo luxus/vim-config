@@ -8,6 +8,7 @@
                                      :override-generic-sorter true
                                      :override-file-sorter true
                                      :case-mode "smart_case"}
+                               :tele_tabby { :use_highlighter true }
                                :project {
                                   :base_dirs  ["~/repos"]
                                   :hidden_files true }}})
@@ -24,3 +25,5 @@
 (nvim.set_keymap :n :<leader>fz ":lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fr ":lua require('telescope.builtin').resume()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.project.project{}<CR>" {:noremap true :silent true})
+(nvim.set_keymap :n :<leader>fp ":lua require('telescope').extensions.tele_tabby.list()" {:noremap true :silent true})
+

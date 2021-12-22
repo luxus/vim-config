@@ -40,14 +40,35 @@
   :tpope/vim-repeat {}
   :tpope/vim-sensible {}
   :tpope/vim-unimpaired {}
+  :tpope/vim-vinegar {}
+  :tpope/vim-dispatch {}
+   
+  ;; editing
+  :mg979/vim-visual-multi {:branch "master"}
+  :bkad/CamelCaseMotion {}
+  :vim-scripts/ReplaceWithRegister {}
+  :terryma/vim-expand-region {}
+  :jiangmiao/auto-pairs {}
+  :mbbill/undotree {}
+
+  ;; session
+  :rmagatti/auto-session {}
+  :rmagatti/session-lens {}
+
+  ;; lisp
+  :tpope/vim-sexp-mappings-for-regular-people {}
+  :guns/vim-sexp {}
+
   ;file searching
   :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
-  :nvim-telescope/telescope.nvim {:requires [:nvim-lua/popup.nvim
+  :nvim-telescope/telescope.nvim {:requires [ :TC72/telescope-tele-tabby.nvim
+                                             :nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim
                                              :nvim-telescope/telescope-project.nvim]
                                   :mod :telescope}
   ;parsing system
-  :nvim-treesitter/nvim-treesitter {:run ":TSUpdate"
+  :nvim-treesitter/nvim-treesitter {:requires [:nvim-treesitter/nvim-treesitter-textobjects]
+                                    :run ":TSUpdate"
                                     :mod :treesitter}
   ;lsp
   :neovim/nvim-lspconfig {:mod :lspconfig}
