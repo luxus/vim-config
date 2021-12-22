@@ -15,7 +15,10 @@
 
 ; source config
 (nvim.set_keymap :n :<leader>sv ":source $MYVIMRC<CR>" {:noremap true})
+; normal mode key
 (noremap :i :jk :<esc>)
+; mouse mode
+(set nvim.o.mouse "a")
 
 ;don't wrap lines
 (nvim.ex.set :nowrap)
