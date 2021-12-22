@@ -14,8 +14,9 @@ local autoload = (require("aniseed.autoload")).autoload
 local nvim, telescope = autoload("aniseed.nvim"), autoload("telescope")
 do end (_2amodule_locals_2a)["nvim"] = nvim
 _2amodule_locals_2a["telescope"] = telescope
-telescope.setup({defaults = {file_ignore_patterns = {"node_modules"}}, pickers = {find_files = {find_command = {"rg", "--files", "--iglob", "!.git", "--hidden"}}}, extensions = {fzf = {fuzzy = true, ["override-generic-sorter"] = true, ["override-file-sorter"] = true, ["case-mode"] = "smart_case"}}})
+telescope.setup({defaults = {file_ignore_patterns = {"node_modules"}}, pickers = {find_files = {find_command = {"rg", "--files", "--iglob", "!.git", "--hidden"}}}, extensions = {fzf = {fuzzy = true, ["override-generic-sorter"] = true, ["override-file-sorter"] = true, ["case-mode"] = "smart_case"}, project = {base_dirs = {"~/repos"}, hidden_files = true}}})
 telescope.load_extension("fzf")
+telescope.load_extension("project")
 nvim.set_keymap("n", "<leader>ff", ":lua require('telescope.builtin').find_files()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>fg", ":lua require('telescope.builtin').live_grep()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>fb", ":lua require('telescope.builtin').buffers()<CR>", {noremap = true})
