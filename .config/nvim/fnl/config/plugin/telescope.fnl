@@ -36,14 +36,14 @@
 
 ;;- create function to open file browser when opening a directory
 
-(fn pl-is-dir [] 
+(fn pl-is-dir []
   (let [pl (require "plenary.path")
-        path (vim.fn.expand "%:p") 
+        path (vim.fn.expand "%:p")
         new-thing (pl.new path) ]
     (new-thing:is_dir)))
 
-(set _G.browse_if_dir 
-     (fn [] 
+(set _G.browse_if_dir
+     (fn []
        (if (pl-is-dir)
          (let [buf (vim.api.nvim_get_current_buf)]
            (vim.api.nvim_buf_set_option buf "buftype" "nofile")
