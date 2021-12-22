@@ -31,6 +31,8 @@
   :Olical/aniseed {:branch :develop}
   ;clojure
   :Olical/conjure {:branch :master :mod :conjure}
+  ; which-key
+  :folke/which-key.nvim {:mod :whichkey}
   ;file searching
   :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
   :nvim-telescope/telescope.nvim {:requires [:nvim-lua/popup.nvim
