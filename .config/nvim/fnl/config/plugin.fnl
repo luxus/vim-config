@@ -33,6 +33,13 @@
   :Olical/conjure {:branch :master :mod :conjure}
   ; which-key
   :folke/which-key.nvim {:mod :whichkey}
+  ; tpop
+  :tpope/vim-abolish {}
+  :tpope/vim-commentary {}
+  :tpope/vim-surround {}
+  :tpope/vim-repeat {}
+  :tpope/vim-sensible {}
+  :tpope/vim-unimpaired {}
   ;file searching
   :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
   :nvim-telescope/telescope.nvim {:requires [:nvim-lua/popup.nvim

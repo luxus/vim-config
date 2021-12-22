@@ -26,6 +26,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-unimpaired'
 Plug 'asvetliakov/vim-easymotion'
 Plug 'lfilho/cosco.vim'
 Plug 'chamindra/marvim'
@@ -34,7 +35,6 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'terryma/vim-expand-region'
 " Plug 'andymass/vim-matchup'
-Plug 'tpope/vim-unimpaired'
 
 "colour schemes
 Plug 'romgrk/doom-one.vim'
@@ -364,7 +364,7 @@ require'nvim-treesitter.configs'.setup {
     select = {
       enable = true,
 
-      -- Automatically jump forward to textobj, similar to targets.vim 
+      -- Automatically jump forward to textobj, similar to targets.vim
       lookahead = true,
 
       keymaps = {
