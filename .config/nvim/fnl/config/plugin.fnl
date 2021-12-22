@@ -61,7 +61,8 @@
 
   ;file searching
   :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
-  :nvim-telescope/telescope.nvim {:requires [ :TC72/telescope-tele-tabby.nvim
+  :nvim-telescope/telescope.nvim {:requires [:rudism/telescope-vinegar.nvim
+                                             :TC72/telescope-tele-tabby.nvim
                                              :nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim
                                              :nvim-telescope/telescope-project.nvim]

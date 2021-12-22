@@ -25,5 +25,55 @@
 (nvim.set_keymap :n :<leader>fz ":lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fr ":lua require('telescope.builtin').resume()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.project.project{}<CR>" {:noremap true :silent true})
-(nvim.set_keymap :n :<leader>fp ":lua require('telescope').extensions.tele_tabby.list()" {:noremap true :silent true})
+(nvim.set_keymap :n :<leader>ft ":lua require('telescope').extensions.tele_tabby.list()<CR>" {:noremap true :silent true})
+(nvim.set_keymap :n :- ":lua require('telescope').extensions.vinegar.file_browser()<cr>" {:noremap true})
 
+
+;; disable netrw
+; vim.g['loaded_netrw'] = 1
+
+(set nvim.g.loaded_netrw 1)
+
+;;- create function to open file browser when opening a directory
+
+(comment 
+ )
+
+
+(fn pl-is-dir [] 
+  (let [pl (require "plenary.path")
+        path (vim.fn.expand "%:p") 
+        new-thing (pl.new path) ]
+    (new-thing:is_dir)))
+
+(comment 
+  
+  (pl-is-dir)
+  )
+
+
+(set _G.browse_if_dir 
+     (fn [] 
+       (if (pl-is-dir)
+         (let [buf (vim.api.nvim_get_current_buf)]
+           (vim.api.nvim_buf_set_option buf "buftype" "nofile")
+           (vim.api.nvim_buf_set_option buf "buflisted" false)
+           (vim.api.nvim_buf_set_option buf "swapfile" false)
+           (vim.api.nvim_buf_set_option buf "bufhidden" "hide")
+           (telescope.extensions.vinegar.file_browser)
+           ))))
+
+
+; _G.browse_if_dir = function()
+;   if require('plenary.path'):new(vim.fn.expand('%:p')):is_dir() then
+;     local buf = vim.api.nvim_get_current_buf()
+;     vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
+;     vim.api.nvim_buf_set_option(buf, 'buflisted', false)
+;     vim.api.nvim_buf_set_option(buf, 'swapfile', false)
+;     vim.api.nvim_buf_set_option(buf, 'bufhidden', 'hide')
+;     require('telescope').extensions.vinegar.file_browser()
+;   end
+; end
+
+;; autocommand to run the above function when launching
+(vim.api.nvim_command "au VimEnter * call v:lua.browse_if_dir()")
