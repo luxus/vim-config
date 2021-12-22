@@ -72,7 +72,8 @@
                                     :run ":TSUpdate"
                                     :mod :treesitter}
   ;lsp
-  :neovim/nvim-lspconfig {:mod :lspconfig}
+  :williamboman/nvim-lsp-installer {:requires [:neovim/nvim-lspconfig]
+                          :mod :lspconfig}
   ;autocomplete
   :hrsh7th/nvim-cmp {:requires [:hrsh7th/cmp-buffer
                                 :hrsh7th/cmp-nvim-lsp
