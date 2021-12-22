@@ -4,10 +4,18 @@
              util config.util
              str aniseed.string}})
 
+(defn- noremap [mode from to]
+  "Sets a mapping with {:noremap true}."
+  (nvim.set_keymap mode from to {:noremap true}))
+
 ;generic mapping leaders configuration
 (nvim.set_keymap :n :<space> :<nop> {:noremap true})
 (set nvim.g.mapleader " ")
 (set nvim.g.maplocalleader ",")
+
+; source config
+(nvim.set_keymap :n :<leader>sv ":source $MYVIMRC<CR>" {:noremap true})
+(noremap :i :jk :<esc>)
 
 ;don't wrap lines
 (nvim.ex.set :nowrap)
