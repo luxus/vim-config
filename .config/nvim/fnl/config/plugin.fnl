@@ -49,7 +49,7 @@
   :vim-scripts/ReplaceWithRegister {}
   :terryma/vim-expand-region {}
   :jiangmiao/auto-pairs {}
-  :mbbill/undotree {}
+  :mbbill/undotree {:mod :undotree}
 
   ;; session
   :rmagatti/auto-session {}
