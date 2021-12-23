@@ -39,9 +39,9 @@
   :tpope/vim-surround {}
   :tpope/vim-repeat {}
   :tpope/vim-sensible {}
-  :tpope/vim-unimpaired {}
-  :tpope/vim-vinegar {}
   :tpope/vim-dispatch {}
+  :tpope/vim-vinegar {}
+  :tpope/vim-unimpaired {}
    
   ;; coc
   :neoclide/coc.nvim {:branch "release"
@@ -61,10 +61,12 @@
   ;; lisp
   :tpope/vim-sexp-mappings-for-regular-people {}
   :guns/vim-sexp {}
+  :feline-nvim/feline.nvim {:mod :feline}
 
   ;file searching
   :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
-  :nvim-telescope/telescope.nvim {:requires [:rmagatti/session-lens
+  :nvim-telescope/telescope.nvim {:requires [:kyazdani42/nvim-web-devicons
+                                             :rmagatti/session-lens
                                              :rudism/telescope-vinegar.nvim
                                              :TC72/telescope-tele-tabby.nvim
                                              :nvim-lua/popup.nvim

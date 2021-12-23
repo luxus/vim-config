@@ -1,3 +1,4 @@
+# Todo
 [x] which-key
 [x] command history
 [x] save session
@@ -8,36 +9,18 @@
 [x] multicursor
 [x] search history
 
-[] use mouse
+[x] use mouse
 [x] map key to undotree
-[] js
-[] csharp
-[] tree sitter textobj setup
-[] keymaps to go to prev and next tab
+[x] js
+[x] csharp
+[x] tree sitter textobj setup
+[x] keymaps to go to prev and next tab
+  - Already existed
 [] eyebrowse in vim for workspaces
 [] shared clipboard
+[] tcd for telescope-project (how to set the tab directory)
+[] autocommand (autocmd) to choose between lsp or coc bindings
+
+-[] modeline
 
 
-
-:tpope/vim-vinegar {}
-:tpope/vim-dispatch {}
-
-;; editing
-:mg979/vim-visual-multi' {} {'branch': 'master'}
-:bkad/CamelCaseMotion {}
-:vim-scripts/ReplaceWithRegister {}
-:terryma/vim-expand-region {}
-:jiangmiao/auto-pairs {}
-:mbbill/undotree {}
-
-
-;; session
-:rmagatti/auto-session {}
-:rmagatti/session-lens {}
-
-;; treesitter
-:nvim-treesitter/nvim-treesitter-textobjects {}
-
-;; lisp
-:tpope/vim-sexp-mappings-for-regular-people {}
-:guns/vim-sexp {}

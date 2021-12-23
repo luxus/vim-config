@@ -109,6 +109,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
+  ["coc.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\coc.nvim",
+    url = "https://github.com/neoclide/coc.nvim"
+  },
   conjure = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\conjure",
@@ -119,10 +124,22 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\github-nvim-theme",
     url = "https://github.com/projekt0n/github-nvim-theme"
   },
+  ["lualine.nvim"] = {
+    after = { "nvim-web-devicons" },
+    loaded = false,
+    needs_bufread = false,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\opt\\lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
+  },
+  ["nvim-lsp-installer"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-lsp-installer",
+    url = "https://github.com/williamboman/nvim-lsp-installer"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -138,6 +155,15 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-treesitter-textobjects",
     url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+  },
+  ["nvim-web-devicons"] = {
+    load_after = {
+      ["lualine.nvim"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\opt\\nvim-web-devicons",
+    url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,
