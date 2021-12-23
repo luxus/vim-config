@@ -43,6 +43,10 @@
   :tpope/vim-vinegar {}
   :tpope/vim-dispatch {}
    
+  ;; coc
+  :neoclide/coc.nvim {:branch "release"
+                      :mod :coc}
+
   ;; editing
   :mg979/vim-visual-multi {:branch "master"}
   :bkad/CamelCaseMotion {}
