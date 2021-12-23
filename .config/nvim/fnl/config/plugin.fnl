@@ -49,7 +49,7 @@
 
   ;; editing
   :mg979/vim-visual-multi {:branch "master"}
-  :bkad/CamelCaseMotion {}
+  :bkad/CamelCaseMotion {:mod :camelcasemotion}
   :vim-scripts/ReplaceWithRegister {}
   :terryma/vim-expand-region {}
   :jiangmiao/auto-pairs {}
