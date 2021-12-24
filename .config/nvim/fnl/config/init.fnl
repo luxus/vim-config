@@ -12,6 +12,20 @@
 (nvim.set_keymap :n :<space> :<nop> {:noremap true})
 (set nvim.g.mapleader " ")
 (set nvim.g.maplocalleader ",")
+(vim.cmd "nnoremap gp `[v`]")
+(vim.cmd "vmap y y`]")
+
+(vim.cmd "
+  function! s:VSetSearch(cmdtype)
+    let temp = @s
+    norm! gv\"sy
+    let @/ = '\\V' . substitute(escape(@s, a:cmdtype.'\\'), '\\n', '\\\\n', 'g')
+    let @s = temp
+  endfunction
+
+  xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+  xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
+         ")
 
 ; shared clipboard (neither work yet)
 (set vim.o.clipboard :unnamedplus)

@@ -20,6 +20,42 @@
 [] shared clipboard
 [] tcd for telescope-project (how to set the tab directory)
 [] autocommand (autocmd) to choose between lsp or coc bindings
+[] git integration
+[] chadtree
+[] search for selection
+[ ] :h persistent-undo
+
+```viml
+  " Vscode neovim
+  " Search for selection
+  function! s:VSetSearch(cmdtype)
+    let temp = @s
+    norm! gv"sy
+    let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+    let @s = temp
+  endfunction
+
+  xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+  xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
+
+```
+
+
+## coc.nvim
+## actions vs commands?
+
+## clangd
+
+Creating the `compile_commands.json` file from platformio
+https://docs.platformio.org/en/latest/integration/compile_commands.html
+
+```bash
+pio run -t compiledb
+```
+
+Cannot have a blank string as an arugment
+
+
 
 -[] modeline
 
