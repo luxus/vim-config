@@ -43,6 +43,9 @@
   :tpope/vim-vinegar {}
   :tpope/vim-unimpaired {}
    
+  ;; bufferize
+  :AndrewRadev/bufferize.vim {}
+
   ;; coc
   :neoclide/coc.nvim {:branch "release"
                       :mod :coc}
