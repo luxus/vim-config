@@ -21,9 +21,9 @@
 [] tcd for telescope-project (how to set the tab directory)
 [] autocommand (autocmd) to choose between lsp or coc bindings
 [] git integration
-[] chadtree
-[] search for selection
-[ ] :h persistent-undo
+[x] chadtree
+[x] search for selection
+[] live grep search hidden folders
 
 ```viml
   " Vscode neovim
@@ -40,6 +40,7 @@
 
 ```
 
+[ ] :h persistent-undo
 
 ## coc.nvim
 ## actions vs commands?

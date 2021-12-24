@@ -78,6 +78,11 @@
                                              :nvim-lua/plenary.nvim
                                              :nvim-telescope/telescope-project.nvim]
                                   :mod :telescope}
+
+  ;; clipboard
+  :AckslD/nvim-neoclip.lua {:requires [:nvim-telescope/telescope.nvim]
+                            :mod :neoclip}
+
   ;parsing system
   :nvim-treesitter/nvim-treesitter {:requires [:nvim-treesitter/nvim-treesitter-textobjects]
                                     :run ":TSUpdate"
