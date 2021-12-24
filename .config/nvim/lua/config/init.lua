@@ -23,6 +23,9 @@ _2amodule_locals_2a["noremap"] = noremap
 nvim.set_keymap("n", "<space>", "<nop>", {noremap = true})
 nvim.g.mapleader = " "
 nvim.g.maplocalleader = ","
+vim.cmd("nnoremap gp `[v`]")
+vim.cmd("vmap y y`]")
+vim.cmd("\n  function! s:VSetSearch(cmdtype)\n    let temp = @s\n    norm! gv\"sy\n    let @/ = '\\V' . substitute(escape(@s, a:cmdtype.'\\'), '\\n', '\\\\n', 'g')\n    let @s = temp\n  endfunction\n\n  xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>\n  xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>\n         ")
 vim.o.clipboard = "unnamedplus"
 vim.api.nvim_exec(":set clipboard=unnamedplus", true)
 nvim.set_keymap("n", "<leader>sv", ":source $MYVIMRC<CR>", {noremap = true})
