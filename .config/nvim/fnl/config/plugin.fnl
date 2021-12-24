@@ -55,6 +55,11 @@
   :jiangmiao/auto-pairs {}
   :mbbill/undotree {:mod :undotree}
 
+  ;; folders
+  :ms-jpq/chadtree {:branch "chad"
+                    :run "python -m chadtree deps"
+                    :mod :chadtree}
+
   ;; session
   :rmagatti/auto-session {}
 
@@ -86,4 +91,5 @@
                                 :PaterJason/cmp-conjure]
                      :mod :cmp}
   ;theme
+  :bluz71/vim-nightfly-guicolors {}
   :projekt0n/github-nvim-theme {:mod :theme})
