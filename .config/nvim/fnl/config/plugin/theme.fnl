@@ -1,5 +1,9 @@
 (module config.plugin.theme
-  {autoload {theme github-theme}})
+  {autoload {nvim aniseed.nvim
+             theme github-theme}})
 
-(theme.setup {:theme_style "dark"
-              :comment_style "italic"})
+;; For github theme
+; (theme.setup {:theme_style "dark"
+;               :comment_style "italic"})
+
+(nvim.ex.colorscheme :nightfly)

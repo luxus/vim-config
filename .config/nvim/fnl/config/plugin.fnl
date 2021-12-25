@@ -99,5 +99,8 @@
                                 :PaterJason/cmp-conjure]
                      :mod :cmp}
   ;theme
-  :bluz71/vim-nightfly-guicolors {}
-  :projekt0n/github-nvim-theme {:mod :theme})
+  :bluz71/vim-nightfly-guicolors {:mod :theme
+                                 ;; :config (lambda [] (nvim.ex.colorscheme :nightfly))
+                                  }
+  ; :projekt0n/github-nvim-theme {:mod :theme}
+  )
