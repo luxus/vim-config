@@ -40,9 +40,9 @@
   :tpope/vim-repeat {}
   :tpope/vim-sensible {}
   :tpope/vim-dispatch {}
-  :tpope/vim-vinegar {}
+  ;;:tpope/vim-vinegar {}
   :tpope/vim-unimpaired {}
-   
+
   ;; bufferize
   :AndrewRadev/bufferize.vim {}
 
@@ -75,7 +75,7 @@
   :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
   :nvim-telescope/telescope.nvim {:requires [:kyazdani42/nvim-web-devicons
                                              :rmagatti/session-lens
-                                             :rudism/telescope-vinegar.nvim
+                                             ; :rudism/telescope-vinegar.nvim
                                              :TC72/telescope-tele-tabby.nvim
                                              :nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim
