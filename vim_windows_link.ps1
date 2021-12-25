@@ -10,4 +10,4 @@
 
 # cmd /c mklink $HOME"\.vsvimrc" $PSScriptRoot"\.vsvimrc"
 
-cmd /c mklink /D $env:APPDATA"\..\Local\nvim\" $PSScriptRoot"\.config\nvim"
+cmd /c mklink /D $env:APPDATA"\..\Local\nvim\" $PSScriptRoot"\config\nvim"

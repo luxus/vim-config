@@ -63,3 +63,8 @@ Cannot have a blank string as an arugment
 -[] modeline
 
 
+require'telescope.builtin'.live_grep{ vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case', '-u' } }
+require'telescope.builtin'.live_grep{ vimgrep_arguments = { 'rg',  '-u' } }
+lua require'telescope.builtin'.live_grep{ vimgrep_arguments = { 'rg',  '-u' } }
+lua require'telescope.builtin'.live_grep{ vimgrep_arguments = { 'rg',  '--hidden' } }
+
