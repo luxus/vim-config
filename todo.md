@@ -24,6 +24,7 @@
 [x] chadtree
 [x] search for selection
 [] live grep search hidden folders
+[] builtin.grep_string({opts})                            *builtin.grep_string()*
 [] repeat
 
 ```viml

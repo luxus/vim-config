@@ -2,7 +2,7 @@
   {autoload {nvim aniseed.nvim
              telescope telescope}})
 
-(telescope.setup {:defaults {:file_ignore_patterns ["node_modules"]}
+(telescope.setup {:defaults {:file_ignore_patterns ["node_modules"] :vimgrep_arguments ["rg" "--color=never" "--no-heading" "--with-filename" "--line-number" "--column" "--smart-case" "--hidden"]}
                   :pickers {:find_files {:find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}}
                   :extensions {:fzf {:fuzzy true
                                      :override-generic-sorter true
