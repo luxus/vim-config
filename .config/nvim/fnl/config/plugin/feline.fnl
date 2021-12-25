@@ -2,5 +2,5 @@
   {autoload {nvim aniseed.nvim
              feline feline}})
 
-(vim.cmd ":set termguicolors")
+(set nvim.o.termguicolors true)
 (feline.setup)
