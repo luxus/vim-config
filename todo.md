@@ -26,6 +26,7 @@
 [] live grep search hidden folders
 [] builtin.grep_string({opts})                            *builtin.grep_string()*
 [] repeat
+[] romgrk/nvim-treesitter-context
 
 ```viml
   " Vscode neovim
