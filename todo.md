@@ -24,11 +24,12 @@
 [x] chadtree
 [x] search for selection
 [] live grep search hidden folders
+[] repeat
 
 ```viml
   " Vscode neovim
   " Search for selection
-  function! s:VSetSearch(cmdtype)
+  unction! s:VSetSearch(cmdtype)
     let temp = @s
     norm! gv"sy
     let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')

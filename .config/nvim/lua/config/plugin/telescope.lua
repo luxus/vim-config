@@ -27,26 +27,4 @@ nvim.set_keymap("n", "<leader>fz", ":lua require('telescope.builtin').current_bu
 nvim.set_keymap("n", "<leader>fr", ":lua require('telescope.builtin').resume()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>fp", ":lua require'telescope'.extensions.project.project{}<CR>", {noremap = true, silent = true})
 nvim.set_keymap("n", "<leader>ft", ":lua require('telescope').extensions.tele_tabby.list()<CR>", {noremap = true, silent = true})
-nvim.set_keymap("n", "-", ":lua require('telescope').extensions.vinegar.file_browser()<cr>", {noremap = true})
-nvim.set_keymap("n", "<leader>fs", ":lua require('session-lens').search_session()<CR>", {noremap = true})
-nvim.g.loaded_netrw = 1
-local function pl_is_dir()
-  local pl = require("plenary.path")
-  local path = vim.fn.expand("%:p")
-  local new_thing = pl.new(path)
-  return new_thing:is_dir()
-end
-local function _1_()
-  if pl_is_dir() then
-    local buf = vim.api.nvim_get_current_buf()
-    vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
-    vim.api.nvim_buf_set_option(buf, "buflisted", false)
-    vim.api.nvim_buf_set_option(buf, "swapfile", false)
-    vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
-    return telescope.extensions.vinegar.file_browser()
-  else
-    return nil
-  end
-end
-_G.browse_if_dir = _1_
-return vim.api.nvim_command("au VimEnter * call v:lua.browse_if_dir()")
+return nvim.set_keymap("n", "<leader>fs", ":lua require('session-lens').search_session()<CR>", {noremap = true})

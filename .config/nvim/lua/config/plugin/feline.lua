@@ -14,5 +14,5 @@ local autoload = (require("aniseed.autoload")).autoload
 local feline, nvim = autoload("feline"), autoload("aniseed.nvim")
 do end (_2amodule_locals_2a)["feline"] = feline
 _2amodule_locals_2a["nvim"] = nvim
-vim.cmd(":set termguicolors")
+nvim.o.termguicolors = true
 return feline.setup()

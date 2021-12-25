@@ -11,6 +11,7 @@ do
   _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local autoload = (require("aniseed.autoload")).autoload
-local theme = autoload("github-theme")
-do end (_2amodule_locals_2a)["theme"] = theme
-return theme.setup({theme_style = "dark", comment_style = "italic"})
+local nvim, theme = autoload("aniseed.nvim"), autoload("github-theme")
+do end (_2amodule_locals_2a)["nvim"] = nvim
+_2amodule_locals_2a["theme"] = theme
+return nvim.ex.colorscheme("nightfly")
