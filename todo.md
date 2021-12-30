@@ -27,6 +27,7 @@
 [] builtin.grep_string({opts})                            *builtin.grep_string()*
 [] repeat
 [] romgrk/nvim-treesitter-context
+[] whichkey configure names for mappings
 
 ```viml
   " Vscode neovim

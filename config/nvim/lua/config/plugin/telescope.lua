@@ -1,4 +1,4 @@
-local _2afile_2a = "C:\\Users\\carlk\\AppData\\Local\\nvim\\fnl\\config\\plugin\\telescope.fnl"
+local _2afile_2a = "AppData\\Local\\nvim\\fnl\\config\\plugin\\telescope.fnl"
 local _2amodule_name_2a = "config.plugin.telescope"
 local _2amodule_2a
 do
@@ -20,9 +20,11 @@ telescope.load_extension("project")
 nvim.set_keymap("n", "<leader>ff", ":lua require('telescope.builtin').find_files()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>fg", ":lua require('telescope.builtin').live_grep()<CR>", {noremap = true})
 nvim.set_keymap("x", "<leader>fv", ":lua require('telescope.builtin').grep_string()<CR>", {})
+nvim.set_keymap("n", "<leader>fv", ":lua require('telescope.builtin').grep_string()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>fi", ":lua require('telescope.builtin').command_history()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>fb", ":lua require('telescope.builtin').buffers()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>fh", ":lua require('telescope.builtin').help_tags()<CR>", {noremap = true})
+nvim.set_keymap("n", "<leader>fd", ":lua require('telescope.builtin').file_browser()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>fc", ":lua require('telescope.builtin').commands()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>fz", ":lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>fr", ":lua require('telescope.builtin').resume()<CR>", {noremap = true})

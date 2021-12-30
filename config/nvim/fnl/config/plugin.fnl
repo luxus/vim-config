@@ -82,6 +82,10 @@
                                              :nvim-telescope/telescope-project.nvim]
                                   :mod :telescope}
 
+
+ :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()")) }
+ :junegunn/fzf.vim {:mod :fzf}
+
   ;; clipboard
   :AckslD/nvim-neoclip.lua {:requires [:nvim-telescope/telescope.nvim]
                             :mod :neoclip}
