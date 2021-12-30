@@ -79,14 +79,13 @@
                                              :TC72/telescope-tele-tabby.nvim
                                              :nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim
-                                             :nvim-telescope/telescope-project.nvim]
+                                             :ahmedkhalf/project.nvim]
                                   :mod :telescope}
-
 
  :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()")) }
  :junegunn/fzf.vim {:mod :fzf}
 
-  ;; clipboard
+  ; clipboard
   :AckslD/nvim-neoclip.lua {:requires [:nvim-telescope/telescope.nvim]
                             :mod :neoclip}
 
@@ -97,6 +96,9 @@
   ;lsp
   :williamboman/nvim-lsp-installer {:requires [:neovim/nvim-lspconfig]
                           :mod :lspconfig}
+  ; dap
+  :rcarriga/nvim-dap-ui {:requires ["mfussenegger/nvim-dap"]}
+
   ;autocomplete
   :hrsh7th/nvim-cmp {:requires [:hrsh7th/cmp-buffer
                                 :hrsh7th/cmp-nvim-lsp

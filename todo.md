@@ -18,7 +18,8 @@
   - Already existed
 [] eyebrowse in vim for workspaces
 [] shared clipboard
-[] tcd for telescope-project (how to set the tab directory)
+[x] tcd for telescope-project (how to set the tab directory)
+  - Changed to project-nvim
 [] autocommand (autocmd) to choose between lsp or coc bindings
 [] git integration
 [x] chadtree
