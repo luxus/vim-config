@@ -97,7 +97,8 @@
   :williamboman/nvim-lsp-installer {:requires [:neovim/nvim-lspconfig]
                           :mod :lspconfig}
   ; dap
-  :rcarriga/nvim-dap-ui {:requires ["mfussenegger/nvim-dap"]}
+  :rcarriga/nvim-dap-ui {:requires ["mfussenegger/nvim-dap"]
+                         :mod :dap}
 
   ;autocomplete
   :hrsh7th/nvim-cmp {:requires [:hrsh7th/cmp-buffer
