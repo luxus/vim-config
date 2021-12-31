@@ -98,7 +98,8 @@
   :williamboman/nvim-lsp-installer {:requires [:neovim/nvim-lspconfig]
                           :mod :lspconfig}
   ; dap
-  :rcarriga/nvim-dap-ui {:requires ["mfussenegger/nvim-dap"]
+  :mfussenegger/nvim-dap {:requires [:rcarriga/nvim-dap-ui
+                                    :theHamsta/nvim-dap-virtual-text]
                          :mod :dap}
 
   ;autocomplete

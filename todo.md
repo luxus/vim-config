@@ -24,10 +24,13 @@
 [] git integration
 [x] chadtree
 [x] search for selection
-[] live grep search hidden folders
-[] builtin.grep_string({opts})                            *builtin.grep_string()*
-[] repeat
+[x] live grep search hidden folders
+[x] builtin.grep_string({opts})                            *builtin.grep_string()*
+[x] repeat
 [] romgrk/nvim-treesitter-context
+[] DAP 
+  - Send multiple lines to repl
+  - Better keybindings
 [] whichkey configure names for mappings
 
 ```viml

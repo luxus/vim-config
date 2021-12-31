@@ -1,9 +1,12 @@
 (module config.plugin.dap
   {autoload {dap dap
              dap-ui dapui
-            nvim aniseed.nvim}})
+             nvim-dap-virtual-text nvim-dap-virtual-text
+             nvim aniseed.nvim}})
 
 (dap-ui.setup)
+(nvim-dap-virtual-text.setup)
+; (set vim.g.dap_virtual_text true)
 
 (set dap.adapters.chrome
      {:type :executable
@@ -65,3 +68,5 @@
 
 ; nvim-dap-ui
 (nvim.set_keymap :n "<leader>dui" "<cmd>lua require'dapui'.toggle()<CR>" {:noremap true})
+(nvim.set_keymap :v :<M-k> "<Cmd>lua require('dapui').eval()<CR>" {:noremap true})
+
