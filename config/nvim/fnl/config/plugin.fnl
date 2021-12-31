@@ -77,6 +77,7 @@
                                              :rmagatti/session-lens
                                              ; :rudism/telescope-vinegar.nvim
                                              :TC72/telescope-tele-tabby.nvim
+                                             :nvim-telescope/telescope-dap.nvim
                                              :nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim
                                              :ahmedkhalf/project.nvim]

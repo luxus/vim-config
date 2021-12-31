@@ -15,7 +15,6 @@ local nvim = autoload("aniseed.nvim")
 do end (_2amodule_locals_2a)["nvim"] = nvim
 if vim.fn.executable("rg") then
   vim.o.grepprg = "rg --vimgrep"
-  return nil
 else
-  return nil
 end
+return nvim.set_keymap("n", "<leader>fg", "<cmd>Rg<CR>", {noremap = true})

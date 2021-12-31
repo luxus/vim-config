@@ -18,6 +18,8 @@
 
 (telescope.load_extension "fzf")
 (telescope.load_extension "projects")
+(telescope.load_extension "dap")
+
 (project.setup {:exclude_dirs ["~/source/repos/fairplayams/"]
                 :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" "*.csproj" "*.sln" ]})
 
@@ -38,6 +40,17 @@
 (nvim.set_keymap :n :<leader>fs ":lua require('session-lens').search_session()<CR>" {:noremap true})
 
 
+;; telescope-dap
+(nvim.set_keymap :n "<leader>dcc"
+          "<cmd>lua require'telescope'.extensions.dap.commands{}<CR>" {:noremap true})
+(nvim.set_keymap :n "<leader>dco"
+          "<cmd>lua require'telescope'.extensions.dap.configurations{}<CR>" {:noremap true})
+(nvim.set_keymap :n "<leader>dlb"
+          "<cmd>lua require'telescope'.extensions.dap.list_breakpoints{}<CR>" {:noremap true})
+(nvim.set_keymap :n "<leader>dv"
+          "<cmd>lua require'telescope'.extensions.dap.variables{}<CR>" {:noremap true})
+(nvim.set_keymap :n "<leader>df"
+          "<cmd>lua require'telescope'.extensions.dap.frames{}<CR>" {:noremap true})
 
 ;; disable netrw
 ; vim.g['loaded_netrw'] = 1
