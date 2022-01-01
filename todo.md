@@ -32,6 +32,8 @@
   - Send multiple lines to repl
   - Better keybindings
 [] whichkey configure names for mappings
+[] learn to use cfdo cdo
+[] Configure multicursor to recognise the camelcase words
 
 ```viml
   " Vscode neovim

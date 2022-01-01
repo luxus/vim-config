@@ -43,6 +43,10 @@
   ;;:tpope/vim-vinegar {}
   :tpope/vim-unimpaired {}
 
+  ;; movement
+  :phaazon/hop.nvim {:branch "v1"
+                     :mod :hop}
+
   ;; bufferize
   :AndrewRadev/bufferize.vim {}
 
@@ -53,11 +57,7 @@
   ;; editing
   :mg979/vim-visual-multi {:branch "master"}
   :bkad/CamelCaseMotion {:mod :camelcasemotion}
-  :vim-scripts/ReplaceWithRegister {}
-  :terryma/vim-expand-region {}
-  :jiangmiao/auto-pairs {}
-  :mbbill/undotree {:mod :undotree}
-
+  :vim-scripts/ReplaceWithRegister {} :terryma/vim-expand-region {} :jiangmiao/auto-pairs {} :mbbill/undotree {:mod :undotree}
   ;; folders
   :ms-jpq/chadtree {:branch "chad"
                     :run "python -m chadtree deps"

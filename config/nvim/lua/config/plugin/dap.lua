@@ -11,11 +11,13 @@ do
   _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local autoload = (require("aniseed.autoload")).autoload
-local dap, dap_ui, nvim = autoload("dap"), autoload("dapui"), autoload("aniseed.nvim")
+local dap, dap_ui, nvim, nvim_dap_virtual_text = autoload("dap"), autoload("dapui"), autoload("aniseed.nvim"), autoload("nvim-dap-virtual-text")
 do end (_2amodule_locals_2a)["dap"] = dap
 _2amodule_locals_2a["dap-ui"] = dap_ui
 _2amodule_locals_2a["nvim"] = nvim
+_2amodule_locals_2a["nvim-dap-virtual-text"] = nvim_dap_virtual_text
 dap_ui.setup()
+nvim_dap_virtual_text.setup()
 dap.adapters.chrome = {type = "executable", command = "node", args = {(os.getenv("HOME") .. "/repos/vscode-chrome-debug/out/src/chromeDebug.js")}}
 dap.configurations.javascript = {{type = "chrome", request = "attach", program = "${file}", cwd = vim.fn.getcwd(), sourceMaps = true, protocol = "inspector", port = 9222, webRoot = "${workspaceFolder}"}}
 dap.configurations.typescriptreact = {{type = "chrome", request = "attach", program = "${file}", cwd = vim.fn.getcwd(), sourceMaps = true, protocol = "inspector", port = 9222, webRoot = "${workspaceFolder}"}}
@@ -36,4 +38,5 @@ nvim.set_keymap("n", "<leader>dsbr", "<cmd>lua require'dap'.set_breakpoint(vim.f
 nvim.set_keymap("n", "<leader>dsbm", "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>dro", "<cmd>lua require'dap'.repl.open()<CR>", {noremap = true})
 nvim.set_keymap("n", "<leader>drl", "<cmd>lua require'dap'.repl.run_last()<CR>", {noremap = true})
-return nvim.set_keymap("n", "<leader>dui", "<cmd>lua require'dapui'.toggle()<CR>", {noremap = true})
+nvim.set_keymap("n", "<leader>dui", "<cmd>lua require'dapui'.toggle()<CR>", {noremap = true})
+return nvim.set_keymap("v", "<M-k>", "<Cmd>lua require('dapui').eval()<CR>", {noremap = true})
