@@ -14,6 +14,7 @@
 (set nvim.g.maplocalleader ",")
 (vim.cmd "nnoremap gp `[v`]")
 (vim.cmd "vmap y y`]")
+(set vim.o.scrolloff 7)
 
 (vim.cmd "
   function! s:VSetSearch(cmdtype)
