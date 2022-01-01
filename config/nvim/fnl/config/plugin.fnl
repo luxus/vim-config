@@ -47,6 +47,10 @@
   :phaazon/hop.nvim {:branch "v1"
                      :mod :hop}
 
+  ;; git
+  :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim :sindrets/diffview.nvim]
+                           :mod :neogit}
+
   ;; bufferize
   :AndrewRadev/bufferize.vim {}
 
