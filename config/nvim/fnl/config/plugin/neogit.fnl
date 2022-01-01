@@ -2,9 +2,11 @@
   {autoload {autoload aniseed.nvim
              neogit neogit 
              diffview diffview 
+             gitsigns gitsigns 
              which-key which-key}})
 
 (diffview.setup)
+(gitsigns.setup)
 (neogit.setup 
   {:integrations {:diffview true}})
 
