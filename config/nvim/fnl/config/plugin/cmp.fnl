@@ -26,3 +26,12 @@
                       :<CR> (cmp.mapping.confirm {:behavior cmp.ConfirmBehavior.Insert
                                                   :select true})}
             :sources cmp-srcs})
+
+
+(cmp.setup.cmdline "/" 
+  {:sources [ {:name :buffer} ]})
+
+(cmp.setup.cmdline ":"
+                   {:sources (cmp.config.sources [ {:name :path} ]
+                                                 [ {:name :buffer} ]
+                                                 [ {:name :cmdline} ])})	
