@@ -21,7 +21,7 @@
 [x] tcd for telescope-project (how to set the tab directory)
   - Changed to project-nvim
 [] autocommand (autocmd) to choose between lsp or coc bindings
-[] git integration
+[x] git integration
 [x] chadtree
 [x] search for selection
 [x] live grep search hidden folders
@@ -34,6 +34,7 @@
 [] whichkey configure names for mappings
 [] learn to use cfdo cdo
 [] Configure multicursor to recognise the camelcase words
+[] number of lines before and after cursor
 
 ```viml
   " Vscode neovim
@@ -75,4 +76,7 @@ require'telescope.builtin'.live_grep{ vimgrep_arguments = { 'rg', '--color=never
 require'telescope.builtin'.live_grep{ vimgrep_arguments = { 'rg',  '-u' } }
 lua require'telescope.builtin'.live_grep{ vimgrep_arguments = { 'rg',  '-u' } }
 lua require'telescope.builtin'.live_grep{ vimgrep_arguments = { 'rg',  '--hidden' } }
+
+
+[ ] Write a plugin that looks up files with similar names to the current file or in the same dir
 

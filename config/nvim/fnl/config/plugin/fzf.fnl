@@ -59,8 +59,7 @@
   (get-common-name "xxx"))
 
 (defn fzf-file-query [query]
-  (let [ cmd-str (core.str  ":lua vim.fn['fzf#vim#files']('.', {options={'--query=" query"', '--layout=reverse', '--info=inline'}})")]
-    (vim.cmd cmd-str)))
+  (vim.fn.fzf#vim#files "." (vim.fn.fzf#vim#with_preview {:options ["--query" query "--layout=reverse" "--info=inline" ]})))
 
 (defn fzf-this-file []
   (let [this-file (get-this-filename)

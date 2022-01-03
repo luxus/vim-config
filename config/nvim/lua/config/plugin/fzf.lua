@@ -11,8 +11,9 @@ do
   _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local autoload = (require("aniseed.autoload")).autoload
-local nvim = autoload("aniseed.nvim")
-do end (_2amodule_locals_2a)["nvim"] = nvim
+local fzf, nvim = autoload("fzf"), autoload("aniseed.nvim")
+do end (_2amodule_locals_2a)["fzf"] = fzf
+_2amodule_locals_2a["nvim"] = nvim
 if vim.fn.executable("rg") then
   vim.o.grepprg = "rg --vimgrep"
 else
