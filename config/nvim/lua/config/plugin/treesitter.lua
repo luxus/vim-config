@@ -13,4 +13,4 @@ end
 local autoload = (require("aniseed.autoload")).autoload
 local treesitter = autoload("nvim-treesitter.configs")
 do end (_2amodule_locals_2a)["treesitter"] = treesitter
-return treesitter.setup({highlight = {enable = true}, indent = {enable = true}, ensure_installed = {"clojure"}, textobjects = {select = {enable = true, lookahead = true, keymaps = {af = "@function.outer", ["if"] = "@function.inner", ac = "@class.outer", ic = "@class.inner", aa = "@parameter.outer", ia = "@parameter.inner"}}}})
+return treesitter.setup({highlight = {enable = true}, indent = {enable = true}, ensure_installed = {"clojure", "c_sharp", "javascript"}, textobjects = {select = {enable = true, lookahead = true, keymaps = {af = "@function.outer", ["if"] = "@function.inner", ac = "@class.outer", ic = "@class.inner", aa = "@parameter.outer", ia = "@parameter.inner"}}}})

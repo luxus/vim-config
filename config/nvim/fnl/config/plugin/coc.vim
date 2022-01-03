@@ -169,3 +169,6 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
 
+
+
+let g:coc_global_extensions=[ 'coc-omnisharp', 'coc-tsserver', 'coc-json', 'coc-css' ]
