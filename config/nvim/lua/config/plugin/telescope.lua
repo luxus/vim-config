@@ -1,4 +1,4 @@
-local _2afile_2a = "C:\\Users\\carlk\\AppData\\Local\\nvim\\fnl\\config\\plugin\\telescope.fnl"
+local _2afile_2a = "C:\\Users\\c.kamholtz\\AppData\\Local\\nvim\\fnl\\config\\plugin\\telescope.fnl"
 local _2amodule_name_2a = "config.plugin.telescope"
 local _2amodule_2a
 do

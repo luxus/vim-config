@@ -7,6 +7,8 @@
              path plenary.path
              fzf fzf}})
 
+;;(vim.fn.fzf#install)
+
 (if (vim.fn.executable "rg")
   (set vim.o.grepprg "rg --vimgrep"))
 
@@ -17,20 +19,20 @@
 
 ; :lua vim.fn["fzf#vim#files"](".", {options={"--query=fnl", "--layout=reverse", "--info=inline"}})
 ; (vim.api.nvim_exec "call fzf#vim#files('.', {'options': ['--query=aaa']})" false)
-        
-(defn- get-this-filename [] 
+
+(defn- get-this-filename []
   (let [fullpath (vim.fn.expand "%")
         base (fs.basename fullpath)
         temp (-> (string.gsub fullpath base "")
                  ;; remove leading slash
                  (string.gsub "^\\" "")
                  ;; remove ext
-                 (astring.split "%.") 
+                 (astring.split "%.")
                  (core.first))]
     temp))
 
 (defn get-files-in-dir []
-  (scandir.scan_dir 
+  (scandir.scan_dir
     (fs.basename (vim.fn.expand "%"))
     {:hidden true :depth 2}))
 
@@ -41,10 +43,10 @@
 
 (def- file-suffixes ["Controller" "ViewComponent" "Model" "Default"])
 
-(defn- get-suffix-pattern [x] 
+(defn- get-suffix-pattern [x]
   (core.str x "$"))
 
-(defn- get-common-name [filename] 
+(defn- get-common-name [filename]
   (let [filename-exact-pattern (core.str "^" filename "$")]
     ;; If a "more comon" name cannot be found, use original name
     (or (->> file-suffixes
@@ -59,13 +61,13 @@
   (get-common-name "xxx"))
 
 (defn fzf-file-query [query]
-  ;; Creates preview window
-  (vim.fn.fzf#vim#files "." (vim.fn.fzf#vim#with_preview 
-                              {:options ["--query" query "--layout=reverse" "--info=inline" ]})))
+  (vim.fn.fzf#vim#files "." (vim.fn.fzf#vim#with_preview {:options ["--query" query "--layout=reverse" "--info=inline" ]})))
 
 (defn fzf-this-file []
   (let [this-file (get-this-filename)
         common-name (get-common-name this-file)]
+    (print "this-file: " this-file)
+    (print "common-name: " common-name)
     (fzf-file-query common-name)))
 
 (nvim.set_keymap :n :<leader>fF ":lua require'config.plugin.fzf'['fzf-this-file']()<cr>" {:noremap true :silent false})
@@ -75,7 +77,7 @@
    (vim.cmd ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})")
    (vim.api.nvim_command "lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})")
    (vim.api.nvim_exec ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})" true)
-   
+
    )
 
 (nvim.set_keymap :n :<leader>fg "<cmd>Rg<CR>" {:noremap true})
