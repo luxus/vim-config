@@ -41,7 +41,7 @@
        (core.filter (lambda [x] (string.match x filename)))
        (core.map (lambda [x] (print x)))))
 
-(def- file-suffixes ["Controller" "ViewComponent" "Model" "Default"])
+(def- file-suffixes ["Controller" "ViewComponent" "ViewModel" "Model" "Default"])
 
 (defn- get-suffix-pattern [x]
   (core.str x "$"))
@@ -81,3 +81,6 @@
    )
 
 (nvim.set_keymap :n :<leader>fg "<cmd>Rg<CR>" {:noremap true})
+
+;; Disable preview window as it interferes with input on work machine
+(set vim.g.fzf_preview_window "")
