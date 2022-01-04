@@ -6,4 +6,6 @@
 ; (theme.setup {:theme_style "dark"
 ;               :comment_style "italic"})
 
-(nvim.ex.colorscheme :nightfly)
+;;(nvim.ex.colorscheme :nightfly)
+(nvim.ex.colorscheme :molokai)
+

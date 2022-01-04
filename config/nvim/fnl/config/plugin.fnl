@@ -103,7 +103,7 @@
   :nvim-treesitter/nvim-treesitter {:requires [:nvim-treesitter/nvim-treesitter-textobjects]
                                     :run ":TSUpdate"
                                     :mod :treesitter}
-  ;lsp
+  ;;lsp
   :williamboman/nvim-lsp-installer {:requires [:neovim/nvim-lspconfig]
                                     :mod :lspconfig}
   ; dap
@@ -119,8 +119,9 @@
                                 :PaterJason/cmp-conjure]
                      :mod :cmp}
   ;theme
-  :bluz71/vim-nightfly-guicolors {:mod :theme
-                                 ;; :config (lambda [] (nvim.ex.colorscheme :nightfly))
-                                  }
+
+  :tomasr/molokai {:mod :theme}
+  :bluz71/vim-nightfly-guicolors {:mod :theme }
   ; :projekt0n/github-nvim-theme {:mod :theme}
+
   )
