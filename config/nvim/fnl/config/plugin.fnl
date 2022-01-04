@@ -72,6 +72,9 @@
   ;; session
   :rmagatti/auto-session {}
 
+  ; ;; autoread
+  ; :djoshea/vim-autoread {}
+
   ;; lisp
   :tpope/vim-sexp-mappings-for-regular-people {}
   :guns/vim-sexp {}
@@ -102,7 +105,7 @@
                                     :mod :treesitter}
   ;lsp
   :williamboman/nvim-lsp-installer {:requires [:neovim/nvim-lspconfig]
-                          :mod :lspconfig}
+                                    :mod :lspconfig}
   ; dap
   :mfussenegger/nvim-dap {:requires [:rcarriga/nvim-dap-ui
                                     :theHamsta/nvim-dap-virtual-text]

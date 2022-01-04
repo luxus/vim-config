@@ -14,7 +14,12 @@
 (set nvim.g.maplocalleader ",")
 (vim.cmd "nnoremap gp `[v`]")
 (vim.cmd "vmap y y`]")
+(vim.cmd "filetype plugin indent on")
 (set vim.o.scrolloff 7)
+(set vim.o.tabstop 4)
+(set vim.o.shiftwidth 4)
+(set vim.o.softtabstop 4)
+(set vim.o.expandtab true)
 
 (vim.cmd "
   function! s:VSetSearch(cmdtype)
