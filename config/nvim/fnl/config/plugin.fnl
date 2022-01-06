@@ -120,8 +120,8 @@
                      :mod :cmp}
   ;theme
 
-  :tomasr/molokai {:mod :theme}
-  :bluz71/vim-nightfly-guicolors {:mod :theme }
+  :bluz71/vim-nightfly-guicolors {:requires [:tomasr/molokai :embark-theme/vim]
+                                  :mod :theme }
   ; :projekt0n/github-nvim-theme {:mod :theme}
 
   )

@@ -7,5 +7,5 @@
 ;               :comment_style "italic"})
 
 ;;(nvim.ex.colorscheme :nightfly)
-(nvim.ex.colorscheme :molokai)
+(nvim.ex.colorscheme :embark)
 
