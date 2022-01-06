@@ -21,6 +21,13 @@
 (set vim.o.softtabstop 4)
 (set vim.o.expandtab true)
 
+;; cursor highlighting
+(set vim.o.cursorline true)
+; Wrap lines on word
+(vim.cmd ":set wrap lbr")
+
+;;(vim.cmd "autocmd FileType cs setlocal commentstring=// %s")
+
 (vim.cmd "
   function! s:VSetSearch(cmdtype)
     let temp = @s
