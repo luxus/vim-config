@@ -25,7 +25,14 @@ nvim.g.mapleader = " "
 nvim.g.maplocalleader = ","
 vim.cmd("nnoremap gp `[v`]")
 vim.cmd("vmap y y`]")
+vim.cmd("filetype plugin indent on")
 vim.o.scrolloff = 7
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.expandtab = true
+vim.o.cursorline = true
+vim.cmd(":set wrap lbr")
 vim.cmd("\n  function! s:VSetSearch(cmdtype)\n    let temp = @s\n    norm! gv\"sy\n    let @/ = '\\V' . substitute(escape(@s, a:cmdtype.'\\'), '\\n', '\\\\n', 'g')\n    let @s = temp\n  endfunction\n\n  xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>\n  xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>\n         ")
 vim.o.clipboard = "unnamedplus"
 vim.api.nvim_exec(":set clipboard=unnamedplus", true)

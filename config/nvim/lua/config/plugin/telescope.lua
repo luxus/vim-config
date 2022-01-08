@@ -19,7 +19,7 @@ telescope.setup({defaults = {file_ignore_patterns = {"node_modules"}}, pickers =
 telescope.load_extension("fzf")
 telescope.load_extension("projects")
 telescope.load_extension("dap")
-project.setup({exclude_dirs = {"~/source/repos/fairplayams/"}, patterns = {".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "*.csproj", "*.sln"}})
+project.setup({exclude_dirs = {"~/source/repos/fairplayams/", "~/source/repos/fairplayams2/"}, detection_methods = {"=Applications/AMSApp", "=Applications/AMS", "pattern", "lsp"}, silent_chdir = false, patterns = {".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "*.sln"}})
 nvim.set_keymap("n", "<leader>ff", ":lua require('telescope.builtin').find_files()<CR>", {noremap = true})
 nvim.set_keymap("x", "<leader>fv", ":lua require('telescope.builtin').grep_string()<CR>", {})
 nvim.set_keymap("n", "<leader>fv", ":lua require('telescope.builtin').grep_string()<CR>", {noremap = true})

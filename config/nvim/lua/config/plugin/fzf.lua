@@ -46,7 +46,7 @@ local function get_similar_files(filename)
   return core.map(_2_, core.filter(_3_, get_files_in_dir()))
 end
 _2amodule_2a["get-similar-files"] = get_similar_files
-local file_suffixes = {"Controller", "ViewComponent", "Model", "Default"}
+local file_suffixes = {"Controller", "ViewComponent", "ViewModel", "Model", "Default"}
 _2amodule_locals_2a["file-suffixes"] = file_suffixes
 local function get_suffix_pattern(x)
   return core.str(x, "$")
@@ -80,4 +80,6 @@ end
 _2amodule_2a["fzf-this-file"] = fzf_this_file
 nvim.set_keymap("n", "<leader>fF", ":lua require'config.plugin.fzf'['fzf-this-file']()<cr>", {noremap = true, silent = false})
 --[[ (nvim.set_keymap "n" "<leader>fF" ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})<cr>" {:noremap true :silent false}) (vim.cmd ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})") (vim.api.nvim_command "lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})") (vim.api.nvim_exec ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})" true) ]]--
-return nvim.set_keymap("n", "<leader>fg", "<cmd>Rg<CR>", {noremap = true})
+nvim.set_keymap("n", "<leader>fg", "<cmd>Rg<CR>", {noremap = true})
+vim.g.fzf_preview_window = ""
+return nil
