@@ -20,8 +20,19 @@
 (telescope.load_extension "projects")
 (telescope.load_extension "dap")
 
-(project.setup {:exclude_dirs ["~/source/repos/fairplayams/"]
-                :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" "*.csproj" "*.sln" ]})
+(project.setup {:exclude_dirs ["~/source/repos/fairplayams/"
+                               "~/source/repos/fairplayams2/"]
+                :detection_methods [
+                                    "=Applications/AMSApp"
+                                    "=Applications/AMS"
+                                    "pattern"
+                                    "lsp"
+                                    ; "!AMSApp/AMSApp/AMSApp.sln"
+                                    ]
+                :silent_chdir false
+                :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" 
+                           ; "*.csproj" 
+                           "*.sln" ]})
 
 (nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').find_files()<CR>" {:noremap true})
 ;;(nvim.set_keymap :n :<leader>fg ":lua require('telescope.builtin').live_grep()<CR>" {:noremap true}) ;; Removed in favour of fzf
