@@ -35,6 +35,21 @@
 [] learn to use cfdo cdo
 [] Configure multicursor to recognise the camelcase words
 [] number of lines before and after cursor
+[] set correct indentation for filetype=cs (csharp)
+[] treesitter using telescope
+[] get project to recognise top level apps directory and ignore others
+[x] sources used for cmp on cmdline
+
+
+## cmp
+- [ ] Disable buffer completions, but keep cmdline completions
+  - Have changed config to try do this
+
+## Feline
+
+- [ ] Truncate the branch name instead of the buffer name
+- [ ] 
+
 
 ```viml
   " Vscode neovim
