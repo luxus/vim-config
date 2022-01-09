@@ -63,7 +63,10 @@
   ;; editing
   :mg979/vim-visual-multi {:branch "master"}
   :bkad/CamelCaseMotion {:mod :camelcasemotion}
-  :vim-scripts/ReplaceWithRegister {} :terryma/vim-expand-region {} :jiangmiao/auto-pairs {} :mbbill/undotree {:mod :undotree}
+  :vim-scripts/ReplaceWithRegister {} 
+  :terryma/vim-expand-region {} 
+  :jiangmiao/auto-pairs {} 
+  :mbbill/undotree {:mod :undotree}
   ;; folders
   :ms-jpq/chadtree {:branch "chad"
                     :run "python -m chadtree deps"
@@ -89,6 +92,7 @@
                                              :nvim-telescope/telescope-dap.nvim
                                              :nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim
+                                             :LinArcX/telescope-env.nvim
                                              :ahmedkhalf/project.nvim]
                                   :mod :telescope}
 
