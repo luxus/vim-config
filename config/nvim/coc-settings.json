@@ -21,9 +21,7 @@
         ".hg/"
       ],
       "filetypes": ["c", "cpp", "objc", "objcpp"]
-    },
-    "snippets": {
-        "textmateSnippetsRoots": ["~/AppData/Roaming/Code/User/snippets"]
     }
-  }
+  },
+  "snippets.textmateSnippetsRoots": ["~/AppData/Roaming/Code/User/snippets"]
 }
