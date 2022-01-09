@@ -39,7 +39,16 @@
 [] treesitter using telescope
 [] get project to recognise top level apps directory and ignore others
 [x] sources used for cmp on cmdline
+[ ] vim impatient
 
+
+h 27.58
+w 50.96
+l 150+
+
+## vim visual multi
+
+[ ] https://github.com/mg979/vim-visual-multi/wiki/5.-Operators#select-operator
 
 ## cmp
 - [ ] Disable buffer completions, but keep cmdline completions
