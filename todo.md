@@ -40,11 +40,18 @@
 [] get project to recognise top level apps directory and ignore others
 [x] sources used for cmp on cmdline
 [ ] vim impatient
+[ ] Harpoon
+[ ] go through history of fzf input
 
 
 h 27.58
 w 50.96
 l 150+
+
+## treesitter
+
+- select statement (or block)
+- next function
 
 ## vim visual multi
 
