@@ -19,21 +19,28 @@
 (telescope.load_extension "fzf")
 (telescope.load_extension "projects")
 (telescope.load_extension "dap")
+(telescope.load_extension "file_browser")
 (telescope.load_extension "env")
 
 (project.setup {:exclude_dirs ["~/source/repos/fairplayams/"
                                "~/source/repos/fairplayams2/"]
                 :detection_methods [
-                                    "=Applications/AMSApp"
-                                    "=Applications/AMS"
                                     "pattern"
                                     "lsp"
-                                    ; "!AMSApp/AMSApp/AMSApp.sln"
                                     ]
                 :silent_chdir false
                 :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" 
                            ; "*.csproj" 
-                           "*.sln" ]})
+
+                           ; "!^AMSApp"
+                           "!>AMSApp"
+                           ; "=Applications"
+                           ">Applications"
+                          ; "=AMSApp"
+                          ; "=Applications/AMSApp"
+                          ; "=Applications/AMS"
+                           "*.sln" 
+                           ]})
 
 (nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').find_files()<CR>" {:noremap true})
 ;;(nvim.set_keymap :n :<leader>fg ":lua require('telescope.builtin').live_grep()<CR>" {:noremap true}) ;; Removed in favour of fzf
@@ -42,7 +49,7 @@
 (nvim.set_keymap :n :<leader>fi ":lua require('telescope.builtin').command_history()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fb ":lua require('telescope.builtin').buffers()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fh ":lua require('telescope.builtin').help_tags()<CR>" {:noremap true})
-(nvim.set_keymap :n :<leader>fd ":lua require('telescope.builtin').file_browser()<CR>" {:noremap true})
+(nvim.set_keymap :n :<leader>fd ":lua require('telescope').extensions.file_browser.file_browser()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fc ":lua require('telescope.builtin').commands()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fz ":lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fr ":lua require('telescope.builtin').resume()<CR>" {:noremap true})

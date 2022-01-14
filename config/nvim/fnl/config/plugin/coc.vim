@@ -168,7 +168,8 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
-
+" highlighting current symbol
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 
 let g:coc_global_extensions=[ 'coc-omnisharp', 'coc-tsserver', 'coc-json', 'coc-css' ]

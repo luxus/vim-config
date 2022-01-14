@@ -23,5 +23,8 @@
       "filetypes": ["c", "cpp", "objc", "objcpp"]
     }
   },
-  "snippets.textmateSnippetsRoots": ["~/AppData/Roaming/Code/User/snippets"]
+  "snippets.textmateSnippetsRoots": ["~/AppData/Roaming/Code/User/snippets"],
+  "highlight.document.enable": true,
+  "html.filetypes": ["html","handlebars","htmldjango","blade", "razor", "cshtml"]
+
 }

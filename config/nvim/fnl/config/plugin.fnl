@@ -78,6 +78,9 @@
   ; ;; autoread
   ; :djoshea/vim-autoread {}
 
+  ;; zoom
+  :nyngwang/NeoZoom.lua {:mod :neozoom}
+
   ;; lisp
   :tpope/vim-sexp-mappings-for-regular-people {}
   :guns/vim-sexp {}
@@ -92,6 +95,7 @@
                                              :nvim-telescope/telescope-dap.nvim
                                              :nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim
+                                             :nvim-telescope/telescope-file-browser.nvim
                                              :LinArcX/telescope-env.nvim
                                              :ahmedkhalf/project.nvim]
                                   :mod :telescope}

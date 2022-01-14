@@ -26,6 +26,8 @@
 ; Wrap lines on word
 (vim.cmd ":set wrap lbr")
 
+(vim.cmd "autocmd BufNewFile,BufRead *.cshtml set filetype=html")
+
 ;;(vim.cmd "autocmd FileType cs setlocal commentstring=// %s")
 
 (vim.cmd "
