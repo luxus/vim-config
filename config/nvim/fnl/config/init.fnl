@@ -28,6 +28,12 @@
 
 (vim.cmd "autocmd BufNewFile,BufRead *.cshtml set filetype=html")
 
+(vim.cmd "
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+augroup END")
+
 ;;(vim.cmd "autocmd FileType cs setlocal commentstring=// %s")
 
 (vim.cmd "

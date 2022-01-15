@@ -79,7 +79,7 @@
   ; :djoshea/vim-autoread {}
 
   ;; zoom
-  :nyngwang/NeoZoom.lua {:mod :neozoom}
+  ;:nyngwang/NeoZoom.lua {:mod :neozoom}
 
   ;; lisp
   :tpope/vim-sexp-mappings-for-regular-people {}
