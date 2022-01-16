@@ -47,12 +47,18 @@
 ; :lua vim.fn["fzf#vim#files"](".", {options={"--query=fnl", "--layout=reverse", "--info=inline"}})
 ; (vim.api.nvim_exec "call fzf#vim#files('.', {'options': ['--query=aaa']})" false)
 
+(defn- get-this-full-filename [] 
+  (vim.fn.expand "%"))
+
+(defn- remove-leading-slash [x]
+  (string.gsub x "^\\" ""))
+
 (defn- get-this-filename []
-  (let [fullpath (vim.fn.expand "%")
+  (let [fullpath (get-this-full-filename)
         base (fs.basename fullpath)
         temp (-> (string.gsub fullpath base "")
                  ;; remove leading slash
-                 (string.gsub "^\\" "")
+                 (remove-leading-slash)
                  ;; remove ext
                  (astring.split "%.")
                  (core.first))]
@@ -68,22 +74,55 @@
        (core.filter (lambda [x] (string.match x filename)))
        (core.map (lambda [x] (print x)))))
 
-(def- file-suffixes ["Controller" "ViewComponent" "ViewModel" "Model" "Default"])
+(defn- get-parent [full-filename]
+  (let [base1 (fs.basename full-filename)
+        base2 (fs.basename base1)
+        parent (-> (string.gsub base1 base2 "")
+                   (remove-leading-slash))]
+          parent))
+
+(def- file-suffixes
+  [{:suffix "Controller"} 
+   {:suffix "ViewComponent"} 
+   {:suffix "ViewModel"} 
+   {:suffix "Model"} 
+   {:match "Default"
+    :callback-fn (lambda [filename full-filename] 
+                   (get-parent full-filename))}])
 
 (defn- get-suffix-pattern [x]
   (core.str x "$"))
 
-(defn- get-common-name [filename]
-  (let [filename-exact-pattern (core.str "^" filename "$")] ; Check for exact match
-    ;; If a "more comon" name cannot be found, use original name
-    (or (->> file-suffixes
-        (core.map #(string.gsub filename (get-suffix-pattern $) "")) ; Remove suffix
-        (core.filter #(not (= $ filename))) ; Remove anything equal to orig name
+(defn- remove-suffix [filename suffix]
+  (string.gsub filename (get-suffix-pattern suffix) ""))
+
+(defn- get-common-name [filename full-filename]
+  (or (->> file-suffixes
+        (core.map 
+          #(let [{:suffix suffix-str
+                  :match match-str
+                  :callback-fn callback-fn} $]
+             
+             (if 
+               suffix-str ; Remove suffix
+               (remove-suffix filename suffix-str)
+               
+               match-str ; Callback fn
+               (if (= match-str filename)
+                 (callback-fn filename full-filename))))) 
+
+        (core.filter 
+          #(not (or (= filename $) ; Remove anything equal to orig name
+                    (core.nil? $)))) 
+
         (core.first)) ; use the first result
 
-        filename)))
+        filename))
+
+(get-this-full-filename)
 
 (comment
+  (get-common-name "Default" "config\\nvim\\fnl\\config\\plugin\\Default.fnl")
   (get-common-name "xxxViewComponent")
   (get-common-name "xxx"))
 
@@ -92,7 +131,8 @@
 
 (defn fzf-this-file []
   (let [this-file (get-this-filename)
-        common-name (get-common-name this-file)]
+        this-full-filename (get-this-full-filename)
+        common-name (get-common-name this-file this-full-filename)]
     (print "this-file: " this-file)
     (print "common-name: " common-name)
     (fzf-file-query common-name)))
