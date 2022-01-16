@@ -27,8 +27,8 @@
 
 ; start search with word 
 ; (nvim.set_keymap :n :<leader>fwg ":lua require'config.plugin.fzf'['get-rg-cword-cmd']()" {:noremap true})
-(nvim.set_keymap :n :<leader>fwg (get-lua-cmd "rg-expand" ["cWORD"]) {:noremap true})
-(nvim.set_keymap :n :<leader>fWg (get-lua-cmd "rg-expand" ["cword"]) {:noremap true})
+(nvim.set_keymap :n :<leader>fwg (get-lua-cmd "rg-expand" ["<cword>"]) {:noremap true})
+(nvim.set_keymap :n :<leader>fWg (get-lua-cmd "rg-expand" ["<cWORD>"]) {:noremap true})
 ; (nvim.set_keymap :n :<leader>fWg ":lua require'config.plugin.fzf'['get-rg-cWORD-cmd']()<CR>" {:noremap true})
 
 (print rg-expand)
