@@ -14,7 +14,11 @@
   (set vim.o.grepprg "rg --vimgrep"))
 
 (defn get-rg-expanded-cmd [x]
-  (core.str ":Rg " (vim.fn.expand x)))
+  (let [expanded (vim.fn.expand x)
+        ;escaped (vim.fn.shellescape expanded)
+        ]
+    
+    (core.str ":Rg " expanded)))
 
 (defn rg-expand [x] 
   (vim.cmd (get-rg-expanded-cmd x)))
