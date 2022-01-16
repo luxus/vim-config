@@ -74,12 +74,12 @@
   (core.str x "$"))
 
 (defn- get-common-name [filename]
-  (let [filename-exact-pattern (core.str "^" filename "$")]
+  (let [filename-exact-pattern (core.str "^" filename "$")] ; Check for exact match
     ;; If a "more comon" name cannot be found, use original name
     (or (->> file-suffixes
-        (core.map (lambda [x] (string.gsub filename (get-suffix-pattern x) "")))
-        (core.filter (lambda [x] (not (string.match x filename-exact-pattern))))
-        (core.first))
+        (core.map #(string.gsub filename (get-suffix-pattern $) "")) ; Remove suffix
+        (core.filter #(not (= $ filename))) ; Remove anything equal to orig name
+        (core.first)) ; use the first result
 
         filename)))
 
