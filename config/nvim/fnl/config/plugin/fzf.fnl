@@ -5,13 +5,36 @@
              fs aniseed.fs
              scandir plenary.scandir
              path plenary.path
-             fzf fzf}})
+             fzf fzf
+             which-key which-key}})
 
 ;;(vim.fn.fzf#install)
 
 (if (vim.fn.executable "rg")
   (set vim.o.grepprg "rg --vimgrep"))
 
+(defn get-rg-expanded-cmd [x]
+  (core.str ":Rg " (vim.fn.expand x)))
+
+(defn rg-expand [x] 
+  (vim.cmd (get-rg-expanded-cmd x)))
+
+(comment 
+ (rg-expand "<cword>"))
+
+(defn get-lua-cmd [func-name params]
+  (.. ":lua require('" *module-name* "')['" func-name "']('" (astring.join ", " params) "')<CR>"))
+
+; start search with word 
+; (nvim.set_keymap :n :<leader>fwg ":lua require'config.plugin.fzf'['get-rg-cword-cmd']()" {:noremap true})
+(nvim.set_keymap :n :<leader>fwg (get-lua-cmd "rg-expand" ["cWORD"]) {:noremap true})
+(nvim.set_keymap :n :<leader>fWg (get-lua-cmd "rg-expand" ["cword"]) {:noremap true})
+; (nvim.set_keymap :n :<leader>fWg ":lua require'config.plugin.fzf'['get-rg-cWORD-cmd']()<CR>" {:noremap true})
+
+(print rg-expand)
+
+(nvim.set_keymap :n :<leader>fwh ":call fzf#vim#tags(expand('<cword>'))<CR>" {:noremap true})
+(nvim.set_keymap :n :<leader>fWh ":call fzf#vim#tags(expand('<cWORD>'))<CR>" {:noremap true})
 
 ; (vim.fn.fzf#vim#files "." {:options ["--query=fnl" "--layout=reverse" "--info=inline" ]})
 ; (vim.fn.fzf#vim#files "." {:options []})
