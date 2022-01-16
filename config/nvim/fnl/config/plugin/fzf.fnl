@@ -30,12 +30,8 @@
   (.. ":lua require('" *module-name* "')['" func-name "']('" (astring.join ", " params) "')<CR>"))
 
 ; start search with word 
-; (nvim.set_keymap :n :<leader>fwg ":lua require'config.plugin.fzf'['get-rg-cword-cmd']()" {:noremap true})
 (nvim.set_keymap :n :<leader>fwg (get-lua-cmd "rg-expand" ["<cword>"]) {:noremap true})
 (nvim.set_keymap :n :<leader>fWg (get-lua-cmd "rg-expand" ["<cWORD>"]) {:noremap true})
-; (nvim.set_keymap :n :<leader>fWg ":lua require'config.plugin.fzf'['get-rg-cWORD-cmd']()<CR>" {:noremap true})
-
-(print rg-expand)
 
 (nvim.set_keymap :n :<leader>fwh ":call fzf#vim#tags(expand('<cword>'))<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fWh ":call fzf#vim#tags(expand('<cWORD>'))<CR>" {:noremap true})
@@ -81,7 +77,7 @@
                    (remove-leading-slash))]
           parent))
 
-(def- file-suffixes
+(def- file-patterns
   [{:suffix "Controller"} 
    {:suffix "ViewComponent"} 
    {:suffix "ViewModel"} 
@@ -96,28 +92,33 @@
 (defn- remove-suffix [filename suffix]
   (string.gsub filename (get-suffix-pattern suffix) ""))
 
+(defn get-file-pattern-result [filename full-filename pattern]
+   (let [{:suffix suffix-str
+          :match match-str
+          :callback-fn callback-fn} pattern]
+     
+     (if 
+       suffix-str ; Remove suffix
+       (remove-suffix filename suffix-str)
+       
+       match-str ; Callback fn
+       (if (= match-str filename)
+         (callback-fn filename full-filename)))))
+
+
 (defn- get-common-name [filename full-filename]
-  (or (->> file-suffixes
-        (core.map 
-          #(let [{:suffix suffix-str
-                  :match match-str
-                  :callback-fn callback-fn} $]
-             
-             (if 
-               suffix-str ; Remove suffix
-               (remove-suffix filename suffix-str)
-               
-               match-str ; Callback fn
-               (if (= match-str filename)
-                 (callback-fn filename full-filename))))) 
+  (or (->> file-patterns
+           (core.map 
+             #(get-file-pattern-result filename full-filename $)) 
 
-        (core.filter 
-          #(not (or (= filename $) ; Remove anything equal to orig name
-                    (core.nil? $)))) 
+           (core.filter 
+             #(not (or (= filename $) ; Remove anything equal to orig name
+                       (core.nil? $)))) 
 
-        (core.first)) ; use the first result
+           (core.first)) ; use the first result
 
-        filename))
+      ; If nothing, use original filename
+       filename))
 
 (get-this-full-filename)
 
