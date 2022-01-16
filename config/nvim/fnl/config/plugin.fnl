@@ -20,11 +20,13 @@
           (let [name (. pkgs i)
                 opts (. pkgs (+ i 1))]
             (-?> (. opts :mod) (safe-require-plugin-config))
-            (use (a.assoc opts 1 name)))))))
+            (use (a.assoc opts 1 name)))))
+      {:config {:compile_path (.. (vim.fn.stdpath "config") "/lua/packer_compiled.lua")}}))
   nil)
 
 ;plugins managed by packer
 (use
+  :lewis6991/impatient.nvim {}
   ;plugin Manager
   :wbthomason/packer.nvim {}
   ;nvim config and plugins in Fennel
