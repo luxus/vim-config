@@ -25,6 +25,8 @@
 (set vim.o.cursorline true)
 ; Wrap lines on word
 (vim.cmd ":set wrap lbr")
+(set vim.o.breakindent true)
+(vim.cmd "let &showbreak= ' '")
 
 (vim.cmd "autocmd BufNewFile,BufRead *.cshtml set filetype=html")
 
