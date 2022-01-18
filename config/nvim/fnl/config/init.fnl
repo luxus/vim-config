@@ -21,6 +21,9 @@
 (set vim.o.softtabstop 4)
 (set vim.o.expandtab true)
 
+; font 
+(set vim.o.guifont "Fira Code:h11")
+
 ;; cursor highlighting
 (set vim.o.cursorline true)
 ; Wrap lines on word
