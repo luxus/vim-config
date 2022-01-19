@@ -112,6 +112,8 @@
   ; :kevinhwang91/nvim-bqf {:mod :bqf
   ;                         :ft [:qf]}
 
+  :wincent/ferret {}
+
   ; clipboard
   :AckslD/nvim-neoclip.lua {:requires [:nvim-telescope/telescope.nvim]
                             :mod :neoclip}
@@ -129,7 +131,7 @@
                          :mod :dap}
 
   ; buffer history
-  :dhruvasagar/vim-buffer-history {}
+  :ton/vim-bufsurf {}
 
   ;autocomplete
   :hrsh7th/nvim-cmp {:requires [ :hrsh7th/cmp-nvim-lsp
