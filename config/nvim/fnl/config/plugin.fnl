@@ -77,6 +77,9 @@
   ;; session
   :rmagatti/auto-session {}
 
+  ; Show indents
+  :lukas-reineke/indent-blankline.nvim {:mod :indent-blankline}
+
   ; ;; autoread
   ; :djoshea/vim-autoread {}
 
@@ -105,6 +108,10 @@
  :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()")) }
  :junegunn/fzf.vim {:mod :fzf}
 
+ ; quickfix
+  ; :kevinhwang91/nvim-bqf {:mod :bqf
+  ;                         :ft [:qf]}
+
   ; clipboard
   :AckslD/nvim-neoclip.lua {:requires [:nvim-telescope/telescope.nvim]
                             :mod :neoclip}
@@ -121,6 +128,9 @@
                                     :theHamsta/nvim-dap-virtual-text]
                          :mod :dap}
 
+  ; buffer history
+  :dhruvasagar/vim-buffer-history {}
+
   ;autocomplete
   :hrsh7th/nvim-cmp {:requires [ :hrsh7th/cmp-nvim-lsp
                                 :hrsh7th/cmp-buffer
@@ -130,8 +140,6 @@
                      :mod :cmp}
   ;theme
 
-  :bluz71/vim-nightfly-guicolors {:requires [:tomasr/molokai :embark-theme/vim]
+  :bluz71/vim-nightfly-guicolors {:requires [:tomasr/molokai :embark-theme/vim :projekt0n/github-nvim-theme]
                                   :mod :theme }
-  ; :projekt0n/github-nvim-theme {:mod :theme}
-
   )

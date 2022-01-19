@@ -30,6 +30,8 @@
 (vim.cmd ":set wrap lbr")
 (set vim.o.breakindent true)
 (vim.cmd "let &showbreak= ' '")
+(set vim.o.wrap true)
+(vim.cmd ":windo set wrap")
 
 (vim.cmd "autocmd BufNewFile,BufRead *.cshtml set filetype=html")
 
