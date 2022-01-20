@@ -9,7 +9,10 @@
                              :mappings {:i {"<C-Down>" (. telescope-actions :cycle_history_next) 
                                             "<C-Up>" (. telescope-actions :cycle_history_prev) }}}
 
-                  :pickers {:find_files {:find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}}
+                  :pickers {:grep_string {:theme :ivy}
+                            :current_buffer_fuzzy_find {:theme :ivy}
+                            :find_files {:theme :ivy
+                                         :find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}}
                   :extensions {:fzf {:fuzzy true
                                      :override-generic-sorter true
                                      :override-file-sorter true
@@ -44,6 +47,8 @@
                           ; "=Applications/AMS"
                            "*.sln" 
                            ]})
+
+(vim.cmd "autocmd User TelescopePreviewerLoaded setlocal wrap")
 
 (nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').find_files()<CR>" {:noremap true})
 ;;(nvim.set_keymap :n :<leader>fg ":lua require('telescope.builtin').live_grep()<CR>" {:noremap true}) ;; Removed in favour of fzf
