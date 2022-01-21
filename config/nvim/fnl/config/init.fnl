@@ -21,10 +21,17 @@
 (set vim.o.softtabstop 4)
 (set vim.o.expandtab true)
 
+; font 
+(set vim.o.guifont "Fira Code:h11")
+
 ;; cursor highlighting
 (set vim.o.cursorline true)
 ; Wrap lines on word
 (vim.cmd ":set wrap lbr")
+(set vim.o.breakindent true)
+(vim.cmd "let &showbreak= ' '")
+(set vim.o.wrap true)
+(vim.cmd ":windo set wrap")
 
 (vim.cmd "autocmd BufNewFile,BufRead *.cshtml set filetype=html")
 

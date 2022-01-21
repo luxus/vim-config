@@ -1,12 +1,18 @@
 (module config.plugin.telescope
   {autoload {nvim aniseed.nvim
              telescope telescope
+             telescope-actions telescope.actions
              project project_nvim}})
 
 (telescope.setup {:defaults {:file_ignore_patterns ["node_modules"] 
                              ;;:vimgrep_arguments ["rg" "--color=never" "--no-heading" "--with-filename" "--line-number" "--column" "--smart-case" "--hidden"]
-                             }
-                  :pickers {:find_files {:find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}}
+                             :mappings {:i {"<C-Down>" (. telescope-actions :cycle_history_next) 
+                                            "<C-Up>" (. telescope-actions :cycle_history_prev) }}}
+
+                  :pickers {:grep_string {:theme :ivy}
+                            :current_buffer_fuzzy_find {:theme :ivy}
+                            :find_files {:theme :ivy
+                                         :find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}}
                   :extensions {:fzf {:fuzzy true
                                      :override-generic-sorter true
                                      :override-file-sorter true
@@ -41,6 +47,8 @@
                           ; "=Applications/AMS"
                            "*.sln" 
                            ]})
+
+(vim.cmd "autocmd User TelescopePreviewerLoaded setlocal wrap")
 
 (nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').find_files()<CR>" {:noremap true})
 ;;(nvim.set_keymap :n :<leader>fg ":lua require('telescope.builtin').live_grep()<CR>" {:noremap true}) ;; Removed in favour of fzf

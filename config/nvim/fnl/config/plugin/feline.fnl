@@ -16,7 +16,9 @@
               {:name (vi-mode-utils.get_mode_highlight_name)
                :fg (vi-mode-utils.get_mode_color)
                :style :bold})}
-       {:provider :file_info
+       {:provider {:name :file_info
+                   :opts {:type :unique}}
+        
         :hl {:fg :white :bg :oceanblue :style :bold}
         :left_sep [:slant_left_2
                    {:str " " :hl {:bg :oceanblue :fg :NONE}}]
