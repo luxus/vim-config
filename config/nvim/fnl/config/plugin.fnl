@@ -37,13 +37,16 @@
   :folke/which-key.nvim {:mod :whichkey}
   ; tpope
   :tpope/vim-abolish {}
-  :tpope/vim-commentary {}
+  ;:tpope/vim-commentary {}
   :tpope/vim-surround {}
   :tpope/vim-repeat {}
   :tpope/vim-sensible {}
   :tpope/vim-dispatch {}
   ;;:tpope/vim-vinegar {}
   :tpope/vim-unimpaired {}
+
+  ; comments
+  :numToStr/Comment.nvim {:mod :comment}
 
   ;; movement
   :phaazon/hop.nvim {:branch "v1"
