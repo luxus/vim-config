@@ -3,9 +3,9 @@
              theme github-theme}})
 
 ;; For github theme
-(theme.setup {:theme_style "light"
-              :comment_style "italic"})
+; (theme.setup {:theme_style "dark"
+;               :comment_style "italic"})
 
 ;;(nvim.ex.colorscheme :nightfly)
-;(nvim.ex.colorscheme :embark)
+(nvim.ex.colorscheme :embark)
 
