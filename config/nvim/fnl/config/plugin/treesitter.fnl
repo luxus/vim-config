@@ -1,5 +1,6 @@
 (module config.plugin.treesitter
-  {autoload {treesitter nvim-treesitter.configs }})
+  {autoload {treesitter nvim-treesitter.configs 
+             treesitter-context treesitter-context}})
 
 (treesitter.setup {:highlight {:enable true}
                    :indent {:enable true}
@@ -19,3 +20,5 @@
                                       "aa" "@parameter.outer"
                                       "ia" "@parameter.inner"
       }}}})
+
+()
