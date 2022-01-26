@@ -34,7 +34,7 @@
                                     "pattern"
                                     "lsp"
                                     ]
-                :silent_chdir false
+                :silent_chdir true
                 :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" 
                            ; "*.csproj" 
 
