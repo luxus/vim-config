@@ -13,20 +13,25 @@
   "Iterates through the arguments as pairs and calls packer's use function for
   each of them. Works around Fennel not liking mixed associative and sequential
   tables as well."
-  (let [pkgs [...]]
-    (packer.startup
-      (fn [use]
-        (for [i 1 (a.count pkgs) 2]
-          (let [name (. pkgs i)
-                opts (. pkgs (+ i 1))]
-            (-?> (. opts :mod) (safe-require-plugin-config))
-            (use (a.assoc opts 1 name)))))
-      {:config {:compile_path (.. (vim.fn.stdpath "config") "/lua/packer_compiled.lua")}}))
+  (let [pkgs [...]
+        spec-func 
+        (fn [use]
+          (for [i 1 (a.count pkgs) 2]
+            (let [name (. pkgs i)
+                  opts (. pkgs (+ i 1))]
+              (-?> (. opts :mod) (safe-require-plugin-config))
+              (use (a.assoc opts 1 name)))))
+
+        spec-config {:config {:compile_path (.. (vim.fn.stdpath "config") "/lua/packer_compiled.lua")}}
+        spec (a.assoc spec-config 1 spec-func)]
+
+    ;(print (vim.inspect spec))
+    (packer.startup spec))
   nil)
 
 ;plugins managed by packer
 (use
-  :lewis6991/impatient.nvim {}
+  :lewis6991/impatient.nvim {:mod :impatient}
   ;plugin Manager
   :wbthomason/packer.nvim {}
   ;nvim config and plugins in Fennel
@@ -87,7 +92,7 @@
   ; :djoshea/vim-autoread {}
 
   ;; zoom
-  ;:nyngwang/NeoZoom.lua {:mod :neozoom}
+  :nyngwang/NeoZoom.lua {:mod :neozoom}
 
   ;; lisp
   :tpope/vim-sexp-mappings-for-regular-people {}
@@ -149,3 +154,5 @@
   :bluz71/vim-nightfly-guicolors {:requires [:tomasr/molokai :embark-theme/vim :projekt0n/github-nvim-theme :fenetikm/falcon :marko-cerovac/material.nvim] 
                                   :mod :theme }
   )
+
+(require "packer_compiled")
