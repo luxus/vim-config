@@ -21,4 +21,4 @@
                                       "ia" "@parameter.inner"
       }}}})
 
-()
+(treesitter-context.setup)
