@@ -151,4 +151,4 @@
 (nvim.set_keymap :n :<leader>fg "<cmd>Rg<CR>" {:noremap true})
 
 ;; Disable preview window as it interferes with input on work machine
-(set vim.g.fzf_preview_window "")
+; (set vim.g.fzf_preview_window "")
