@@ -1,6 +1,8 @@
 (module config.plugin.whichkey
   {autoload {which-key which-key}})
 
-(which-key.setup {})
+(let [(ok? which-key) (pcall #(require :which-key))]
+  (when ok?
+    (which-key.setup {})))
 
 
