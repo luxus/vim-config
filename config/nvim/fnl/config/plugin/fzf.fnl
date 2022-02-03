@@ -14,6 +14,9 @@
 (if (vim.fn.executable "rg")
   (set vim.o.grepprg "rg --vimgrep"))
 
+;; Enable command history
+(set vim.g.fzf_history_dir "~/.local/share/fzf-history")
+
 (defn get-rg-expanded-cmd [x]
   (let [expanded (vim.fn.expand x)
         ;escaped (vim.fn.shellescape expanded)
@@ -163,4 +166,4 @@
 (nvim.set_keymap :n :<leader>fg "<cmd>Rg<CR>" {:noremap true})
 
 ;; Disable preview window as it interferes with input on work machine
-; (set vim.g.fzf_preview_window "")
+(set vim.g.fzf_preview_window "")
