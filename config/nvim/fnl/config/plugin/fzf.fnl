@@ -1,5 +1,6 @@
 (module config.plugin.fzf
   {autoload {nvim aniseed.nvim
+             autil aniseed.nvim.util
              core aniseed.core
              astring aniseed.string
              fs aniseed.fs
@@ -25,6 +26,17 @@
 
 (comment 
  (rg-expand "<cword>"))
+
+(defn fzf-root []
+  (let [expanded (.. (vim.fn.expand "%:p:h") ";")
+        path (vim.fn.finddir ".git" expanded)
+        subbed (vim.fn.substitute path ".git" "" "")
+        result (vim.fn.fnamemodify subbed ":p:h")]
+      
+      result))
+
+(autil.fn-bridge "s:fzf_root" "config.plugin.fzf" "fzf-root")
+(nvim.set_keymap :n :<leader>fu ":exe 'Files ' . <SID>fzf_root()<CR>" {:noremap true})
 
 (defn get-lua-cmd [func-name params]
   (.. ":lua require('" *module-name* "')['" func-name "']('" (astring.join ", " params) "')<CR>"))
