@@ -53,9 +53,16 @@
   ; comments
   :numToStr/Comment.nvim {:mod :comment}
 
+  ; Text objects
+  :kana/vim-textobj-user {}
+  :kana/vim-textobj-entire {}
+  :Julian/vim-textobj-variable-segment {}
+
   ;; movement
   :phaazon/hop.nvim {:branch "v1"
                      :mod :hop}
+
+  :matze/vim-move {:mod :vim-move}
 
   ;; git
   :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim 

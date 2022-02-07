@@ -24,6 +24,16 @@
     
     (core.str ":Rg " expanded)))
 
+; RG from git root
+(vim.cmd
+"
+command! -bang -nargs=* GGrep
+\\ call fzf#vim#grep(
+\\   'git grep --line-number -- '.shellescape(<q-args>), 0,
+\\   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+")
+(nvim.set_keymap :n :<leader>fk ":GGrep<CR>" {:noremap true})
+
 (defn rg-expand [x] 
   (vim.cmd (get-rg-expanded-cmd x)))
 

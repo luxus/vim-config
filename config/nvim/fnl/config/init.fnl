@@ -35,6 +35,8 @@
 
 (vim.cmd "autocmd BufNewFile,BufRead *.cshtml set filetype=html")
 
+(nvim.set_keymap :n :\c ":checktime<CR>" {:nowait true :silent true :noremap true})
+
 (vim.cmd "
 augroup highlight_yank
     autocmd!
