@@ -65,6 +65,7 @@
   :matze/vim-move {:mod :vim-move}
 
   ;; git
+  :tpope/vim-fugitive {}
   :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim 
                                       :sindrets/diffview.nvim
                                       :lewis6991/gitsigns.nvim]
@@ -124,8 +125,8 @@
  :junegunn/fzf.vim {:mod :fzf}
 
  ; quickfix
-  ; :kevinhwang91/nvim-bqf {:mod :bqf
-  ;                         :ft [:qf]}
+  :kevinhwang91/nvim-bqf {:mod :bqf
+                          :ft [:qf]}
 
   :wincent/ferret {}
 
