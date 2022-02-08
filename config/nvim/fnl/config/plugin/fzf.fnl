@@ -11,6 +11,15 @@
 
 ;;(vim.fn.fzf#install)
 
+; <M-R> reg to paspte contexts of register into terminal (which is where fzf is run)
+(vim.cmd 
+  "if has('nvim')
+      tnoremap <expr> <M-r> '<C-\\><C-N>\"'.nr2char(getchar()).'pi'
+  endif")
+
+; Copy selection into h register, Open RG terminal, paste contexts of h register into terminal
+(nvim.set_keymap :v :<c-f> "\"hy:Rg<Enter><M-r>h" {})
+
 (if (vim.fn.executable "rg")
   (set vim.o.grepprg "rg --vimgrep"))
 
