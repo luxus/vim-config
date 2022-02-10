@@ -11,6 +11,9 @@
 
 ;;(vim.fn.fzf#install)
 
+; FZF layout set to bottom of screen
+(set vim.g.fzf_layout {:down "40%"})
+
 ; <M-R> reg to paspte contexts of register into terminal (which is where fzf is run)
 (vim.cmd 
   "if has('nvim')

@@ -65,7 +65,8 @@
   :matze/vim-move {:mod :vim-move}
 
   ;; git
-  :tpope/vim-fugitive {}
+  :tpope/vim-fugitive {:requires [:rbong/vim-flog]}
+  
   :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim 
                                       :sindrets/diffview.nvim
                                       :lewis6991/gitsigns.nvim]
