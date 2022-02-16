@@ -65,7 +65,7 @@
   :matze/vim-move {:mod :vim-move}
 
   ;; git
-  :tpope/vim-fugitive {:requires [:rbong/vim-flog]}
+  :tpope/vim-fugitive {:requires [:junegunn/gv.vim :rbong/vim-flog]}
   
   :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim 
                                       :sindrets/diffview.nvim
@@ -124,6 +124,9 @@
 
  :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()")) }
  :junegunn/fzf.vim {:mod :fzf}
+
+ ; Search
+ :pelodelfuego/vim-swoop {}
 
  ; quickfix
   :kevinhwang91/nvim-bqf {:mod :bqf
