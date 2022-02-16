@@ -1,4 +1,4 @@
-local _2afile_2a = "C:\\Users\\c.kamholtz\\AppData\\Local\\nvim\\fnl\\config\\plugin\\neoclip.fnl"
+local _2afile_2a = "C:\\Users\\carlk\\AppData\\Local\\nvim\\fnl\\config\\plugin\\neoclip.fnl"
 local _2amodule_name_2a = "config.plugin.neoclip"
 local _2amodule_2a
 do
@@ -15,5 +15,4 @@ local neoclip, nvim, telescope = autoload("neoclip"), autoload("aniseed.nvim"), 
 do end (_2amodule_locals_2a)["neoclip"] = neoclip
 _2amodule_locals_2a["nvim"] = nvim
 _2amodule_locals_2a["telescope"] = telescope
-neoclip.setup()
 return telescope.load_extension("neoclip")

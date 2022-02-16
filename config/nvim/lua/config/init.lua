@@ -1,4 +1,4 @@
-local _2afile_2a = "C:\\Users\\c.kamholtz\\AppData\\Local\\nvim\\fnl\\config\\init.fnl"
+local _2afile_2a = "C:\\Users\\carlk\\AppData\\Local\\nvim\\fnl\\config\\init.fnl"
 local _2amodule_name_2a = "config.init"
 local _2amodule_2a
 do
@@ -31,8 +31,16 @@ vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
 vim.o.expandtab = true
+vim.o.guifont = "Fira Code NF:h11"
 vim.o.cursorline = true
 vim.cmd(":set wrap lbr")
+vim.o.breakindent = true
+vim.cmd("let &showbreak= ' '")
+vim.o.wrap = true
+vim.cmd(":windo set wrap")
+vim.cmd("autocmd BufNewFile,BufRead *.cshtml set filetype=html")
+nvim.set_keymap("n", "\\c", ":checktime<CR>", {nowait = true, silent = true, noremap = true})
+vim.cmd("\naugroup highlight_yank\n    autocmd!\n    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }\naugroup END")
 vim.cmd("\n  function! s:VSetSearch(cmdtype)\n    let temp = @s\n    norm! gv\"sy\n    let @/ = '\\V' . substitute(escape(@s, a:cmdtype.'\\'), '\\n', '\\\\n', 'g')\n    let @s = temp\n  endfunction\n\n  xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>\n  xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>\n         ")
 vim.o.clipboard = "unnamedplus"
 vim.api.nvim_exec(":set clipboard=unnamedplus", true)

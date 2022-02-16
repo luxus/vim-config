@@ -1,5 +1,5 @@
-local _2afile_2a = "C:\\Users\\carlk\\AppData\\Local\\nvim\\fnl\\config\\plugin\\undotree.fnl"
-local _2amodule_name_2a = "config.plugin.undotree"
+local _2afile_2a = "C:\\Users\\carlk\\AppData\\Local\\nvim\\fnl\\config\\plugin\\vim-move.fnl"
+local _2amodule_name_2a = "config.plugin.vim-move"
 local _2amodule_2a
 do
   package.loaded[_2amodule_name_2a] = {}
@@ -11,6 +11,6 @@ do
   _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local autoload = (require("aniseed.autoload")).autoload
-local nvim = autoload("aniseed.nvim")
+local nvim, vim_move = autoload("aniseed.nvim"), autoload("vim-move")
 do end (_2amodule_locals_2a)["nvim"] = nvim
-return nvim.set_keymap("n", "<F5>", ":UndotreeToggle<CR>", {noremap = true})
+_2amodule_locals_2a["vim-move"] = vim_move

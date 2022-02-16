@@ -1,4 +1,4 @@
-local _2afile_2a = "C:\\Users\\c.kamholtz\\AppData\\Local\\nvim\\fnl\\config\\plugin\\whichkey.fnl"
+local _2afile_2a = "C:\\Users\\carlk\\AppData\\Local\\nvim\\fnl\\config\\plugin\\whichkey.fnl"
 local _2amodule_name_2a = "config.plugin.whichkey"
 local _2amodule_2a
 do
@@ -13,4 +13,13 @@ end
 local autoload = (require("aniseed.autoload")).autoload
 local which_key = autoload("which-key")
 do end (_2amodule_locals_2a)["which-key"] = which_key
-return which_key.setup({})
+local ok_3f, which_key0 = nil, nil
+local function _1_()
+  return require("which-key")
+end
+ok_3f, which_key0 = pcall(_1_)
+if ok_3f then
+  return which_key0.setup({})
+else
+  return nil
+end

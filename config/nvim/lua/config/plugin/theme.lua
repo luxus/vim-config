@@ -1,4 +1,4 @@
-local _2afile_2a = "C:\\Users\\c.kamholtz\\AppData\\Local\\nvim\\fnl\\config\\plugin\\theme.fnl"
+local _2afile_2a = "C:\\Users\\carlk\\AppData\\Local\\nvim\\fnl\\config\\plugin\\theme.fnl"
 local _2amodule_name_2a = "config.plugin.theme"
 local _2amodule_2a
 do
@@ -11,7 +11,10 @@ do
   _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local autoload = (require("aniseed.autoload")).autoload
-local nvim, theme = autoload("aniseed.nvim"), autoload("github-theme")
-do end (_2amodule_locals_2a)["nvim"] = nvim
+local material, nvim, theme = autoload("material"), autoload("aniseed.nvim"), autoload("github-theme")
+do end (_2amodule_locals_2a)["material"] = material
+_2amodule_locals_2a["nvim"] = nvim
 _2amodule_locals_2a["theme"] = theme
-return nvim.ex.colorscheme("embark")
+vim.g.material_style = "deep ocean"
+material.setup()
+return nvim.ex.colorscheme("material")

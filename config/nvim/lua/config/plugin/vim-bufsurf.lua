@@ -1,5 +1,5 @@
-local _2afile_2a = "C:\\Users\\carlk\\AppData\\Local\\nvim\\fnl\\config\\plugin\\conjure.fnl"
-local _2amodule_name_2a = "config.plugin.conjure"
+local _2afile_2a = "C:\\Users\\carlk\\AppData\\Local\\nvim\\fnl\\config\\plugin\\vim-bufsurf.fnl"
+local _2amodule_name_2a = "config.plugin.vim-bufsurf"
 local _2amodule_2a
 do
   package.loaded[_2amodule_name_2a] = {}
@@ -13,7 +13,5 @@ end
 local autoload = (require("aniseed.autoload")).autoload
 local nvim = autoload("aniseed.nvim")
 do end (_2amodule_locals_2a)["nvim"] = nvim
-nvim.g["conjure#mapping#doc_word"] = "K"
-nvim.g["conjure#client#clojure#nrepl#eval#auto_require"] = false
-nvim.g["conjure#client#clojure#nrepl#connection#auto_repl#enabled"] = false
-return nil
+nvim.set_keymap("n", "[b", ":BufSurfBack<CR>", {noremap = true, silent = true})
+return nvim.set_keymap("n", "]b", ":BufSurfForward<CR>", {noremap = true, silent = true})
