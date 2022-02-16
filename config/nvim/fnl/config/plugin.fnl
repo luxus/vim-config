@@ -65,7 +65,7 @@
   :matze/vim-move {:mod :vim-move}
 
   ;; git
-  :tpope/vim-fugitive {:requires [:rbong/vim-flog]}
+  :tpope/vim-fugitive {:requires [:junegunn/gv.vim :rbong/vim-flog]}
   
   :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim 
                                       :sindrets/diffview.nvim
@@ -126,6 +126,9 @@
  :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()")) }
  :junegunn/fzf.vim {:mod :fzf}
 
+ ; Search
+ :pelodelfuego/vim-swoop {}
+
  ; quickfix
   :kevinhwang91/nvim-bqf {:mod :bqf
                           :ft [:qf]}
@@ -161,7 +164,7 @@
                      :mod :cmp}
   ;theme
 
-  :bluz71/vim-nightfly-guicolors {:requires [:tomasr/molokai :embark-theme/vim :projekt0n/github-nvim-theme :fenetikm/falcon :marko-cerovac/material.nvim] 
+  :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim :tomasr/molokai :embark-theme/vim :projekt0n/github-nvim-theme :fenetikm/falcon :marko-cerovac/material.nvim] 
                                   :mod :theme }
   )
 
