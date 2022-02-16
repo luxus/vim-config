@@ -163,7 +163,7 @@
                      :mod :cmp}
   ;theme
 
-  :bluz71/vim-nightfly-guicolors {:requires [:tomasr/molokai :embark-theme/vim :projekt0n/github-nvim-theme :fenetikm/falcon :marko-cerovac/material.nvim] 
+  :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim :tomasr/molokai :embark-theme/vim :projekt0n/github-nvim-theme :fenetikm/falcon :marko-cerovac/material.nvim] 
                                   :mod :theme }
   )
 
