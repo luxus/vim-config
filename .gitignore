@@ -1,4 +1,4 @@
 lock
 *.mdb
-config/nvim/lua/
+config/nvim/lua/**/*/lua
 config/nvim/plugin/
