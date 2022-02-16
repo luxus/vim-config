@@ -2,7 +2,7 @@
   {autoload {nvim aniseed.nvim
              feline feline}})
 
-; (set nvim.o.termguicolors true)
+(set nvim.o.termguicolors true)
 
 ;; Using default preset found in \nvim-data\site\pack\packer\start\feline.nvim\lua\feline\presets\default.lua with a small modication to still show file properties in inactive buffers
 (local vi-mode-utils (require :feline.providers.vi_mode))
