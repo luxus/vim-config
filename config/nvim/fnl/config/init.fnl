@@ -33,6 +33,7 @@
 (set vim.o.wrap true)
 (vim.cmd ":windo set wrap")
 
+; Set filetype to HTML for CSHTML files
 (vim.cmd "autocmd BufNewFile,BufRead *.cshtml set filetype=html")
 
 (nvim.set_keymap :n :\c ":checktime<CR>" {:nowait true :silent true :noremap true})
@@ -71,6 +72,14 @@ augroup END")
 
 ;don't wrap lines
 (nvim.ex.set :nowrap)
+
+; Movement
+(vim.cmd
+  "
+  nnoremap <expr> j v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'
+  nnoremap <expr> k v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'k' : 'gk'
+  "
+  )
 
 ;sets a nvim global options
 (let [options
