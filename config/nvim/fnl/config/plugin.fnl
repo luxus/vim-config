@@ -119,6 +119,7 @@
                                              :nvim-lua/plenary.nvim
                                              :nvim-telescope/telescope-file-browser.nvim
                                              :LinArcX/telescope-env.nvim
+                                             :natecraddock/workspaces.nvim
                                              :ahmedkhalf/project.nvim]
                                   :mod :telescope}
 

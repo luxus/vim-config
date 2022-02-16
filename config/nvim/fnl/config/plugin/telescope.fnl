@@ -2,7 +2,12 @@
   {autoload {nvim aniseed.nvim
              telescope telescope
              telescope-actions telescope.actions
-             project project_nvim}})
+             project project_nvim
+             workspaces workspaces
+             nvim-web-devicons nvim-web-devicons}})
+
+
+(nvim-web-devicons.setup {:default true})
 
 (telescope.setup {:defaults {:file_ignore_patterns ["node_modules"] 
                              ;;:vimgrep_arguments ["rg" "--color=never" "--no-heading" "--with-filename" "--line-number" "--column" "--smart-case" "--hidden"]
@@ -18,17 +23,23 @@
                                      :override-file-sorter true
                                      :case-mode "smart_case"}
                                :tele_tabby { :use_highlighter true }
-                               :project {
-                                  :base_dirs  ["~/repos" "~/source/repos"  "C:/repos"]
-                                  :hidden_files true }}})
+                               ; :project {
+                               ;    :base_dirs  ["~/repos" "~/source/repos"  "C:/repos"]
+                               ;    :hidden_files true }
+                               }})
+(workspaces.setup {
+    :hooks {:open ["Telescope find_files"]}})
 
+
+(telescope.load_extension "workspaces")
 (telescope.load_extension "fzf")
 (telescope.load_extension "projects")
 (telescope.load_extension "dap")
 (telescope.load_extension "file_browser")
 (telescope.load_extension "env")
 
-(project.setup {:exclude_dirs ["~/source/repos/fairplayams/"
+(project.setup {:manual_mode false
+                :exclude_dirs ["~/source/repos/fairplayams/"
                                "~/source/repos/fairplayams2/"]
                 :detection_methods [
                                     "pattern"
