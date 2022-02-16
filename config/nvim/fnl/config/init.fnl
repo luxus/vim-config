@@ -22,7 +22,7 @@
 (set vim.o.expandtab true)
 
 ; font 
-(set vim.o.guifont "Fira Code:h11")
+(set vim.o.guifont "Fira Code NF:h11")
 
 ;; cursor highlighting
 (set vim.o.cursorline true)
