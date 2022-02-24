@@ -86,10 +86,14 @@
   :terryma/vim-expand-region {} 
   :jiangmiao/auto-pairs {} 
   :mbbill/undotree {:mod :undotree}
+
   ;; folders
   :ms-jpq/chadtree {:branch "chad"
                     :run "python -m chadtree deps"
                     :mod :chadtree}
+
+  :kyazdani42/nvim-tree.lua {:require :kyazdani42/nvim-web-devicons
+                             :mod :nvim-tree}
 
   ;; session
   :rmagatti/auto-session {}
@@ -112,13 +116,13 @@
   :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
   :nvim-telescope/telescope.nvim {:requires [:kyazdani42/nvim-web-devicons
                                              :rmagatti/session-lens
-                                             ; :rudism/telescope-vinegar.nvim
                                              :TC72/telescope-tele-tabby.nvim
                                              :nvim-telescope/telescope-dap.nvim
                                              :nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim
                                              :nvim-telescope/telescope-file-browser.nvim
                                              :LinArcX/telescope-env.nvim
+                                             :fannheyward/telescope-coc.nvim
                                              :ahmedkhalf/project.nvim]
                                   :mod :telescope}
 

@@ -7,7 +7,8 @@
 (telescope.setup {:defaults {:file_ignore_patterns ["node_modules"] 
                              ;;:vimgrep_arguments ["rg" "--color=never" "--no-heading" "--with-filename" "--line-number" "--column" "--smart-case" "--hidden"]
                              :mappings {:i {"<C-Down>" (. telescope-actions :cycle_history_next) 
-                                            "<C-Up>" (. telescope-actions :cycle_history_prev) }}}
+                                            "<C-Up>" (. telescope-actions :cycle_history_prev) }}
+                             :preview {:treesitter false}}
 
                   :pickers {:grep_string {:theme :ivy}
                             :current_buffer_fuzzy_find {:theme :ivy}
@@ -27,6 +28,7 @@
 (telescope.load_extension "dap")
 (telescope.load_extension "file_browser")
 (telescope.load_extension "env")
+(telescope.load_extension "coc")
 
 (project.setup {:exclude_dirs ["~/source/repos/fairplayams/"
                                "~/source/repos/fairplayams2/"]
