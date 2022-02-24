@@ -48,7 +48,7 @@
                 :silent_chdir true
                 :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" 
                            ; "*.csproj" 
-
+                            ".west"
                            ; "!^AMSApp"
                            "!>AMSApp"
                            ; "=Applications"

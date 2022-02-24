@@ -189,6 +189,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  ["gv.vim"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\gv.vim",
+    url = "https://github.com/junegunn/gv.vim"
+  },
   ["hop.nvim"] = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\hop.nvim",
@@ -203,6 +208,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
+  ["kanagawa.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\kanagawa.nvim",
+    url = "https://github.com/rebelot/kanagawa.nvim"
   },
   ["material.nvim"] = {
     loaded = true,
@@ -410,6 +420,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-surround",
     url = "https://github.com/tpope/vim-surround"
+  },
+  ["vim-swoop"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-swoop",
+    url = "https://github.com/pelodelfuego/vim-swoop"
   },
   ["vim-textobj-entire"] = {
     loaded = true,
