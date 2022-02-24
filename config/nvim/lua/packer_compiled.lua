@@ -256,6 +256,16 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-dap-virtual-text",
     url = "https://github.com/theHamsta/nvim-dap-virtual-text"
   },
+  ["nvim-fzf"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-fzf",
+    url = "https://github.com/vijaymarupudi/nvim-fzf"
+  },
+  ["nvim-fzf-commands"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-fzf-commands",
+    url = "https://github.com/vijaymarupudi/nvim-fzf-commands"
+  },
   ["nvim-lsp-installer"] = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-lsp-installer",

@@ -58,6 +58,10 @@
   :kana/vim-textobj-entire {}
   :Julian/vim-textobj-variable-segment {}
 
+  ; Harpoon
+  :ThePrimeagen/harpoon {:requires :nvim-lua/plenary.nvim
+                         :mod :harpoon}
+
   ;; movement
   :phaazon/hop.nvim {:branch "v1"
                      :mod :hop}
