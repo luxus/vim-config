@@ -35,9 +35,11 @@
        {:provider :diagnostic_hints :hl {:fg :cyan}}
        {:provider :diagnostic_info :hl {:fg :skyblue}}])
 (tset M.active 2
-      [{:provider :git_branch
-        :hl {:fg :white :bg :black :style :bold}
-        :right_sep {:str " " :hl {:fg :NONE :bg :black}}}
+      [
+       ; Git branch was obscuring the filename when there are many windows
+       ; {:provider :git_branch
+       ;  :hl {:fg :white :bg :black :style :bold}
+       ;  :right_sep {:str " " :hl {:fg :NONE :bg :black}}}
        {:provider :git_diff_added :hl {:fg :green :bg :black}}
        {:provider :git_diff_changed :hl {:fg :orange :bg :black}}
        {:provider :git_diff_removed
