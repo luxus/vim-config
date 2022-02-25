@@ -38,6 +38,18 @@
 
 (nvim.set_keymap :n :\c ":checktime<CR>" {:nowait true :silent true :noremap true})
 
+; https://www.reddit.com/r/neovim/comments/f0qx2y/automatically_reload_file_if_contents_changed/
+(vim.cmd
+ "
+ \" trigger `autoread` when files changes on disk
+ set autoread
+ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+ \" notification after file change
+ autocmd FileChangedShellPost *
+ \\ echohl WarningMsg | echo 'File changed on disk. Buffer reloaded.' | echohl None
+ "
+ )
+
 (vim.cmd "
 augroup highlight_yank
     autocmd!
