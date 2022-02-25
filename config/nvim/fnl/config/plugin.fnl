@@ -170,6 +170,11 @@
                                 :hrsh7th/cmp-cmdline
                                 :PaterJason/cmp-conjure]
                      :mod :cmp}
+
+  ; tabout
+  ;; :abecodes/tabout.nvim {:require [:nvim-treesitter/nvim-treesitter :hrsh7th/nvim-cmp]
+  ;;                        :mod :tabout}
+
   ;theme
 
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim :tomasr/molokai :embark-theme/vim :projekt0n/github-nvim-theme :fenetikm/falcon :marko-cerovac/material.nvim] 
