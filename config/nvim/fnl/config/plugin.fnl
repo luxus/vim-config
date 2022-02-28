@@ -54,6 +54,7 @@
   :numToStr/Comment.nvim {:mod :comment}
 
   ; Text objects
+  :wellle/targets.vim {}
   :kana/vim-textobj-user {}
   :kana/vim-textobj-entire {}
   :Julian/vim-textobj-variable-segment {}
