@@ -182,4 +182,3 @@
                                   :mod :theme }
   )
 
-(require "packer_compiled")

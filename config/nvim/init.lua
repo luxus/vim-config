@@ -26,3 +26,5 @@ vim.g["aniseed#env"] = {
   module = "config.init",
   compile = true
 }
+
+require('packer_compiled')
