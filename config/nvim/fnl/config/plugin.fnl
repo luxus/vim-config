@@ -132,13 +132,13 @@
                                              :ahmedkhalf/project.nvim]
                                   :mod :telescope}
 
- :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()")) }
- :junegunn/fzf.vim {:mod :fzf}
+  :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()")) }
+  :junegunn/fzf.vim {:mod :fzf}
 
- ; Search
- :pelodelfuego/vim-swoop {}
+  ; Search
+  :pelodelfuego/vim-swoop {}
 
- ; quickfix
+  ; quickfix
   :kevinhwang91/nvim-bqf {:mod :bqf
                           :ft [:qf]}
 
@@ -148,12 +148,12 @@
   :AckslD/nvim-neoclip.lua {:requires [:nvim-telescope/telescope.nvim]
                             :mod :neoclip}
 
-  ;parsing system
+   ;parsing system
   :nvim-treesitter/nvim-treesitter {:requires [:nvim-treesitter/nvim-treesitter-textobjects
                                                :romgrk/nvim-treesitter-context]
                                     :run ":TSUpdate"
                                     :mod :treesitter}
-  ;;lsp
+  ;; lsp
   :williamboman/nvim-lsp-installer {:requires [:neovim/nvim-lspconfig]
                                     :mod :lspconfig}
   ; dap
@@ -164,7 +164,7 @@
   ; buffer history
   :ton/vim-bufsurf {:mod :vim-bufsurf}
 
-  ;autocomplete
+  ; autocomplete
   :hrsh7th/nvim-cmp {:requires [:hrsh7th/cmp-nvim-lsp
                                 :hrsh7th/cmp-buffer
                                 :hrsh7th/cmp-path
@@ -176,8 +176,7 @@
   ;; :abecodes/tabout.nvim {:require [:nvim-treesitter/nvim-treesitter :hrsh7th/nvim-cmp]
   ;;                        :mod :tabout}
 
-  ;theme
-
+  ; theme
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim :tomasr/molokai :embark-theme/vim :projekt0n/github-nvim-theme :fenetikm/falcon :marko-cerovac/material.nvim] 
                                   :mod :theme }
   )
