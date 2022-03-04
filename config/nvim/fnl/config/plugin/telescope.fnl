@@ -13,7 +13,8 @@
                              ;;:vimgrep_arguments ["rg" "--color=never" "--no-heading" "--with-filename" "--line-number" "--column" "--smart-case" "--hidden"]
                              :mappings {:i {"<C-Down>" (. telescope-actions :cycle_history_next) 
                                             "<C-Up>" (. telescope-actions :cycle_history_prev) }}
-                             :preview {:treesitter false}}
+                             ;; :preview {:treesitter false}
+                             }
 
                   :pickers {:grep_string {:theme :ivy}
                             :current_buffer_fuzzy_find {:theme :ivy}
