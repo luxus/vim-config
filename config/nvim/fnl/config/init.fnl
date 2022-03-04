@@ -23,6 +23,11 @@
 
 ; font 
 (set vim.o.guifont "Fira Code NF:h11")
+; Disable GUI tabline tabs
+(vim.cmd "GuiTabline 0")
+
+; Disable GUI popup menu
+(vim.cmd "GuiPopupmenu 0")
 
 ;; cursor highlighting
 (set vim.o.cursorline true)
