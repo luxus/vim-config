@@ -98,7 +98,7 @@
 
 (which-key.register 
   {:g {:name "git"
-       :g [":lua require'neogit'.open()<cr>" "Open"]}}
+       :g ["<cmd>Git<CR>" "Open"]}}
   {:prefix "<leader>"})
 
 
