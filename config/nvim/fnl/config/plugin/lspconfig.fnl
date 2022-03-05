@@ -60,19 +60,21 @@
                     (nvim.buf_set_keymap bufnr :n :<leader>li ":lua require('telescope.builtin').lsp_implementations()<cr>" {:noremap true})))]
 
   (nvim-lsp-installer.on_server_ready 
-   (fn on-server-ready-handler [server]
+    (fn on-server-ready-handler [server]
 
-     (let [opts {:on_attach on_attach
-                 :handlers handlers
-                 :capabilities capabilities}]
+      (let [opts {:on_attach on_attach
+                  :handlers handlers
+                  :capabilities capabilities}]
        
-       ;
-      (if (= server.name "clangd")
-        (c.assoc-in opts [:filetypes ] [ "c" "cpp" "objc" "objcpp" "c.doxygen"]))
+      ; Include additional filetypes for clangd as it does not recognise c.doxygen by default
+        (if (= server.name "clangd")
+          (c.assoc-in opts [:filetypes ] [ "c" "cpp" "objc" "objcpp" "c.doxygen"]))
 
-     (server:setup opts))))
+      (server:setup opts))))
   ;; Clojure
   ; (lsp.clojure_lsp.setup {:on_attach on_attach
   ;                         :handlers handlers
   ;                         :capabilities capabilities})
   )
+
+
