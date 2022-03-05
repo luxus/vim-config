@@ -1,5 +1,6 @@
 (module config.plugin.lspconfig
   {autoload {nvim aniseed.nvim
+             c aniseed.core
              lsp lspconfig
              nvim-lsp-installer nvim-lsp-installer
              cmplsp cmp_nvim_lsp}})
@@ -60,9 +61,16 @@
 
   (nvim-lsp-installer.on_server_ready 
    (fn on-server-ready-handler [server]
-     (server:setup {:on_attach on_attach
-                          :handlers handlers
-                          :capabilities capabilities})))
+
+     (let [opts {:on_attach on_attach
+                 :handlers handlers
+                 :capabilities capabilities}]
+       
+       ;
+      (if (= server.name "clangd")
+        (c.assoc-in opts [:filetypes ] [ "c" "cpp" "objc" "objcpp" "c.doxygen"]))
+
+     (server:setup opts))))
   ;; Clojure
   ; (lsp.clojure_lsp.setup {:on_attach on_attach
   ;                         :handlers handlers
