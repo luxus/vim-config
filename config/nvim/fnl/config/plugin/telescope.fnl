@@ -24,7 +24,8 @@
                                      :override-generic-sorter true
                                      :override-file-sorter true
                                      :case-mode "smart_case"}
-                               :tele_tabby { :use_highlighter true }
+                               :tele_tabby {:use_highlighter true}
+
                                ; :project {
                                ;    :base_dirs  ["~/repos" "~/source/repos"  "C:/repos"]
                                ;    :hidden_files true }
