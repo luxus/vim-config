@@ -11,7 +11,8 @@
   [{:name :nvim_lsp}
    {:name :conjure}
    {:name :buffer}
-   {:name :vsnip}])
+   {:name :vsnip}
+   {:name :nvim_lsp_signature_help}])
 
 ;; Setup cmp with desired settings
 (cmp.setup {
