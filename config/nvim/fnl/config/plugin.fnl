@@ -35,7 +35,8 @@
   ;plugin Manager
   :wbthomason/packer.nvim {}
   ;nvim config and plugins in Fennel
-  :Olical/aniseed {:branch :develop}
+  :Olical/aniseed {:require [:Olical/nvim-local-fennel]
+                   :branch :develop}
   ;clojure
   :Olical/conjure {:branch :master :mod :conjure}
   ; which-key
