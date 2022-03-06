@@ -170,7 +170,9 @@
                                 :hrsh7th/cmp-buffer
                                 :hrsh7th/cmp-path
                                 :hrsh7th/cmp-cmdline
-                                :PaterJason/cmp-conjure]
+                                :PaterJason/cmp-conjure
+                                :hrsh7th/cmp-vsnip
+                                :hrsh7th/vim-vsnip]
                      :mod :cmp}
 
   ; tabout

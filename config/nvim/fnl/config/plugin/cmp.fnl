@@ -10,11 +10,13 @@
 (def- cmp-srcs
   [{:name :nvim_lsp}
    {:name :conjure}
-   {:name :buffer}])
+   {:name :buffer}
+   {:name :vsnip}])
 
 ;; Setup cmp with desired settings
 (cmp.setup {
             ;:completion {:autocomplete true}
+            :snippet {:expand (fn [args] (vim.fn.vsnip#anonymous args.body))}
             :formatting
             {:format (fn [entry item]
                        (set item.menu (or (. cmp-src-menu-items entry.source.name) ""))
