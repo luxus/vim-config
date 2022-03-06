@@ -42,6 +42,16 @@
 ; Set filetype to HTML for CSHTML files
 (vim.cmd "autocmd BufNewFile,BufRead *.cshtml set filetype=html")
 
+; Set filetype for .h files to be pure C with doxygen
+; https://www.alexeyshmalko.com/2014/using-vim-as-c-cpp-ide/
+(vim.cmd
+ "
+ augroup project
+ autocmd!
+ autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+ augroup END
+ ")
+
 (nvim.set_keymap :n :\c ":checktime<CR>" {:nowait true :silent true :noremap true})
 
 ; https://www.reddit.com/r/neovim/comments/f0qx2y/automatically_reload_file_if_contents_changed/
