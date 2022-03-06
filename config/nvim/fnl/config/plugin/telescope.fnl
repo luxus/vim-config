@@ -19,7 +19,18 @@
                   :pickers {:grep_string {:theme :ivy}
                             :current_buffer_fuzzy_find {:theme :ivy}
                             :find_files {:theme :ivy
-                                         :find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}}
+                                         :find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}
+
+                            ; Ivy theme for everything lsp
+                            :lsp_references {:theme :ivy}
+                            :lsp_document_symbols {:theme :ivy}
+                            :lsp_workspace_symbols {:theme :ivy}
+                            :lsp_workspace_symbols {:theme :ivy}
+                            :diagnostics {:theme :ivy}
+                            :lsp_implementations {:theme :ivy}
+                            :lsp_definitions {:theme :ivy}
+                            :lsp_type_definitions {:theme :ivy}}
+
                   :extensions {:fzf {:fuzzy true
                                      :override-generic-sorter true
                                      :override-file-sorter true
@@ -47,7 +58,7 @@
                                "~/source/repos/fairplayams2/"]
                 :detection_methods [
                                     "pattern"
-                                    "lsp"
+                                    ;; "lsp"
                                     ]
                 :silent_chdir true
                 :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" 
