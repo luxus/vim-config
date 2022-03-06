@@ -67,8 +67,10 @@
                   :capabilities capabilities}]
        
       ; Include additional filetypes for clangd as it does not recognise c.doxygen by default
-        (if (= server.name "clangd")
-          (c.assoc-in opts [:filetypes ] [ "c" "cpp" "objc" "objcpp" "c.doxygen"]))
+        (when (= server.name "clangd")
+          (c.assoc-in opts [:filetypes ] [ "c" "cpp" "objc" "objcpp" "c.doxygen"])
+          ; Hard coded the clangd --compile-commands-dir argument
+          (c.assoc-in opts [:cmd ] [ "clangd" "--compile-commands-dir" "./light_bulb_dongle/build-dk"]))
 
       (server:setup opts))))
   ;; Clojure
@@ -78,3 +80,9 @@
   )
 
 
+
+;; (lsp.clangd.setup 
+;;   {:on_init (fn [client]
+;;               (set client.config.settings.cmd [ "clangd" "--compile-commands-dir" "./light_bulb_dongle/build-dk"])
+;;               (client.notify :workspace/didChangeConfiguration)
+;;               true)})	
