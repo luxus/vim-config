@@ -22,7 +22,8 @@
 (set vim.o.expandtab true)
 
 ; font 
-(set vim.o.guifont "Fira Code NF:h11")
+(set vim.o.guifont "FiraCode NF:h11")
+
 ; Disable GUI tabline tabs
 (vim.cmd "GuiTabline 0")
 
