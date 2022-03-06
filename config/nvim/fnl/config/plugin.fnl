@@ -137,7 +137,7 @@
   :junegunn/fzf.vim {:mod :fzf}
 
   ; Search
-  :pelodelfuego/vim-swoop {}
+  :pelodelfuego/vim-swoop {:mod :vim-swoop}
 
   ; quickfix
   :kevinhwang91/nvim-bqf {:mod :bqf
