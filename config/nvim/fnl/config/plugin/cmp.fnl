@@ -2,6 +2,10 @@
   {autoload {nvim aniseed.nvim
              cmp cmp}})
 
+;; Use VSCode snippets
+(set vim.g.vsnip_snippet_dir "~/AppData/Roaming/Code/User/snippets")
+;;(vim.fn.expand "~/AppData/Roaming/Code/User/snippets")
+
 (def- cmp-src-menu-items
   {:buffer "buff"
    :conjure "conj"
@@ -40,3 +44,5 @@
                    {:sources (cmp.config.sources [ {:name :path} ]
                                                  ;;[ {:name :buffer} ]
                                                  [ {:name :cmdline} ])})	
+
+
