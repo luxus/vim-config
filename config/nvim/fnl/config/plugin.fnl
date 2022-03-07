@@ -82,8 +82,8 @@
   :AndrewRadev/bufferize.vim {}
 
   ;; coc
-  ;; :neoclide/coc.nvim {:branch "release"
-  ;;                     :mod :coc}
+  :neoclide/coc.nvim {:branch "release"
+                      :mod :coc}
 
   ;; editing
   :mg979/vim-visual-multi {:branch "master"}
