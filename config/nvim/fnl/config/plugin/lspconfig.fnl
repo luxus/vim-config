@@ -3,7 +3,10 @@
              c aniseed.core
              lsp lspconfig
              nvim-lsp-installer nvim-lsp-installer
-             cmplsp cmp_nvim_lsp}})
+             cmplsp cmp_nvim_lsp
+             illuminate illuminate}})
+
+(set vim.g.Illuminate_delay 500)
 
 ;symbols to show for lsp diagnostics
 (defn define-signs
@@ -57,7 +60,10 @@
                     (nvim.buf_set_keymap bufnr :v :<leader>la ":'<,'>:Telescope lsp_range_code_actions theme=cursor<cr>" {:noremap true})
                     (nvim.buf_set_keymap bufnr :n :<leader>lw ":lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>" {:noremap true})
                     (nvim.buf_set_keymap bufnr :n :<leader>lr ":lua require('telescope.builtin').lsp_references()<cr>" {:noremap true})
-                    (nvim.buf_set_keymap bufnr :n :<leader>li ":lua require('telescope.builtin').lsp_implementations()<cr>" {:noremap true})))]
+                    (nvim.buf_set_keymap bufnr :n :<leader>li ":lua require('telescope.builtin').lsp_implementations()<cr>" {:noremap true})
+
+                    ;; Highlight word under cursor
+                    (illuminate.on_attach client)))]
 
   (nvim-lsp-installer.on_server_ready 
     (fn on-server-ready-handler [server]

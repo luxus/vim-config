@@ -155,7 +155,8 @@
                                     :run ":TSUpdate"
                                     :mod :treesitter}
   ;; lsp
-  :williamboman/nvim-lsp-installer {:requires [:neovim/nvim-lspconfig]
+  :williamboman/nvim-lsp-installer {:requires [:RRethy/vim-illuminate
+                                               :neovim/nvim-lspconfig]
                                     :mod :lspconfig}
   ; dap
   :mfussenegger/nvim-dap {:requires [:rcarriga/nvim-dap-ui
