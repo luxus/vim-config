@@ -4,9 +4,26 @@
              lsp lspconfig
              nvim-lsp-installer nvim-lsp-installer
              cmplsp cmp_nvim_lsp
-             illuminate illuminate}})
+             illuminate illuminate
+             omnisharp_extended omnisharp_extended
+             csharpls_extended csharpls_extended}})
 
 (set vim.g.Illuminate_delay 500)
+
+
+(defn update-omnisharp-handler [opts default-handlers]
+  (let [merged-handlers (c.merge default-handlers {:textDocument/definition omnisharp_extended.handler})]
+          (c.assoc-in opts [:handlers] merged-handlers)))
+
+(defn update-csharp-ls-handler [opts default-handlers]
+  (let [merged-handlers (c.merge default-handlers {:textDocument/definition csharpls_extended.handler})]
+          (c.assoc-in opts [:handlers] merged-handlers)))
+
+(comment
+  (update-omnisharp-handler {:handlers                  {:textDocument/definition :something}
+                             :capabilities              "FROGGIN"} 
+
+                            {:textDocument/definition   :default}))
 
 ;symbols to show for lsp diagnostics
 (defn define-signs
@@ -78,13 +95,37 @@
           ; Hard coded the clangd --compile-commands-dir argument
           (c.assoc-in opts [:cmd ] [ "clangd" "--compile-commands-dir" "./light_bulb_dongle/build-dk"]))
 
+        (when (= server.name "omnisharp")
+          (update-omnisharp-handler opts handlers)
+          ;; (let [pid (vim.fn.getpid)
+          ;;       omnisharp-bin ""] 
+          ;;   (c.update-in opts [:cmd] [""]) )
+          
+          )
+
+        (when (= server.name "csharp_ls")
+          (update-csharp-ls-handler opts handlers)
+          ;; (let [pid (vim.fn.getpid)
+          ;;       omnisharp-bin ""] 
+          ;;   (c.update-in opts [:cmd] [""]) )
+          
+          )
+
       (server:setup opts))))
+
   ;; Clojure
   ; (lsp.clojure_lsp.setup {:on_attach on_attach
   ;                         :handlers handlers
   ;                         :capabilities capabilities})
   )
 
+
+(comment 
+  
+  (def aa {:aa "aa"})
+  (c.merge aa {:cc "cc"})
+  
+  (c.assoc-in aa [:bb] "bb"))
 
 
 ;; (lsp.clangd.setup 

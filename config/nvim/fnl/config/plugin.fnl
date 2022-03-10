@@ -156,6 +156,8 @@
                                     :mod :treesitter}
   ;; lsp
   :williamboman/nvim-lsp-installer {:requires [:RRethy/vim-illuminate
+                                               :chen244/csharpls-extended-lsp.nvim
+                                               :Hoffs/omnisharp-extended-lsp.nvim
                                                :neovim/nvim-lspconfig]
                                     :mod :lspconfig}
   ; dap
@@ -173,6 +175,7 @@
                                 :hrsh7th/cmp-cmdline
                                 :hrsh7th/cmp-nvim-lsp-signature-help
                                 :PaterJason/cmp-conjure
+
                                 :hrsh7th/cmp-vsnip
                                 :hrsh7th/vim-vsnip]
                      :mod :cmp}
