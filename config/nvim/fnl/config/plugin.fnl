@@ -150,7 +150,8 @@
                             :mod :neoclip}
 
    ;parsing system
-  :nvim-treesitter/nvim-treesitter {:requires [:nvim-treesitter/nvim-treesitter-textobjects
+  :nvim-treesitter/nvim-treesitter {:requires [:gaelph/logsitter.nvim
+                                               :nvim-treesitter/nvim-treesitter-textobjects
                                                :romgrk/nvim-treesitter-context]
                                     :run ":TSUpdate"
                                     :mod :treesitter}
