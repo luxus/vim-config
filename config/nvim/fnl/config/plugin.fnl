@@ -2,7 +2,8 @@
   {autoload {nvim aniseed.nvim
              a aniseed.core
              util config.util
-             packer packer}})
+             packer packer
+             vs config.plugin.vs}})
 
 (defn- safe-require-plugin-config [name]
   (let [(ok? val-or-err) (pcall require (.. :config.plugin. name))]
@@ -189,3 +190,4 @@
                                   :mod :theme }
   )
 
+(vs.setup {})
