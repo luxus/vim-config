@@ -10,7 +10,6 @@
 
 (set vim.g.Illuminate_delay 500)
 
-
 (defn update-omnisharp-handler [opts default-handlers]
   (let [merged-handlers (c.merge default-handlers {:textDocument/definition omnisharp_extended.handler})]
           (c.assoc-in opts [:handlers] merged-handlers)))
@@ -20,6 +19,11 @@
           (c.assoc-in opts [:handlers] merged-handlers)))
 
 (comment
+
+  (def aa {:aa "aa"})
+  (c.merge aa {:cc "cc"})
+  (c.assoc-in aa [:bb] "bb")
+
   (update-omnisharp-handler {:handlers                  {:textDocument/definition :something}
                              :capabilities              "FROGGIN"} 
 
@@ -120,12 +124,6 @@
   )
 
 
-(comment 
-  
-  (def aa {:aa "aa"})
-  (c.merge aa {:cc "cc"})
-  
-  (c.assoc-in aa [:bb] "bb"))
 
 
 ;; (lsp.clangd.setup 
