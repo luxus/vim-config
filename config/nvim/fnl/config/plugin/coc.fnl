@@ -14,4 +14,4 @@
 ;; (path.exists (get-coc-vim-path))
 
 ;; (vim.cmd (.. "source " (get-coc-vim-path)))
-(vim.cmd "CocDisable")
+(vim.api.nvim_command "CocDisable")
