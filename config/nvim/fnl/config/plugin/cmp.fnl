@@ -41,8 +41,12 @@
   {:sources [ {:name :buffer} ]})
 
 (cmp.setup.cmdline ":"
-                   {:sources (cmp.config.sources [ {:name :path} ]
-                                                 ;;[ {:name :buffer} ]
-                                                 [ {:name :cmdline} ])})	
+                   {:sources (cmp.config.sources 
+                               [ {:name :path} ]
+                               ;;[ {:name :buffer} ]
+                               [ {:name :cmdline
+                                  ;; https://github.com/hrsh7th/cmp-cmdline/issues/24
+                                  :keyword_pattern "[^[:blank:]\\!]*"} ])})
 
-
+;; Maximum number of items to show in the popup menu
+(set vim.o.pumheight 10)
