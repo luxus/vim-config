@@ -24,17 +24,16 @@
  
  )
 
-;; TODO: Don't run this config if not on windows with powershell
-
 ;; TODO: move this into comment module for sharing
 (defn get-lua-cmd [func-name params]
   (.. ":lua require('" *module-name* "')['" func-name "']('" (astring.join ", " params) "')<CR>"))
 
 (defn open-in-vs [devenv-path] 
-  (vim.api.nvim_command 
-    ;; '&' executes the string containing the path to the devenv executable
-    (.. "silent !& \"" devenv-path "\" /Edit "
-        (vim.fn.expand "%"))))
+  (let [current-file (vim.fn.expand "%")]
+    (vim.api.nvim_command 
+      ;; '&' executes the string containing the path to the devenv executable
+      (.. "silent !& \"" devenv-path "\" /Edit "
+          current-file))))
 
 (defn setup [config] 
   (let [{:devenv-path devenv-path} config]
