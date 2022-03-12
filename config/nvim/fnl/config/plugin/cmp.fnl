@@ -49,4 +49,4 @@
                                   :keyword_pattern "[^[:blank:]\\!]*"} ])})
 
 ;; Maximum number of items to show in the popup menu
-(set vim.o.pumheight 10)
+(set vim.o.pumheight 15)
