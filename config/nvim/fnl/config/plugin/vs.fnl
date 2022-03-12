@@ -1,5 +1,6 @@
 (module config.plugin.vs
   {autoload {nvim aniseed.nvim
+             autil aniseed.nvim.util
              path plenary.path }})
 
 
@@ -40,10 +41,14 @@
  )
 
 
-
 (defn open-in-vs [] 
   (vim.api.nvim_command 
     ;; '&' executes the string containing the path to the devenv executable
     (.. "!& \"C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe\" /Edit "
         (vim.fn.expand "%"))))
+
+
+(autil.fn-bridge "s:fzf_root" "config.plugin.fzf" "fzf-root")
+(nvim.set_keymap :n ":lua ")
+
 
