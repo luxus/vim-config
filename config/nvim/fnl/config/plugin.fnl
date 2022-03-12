@@ -190,4 +190,5 @@
                                   :mod :theme }
   )
 
-(vs.setup {})
+;; TODO: Don't run this config if not on windows with powershell
+(vs.setup {:devenv-path "C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe"})

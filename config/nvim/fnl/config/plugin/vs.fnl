@@ -30,29 +30,28 @@
 (defn get-lua-cmd [func-name params]
   (.. ":lua require('" *module-name* "')['" func-name "']('" (astring.join ", " params) "')<CR>"))
 
-(defn open-in-vs [] 
+(defn open-in-vs [devenv-path] 
   (vim.api.nvim_command 
     ;; '&' executes the string containing the path to the devenv executable
-    (.. "silent !& \"C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe\" /Edit "
+    (.. "silent !& \"" devenv-path "\" /Edit "
         (vim.fn.expand "%"))))
 
 (defn setup [config] 
-  
-  ;; Use powershell (:h shell-powershell)
-  (vim.cmd 
-   "
-   let &shell = has('win32') ? 'powershell' : 'pwsh'
-   let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-   let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-   let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-   set shellquote= shellxquote=
-   " )
+  (let [{:devenv-path devenv-path} config]
 
-  ;; Store the NVIM_LISTEN_ADDRESS in home dir
-  (vim.api.nvim_command (.. "silent !New-Item -Path '~/.nvim-listen-address' -Force -ItemType File -Value '" 
-                            (get-nvim-listen-address) 
-                            "'"))
+   ;; Use powershell (:h shell-powershell)
+   (vim.cmd 
+     "
+     let &shell = has('win32') ? 'powershell' : 'pwsh'
+     let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+     let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+     let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+     set shellquote= shellxquote=
+     " )
 
-  (nvim.set_keymap :n :<leader>ov (get-lua-cmd "open-in-vs" []) {:nowait true :noremap true})
+   ;; Store the NVIM_LISTEN_ADDRESS in home dir
+   (vim.api.nvim_command (.. "silent !New-Item -Path '~/.nvim-listen-address' -Force -ItemType File -Value '" 
+                             (get-nvim-listen-address) 
+                             "'"))
 
-  )
+   (nvim.set_keymap :n :<leader>ov (get-lua-cmd "open-in-vs" [devenv-path]) {:nowait true :noremap true})))
