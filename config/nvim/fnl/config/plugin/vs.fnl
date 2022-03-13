@@ -5,7 +5,7 @@
              autil aniseed.nvim.util
              path plenary.path
              job plenary.job
-             uv vim.loop}})
+             uv vim.loop ;; This doesn't seem to actually work}})
 
 
 
@@ -40,7 +40,7 @@
 
 (defn- open-in-vs [devenv-path]
   "WIP for opening current file in VS using uv"
- (let [uv vim.loop
+ (let [uv vim.loop ;; Requiring this as part of the module did not seem to work... not sure why
        stdin (uv.new_pipe false)
        stdout (uv.new_pipe false)
        stderr (uv.new_pipe false)
