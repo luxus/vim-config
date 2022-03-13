@@ -20,8 +20,11 @@
       tnoremap <expr> <M-r> '<C-\\><C-N>\"'.nr2char(getchar()).'pi'
   endif")
 
-; Copy selection into h register, Open RG terminal, paste contexts of h register into terminal
-(nvim.set_keymap :v :<c-f> "\"hy:Rg<Enter><M-r>h" {})
+;; Copy selection into h register, Open RG terminal, paste contexts of h register into terminal
+;; (nvim.set_keymap :v :<c-f> "\"hy:Rg<Enter><M-r>h" {})
+
+;; Copy selection into h register, open command mode, type Rg command, paste contents of h register, enter
+(nvim.set_keymap :v :<c-f> "\"hy:Rg <c-r>h<cr>" {})
 
 (if (vim.fn.executable "rg")
   (set vim.o.grepprg "rg --vimgrep"))
