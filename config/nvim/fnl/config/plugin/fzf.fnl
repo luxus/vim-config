@@ -26,6 +26,8 @@
 ;; Copy selection into h register, open command mode, type Rg command, paste contents of h register, enter
 (nvim.set_keymap :v :<c-f> "\"hy:Rg <c-r>h<cr>" {})
 
+
+
 (if (vim.fn.executable "rg")
   (set vim.o.grepprg "rg --vimgrep"))
 
@@ -75,6 +77,45 @@ command! -bang -nargs=* GGrep
 
 (nvim.set_keymap :n :<leader>fwh ":call fzf#vim#tags(expand('<cword>'))<CR>" {:noremap true})
 (nvim.set_keymap :n :<leader>fWh ":call fzf#vim#tags(expand('<cWORD>'))<CR>" {:noremap true})
+
+;; Create getVisualSelection() function
+(defn getVisualSelection []
+  
+  (vim.api.nvim_exec
+   "
+   function! s:getVisualSelection()
+     let [line_start, column_start] = getpos(\"'<\")[1:2]
+     let [line_end, column_end] = getpos(\"'>\")[1:2]
+     let lines = getline(line_start, line_end)
+
+     if len(lines) == 0
+     return \"\"
+     endif
+
+     let lines[-1] = lines[-1][:column_end - (&selection == \"inclusive\" ? 1 : 2)]
+     let lines[0] = lines[0][column_start - 1:]
+
+     return join(lines, \"\\n\")
+   endfunction
+
+   call s:getVisualSelection()
+   "
+   true)
+  )
+
+(defn get-escaped-visual-selection []
+ ;; (print (vim.inspect (vim.fn.substitute (getVisualSelection) "[" "AAA" "")))
+ ;;(vim.fn.substitute (getVisualSelection) "[" "\\\\$1" "")
+                                             )
+
+(comment 
+  
+  (vim.fn.substitute "abc" "(a)" "\\1aaa" "")
+  )
+
+(nvim.set_keymap :v :<leader>fn (get-lua-cmd "get-escaped-visual-selection" []) {:noremap true})
+
+;; (vim.api.nvim_exec "call s:getVisualSelection()" true)
 
 ; (vim.fn.fzf#vim#files "." {:options ["--query=fnl" "--layout=reverse" "--info=inline" ]})
 ; (vim.fn.fzf#vim#files "." {:options []})
