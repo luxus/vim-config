@@ -171,8 +171,6 @@ command! -bang -nargs=* GGrep
   (let [this-file (get-this-filename)
         this-full-filename (get-this-full-filename)
         common-name (get-common-name this-file this-full-filename)]
-    (print "this-file: " this-file)
-    (print "common-name: " common-name)
     (fzf-file-query common-name)))
 
 (nvim.set_keymap :n :<leader>fF ":lua require'config.plugin.fzf'['fzf-this-file']()<cr>" {:noremap true :silent false})
