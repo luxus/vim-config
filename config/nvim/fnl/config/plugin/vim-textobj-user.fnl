@@ -14,6 +14,6 @@
 
 (vim.fn.textobj#user#plugin 
   "jquery"
-  {:selector {:pattern ["$([\"']" "[\"'])"]
+  {:selector {:pattern ["$([\"']\\?" "[\"']\\?)"]
               :select-a :a$
               :select-i :i$ }})
