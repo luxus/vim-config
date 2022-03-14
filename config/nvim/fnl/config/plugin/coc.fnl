@@ -14,4 +14,6 @@
 ;; (path.exists (get-coc-vim-path))
 
 ;; (vim.cmd (.. "source " (get-coc-vim-path)))
-(vim.cmd "CocDisable")
+
+;; Not currently using Coc but don't want to uninstall it, so let's just disable it
+(vim.api.nvim_command "CocDisable")

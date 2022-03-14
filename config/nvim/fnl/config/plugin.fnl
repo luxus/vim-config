@@ -2,7 +2,8 @@
   {autoload {nvim aniseed.nvim
              a aniseed.core
              util config.util
-             packer packer}})
+             packer packer
+             vs config.plugin.vs}})
 
 (defn- safe-require-plugin-config [name]
   (let [(ok? val-or-err) (pcall require (.. :config.plugin. name))]
@@ -150,12 +151,15 @@
                             :mod :neoclip}
 
    ;parsing system
-  :nvim-treesitter/nvim-treesitter {:requires [:nvim-treesitter/nvim-treesitter-textobjects
+  :nvim-treesitter/nvim-treesitter {:requires [:gaelph/logsitter.nvim
+                                               :nvim-treesitter/nvim-treesitter-textobjects
                                                :romgrk/nvim-treesitter-context]
                                     :run ":TSUpdate"
                                     :mod :treesitter}
   ;; lsp
   :williamboman/nvim-lsp-installer {:requires [:RRethy/vim-illuminate
+                                               :chen244/csharpls-extended-lsp.nvim
+                                               :Hoffs/omnisharp-extended-lsp.nvim
                                                :neovim/nvim-lspconfig]
                                     :mod :lspconfig}
   ; dap
@@ -173,6 +177,7 @@
                                 :hrsh7th/cmp-cmdline
                                 :hrsh7th/cmp-nvim-lsp-signature-help
                                 :PaterJason/cmp-conjure
+
                                 :hrsh7th/cmp-vsnip
                                 :hrsh7th/vim-vsnip]
                      :mod :cmp}
@@ -186,3 +191,6 @@
                                   :mod :theme }
   )
 
+;; TODO: Don't run this config if not on windows with powershell
+(vs.setup {:devenv-path "C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe"
+           :nvim-listen-address-base "~"})
