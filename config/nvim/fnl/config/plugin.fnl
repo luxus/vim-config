@@ -95,9 +95,9 @@
   :mbbill/undotree {:mod :undotree}
 
   ;; folders
-  ;; :ms-jpq/chadtree {:branch "chad"
-  ;;                   :run "python -m chadtree deps"
-  ;;                   :mod :chadtree}
+  :ms-jpq/chadtree {:branch "chad"
+                    :run "python -m chadtree deps"
+                    :mod :chadtree}
 
   :kyazdani42/nvim-tree.lua {:require :kyazdani42/nvim-web-devicons
                              :mod :nvim-tree}

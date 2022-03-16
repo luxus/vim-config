@@ -26,6 +26,10 @@
 
 ; Disable GUI tabline tabs
 (vim.cmd "GuiTabline 0")
+;; next and previous tab keymaps
+(nvim.set_keymap :n "]t" "<cmd>tabnext<CR>" {:nowait true :silent true :noremap true})
+(nvim.set_keymap :n "[t" "<cmd>tabprevious<CR>" {:nowait true :silent true :noremap true})
+(nvim.set_keymap :n "<leader>tc" "<cmd>tabclose<CR>" {:nowait true :silent true :noremap true})
 
 ; Disable GUI popup menu
 (vim.cmd "GuiPopupmenu 0")

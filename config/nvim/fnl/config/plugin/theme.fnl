@@ -4,8 +4,8 @@
              material material}})
 
 ;; For github theme
-; (theme.setup {:theme_style "dark"
-;               :comment_style "italic"})
+(theme.setup {:theme_style "light"
+              :comment_style "italic"})
 
 ;;(nvim.ex.colorscheme :nightfly)
 ; (nvim.ex.colorscheme :embark)
@@ -14,4 +14,4 @@
 ; (set vim.g.material_style "deep ocean")
 ; (material.setup)
 
-(nvim.ex.colorscheme :kanagawa)
+;; (nvim.ex.colorscheme :kanagawa)
