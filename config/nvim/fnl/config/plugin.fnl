@@ -99,8 +99,8 @@
                     :run "python -m chadtree deps"
                     :mod :chadtree}
 
-  :kyazdani42/nvim-tree.lua {:require :kyazdani42/nvim-web-devicons
-                             :mod :nvim-tree}
+  ;; :kyazdani42/nvim-tree.lua {:require :kyazdani42/nvim-web-devicons
+  ;;                            :mod :nvim-tree}
 
   ;; session
   :rmagatti/auto-session {}
@@ -159,6 +159,7 @@
   ;; lsp
   :williamboman/nvim-lsp-installer {:requires [:RRethy/vim-illuminate
                                                :chen244/csharpls-extended-lsp.nvim
+                                               :j-hui/fidget.nvim
                                                :Hoffs/omnisharp-extended-lsp.nvim
                                                :neovim/nvim-lspconfig]
                                     :mod :lspconfig}
@@ -187,7 +188,14 @@
   ;;                        :mod :tabout}
 
   ; theme
-  :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim :tomasr/molokai :embark-theme/vim :projekt0n/github-nvim-theme :fenetikm/falcon :marko-cerovac/material.nvim] 
+  :bluz71/vim-nightfly-guicolors {:requires [
+                                             :rebelot/kanagawa.nvim
+                                             :tomasr/molokai
+                                             :embark-theme/vim
+                                             :projekt0n/github-nvim-theme
+                                             :fenetikm/falcon
+                                             :marko-cerovac/material.nvim
+                                             :EdenEast/nightfox.nvim] 
                                   :mod :theme }
   )
 

@@ -6,7 +6,8 @@
              cmplsp cmp_nvim_lsp
              illuminate illuminate
              omnisharp_extended omnisharp_extended
-             csharpls_extended csharpls_extended}})
+             csharpls_extended csharpls_extended
+             fidget fidget}})
 
 (set vim.g.Illuminate_delay 500)
 
@@ -131,3 +132,5 @@
 ;;               (set client.config.settings.cmd [ "clangd" "--compile-commands-dir" "./light_bulb_dongle/build-dk"])
 ;;               (client.notify :workspace/didChangeConfiguration)
 ;;               true)})	
+
+(fidget.setup {})
