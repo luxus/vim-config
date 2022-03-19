@@ -117,6 +117,12 @@
   ;; lisp
   :tpope/vim-sexp-mappings-for-regular-people {}
   :guns/vim-sexp {}
+
+
+  ;; Cursor-line
+  :mvllow/modes.nvim {:mod :modes}
+
+  ;; line
   :feline-nvim/feline.nvim {:mod :feline}
 
   ;file searching

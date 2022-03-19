@@ -15,4 +15,5 @@
 ; (material.setup)
 
 ;; (nvim.ex.colorscheme :kanagawa)
-(nvim.ex.colorscheme :nightfox)
+
+(nvim.ex.colorscheme :dayfox)

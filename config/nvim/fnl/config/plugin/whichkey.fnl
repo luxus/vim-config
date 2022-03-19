@@ -3,6 +3,6 @@
 
 (let [(ok? which-key) (pcall #(require :which-key))]
   (when ok?
-    (which-key.setup {})))
+      (which-key.setup {:plugins {:presets {:operators false}}})))
 
 
