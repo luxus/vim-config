@@ -190,8 +190,8 @@
                      :mod :cmp}
 
   ; tabout
-  ;; :abecodes/tabout.nvim {:require [:nvim-treesitter/nvim-treesitter :hrsh7th/nvim-cmp]
-  ;;                        :mod :tabout}
+  :abecodes/tabout.nvim {:require [:nvim-treesitter/nvim-treesitter :hrsh7th/nvim-cmp]
+                         :mod :tabout}
 
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [
