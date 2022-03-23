@@ -82,6 +82,9 @@
   ;; bufferize
   :AndrewRadev/bufferize.vim {}
 
+  ;; buffers
+  :kazhala/close-buffers.nvim {:mod :kazhala/close-buffers.nvim} 
+
   ;; coc
   :neoclide/coc.nvim {:branch "release"
                       :mod :coc}
