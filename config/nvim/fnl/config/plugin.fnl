@@ -58,6 +58,7 @@
   ; Text objects
   :wellle/targets.vim {}
   :kana/vim-textobj-user {:mod :vim-textobj-user}
+  :D4KU/vim-textobj-chainmember {}
   :kana/vim-textobj-entire {}
   :Julian/vim-textobj-variable-segment {}
 
@@ -83,7 +84,7 @@
   :AndrewRadev/bufferize.vim {}
 
   ;; buffers
-  :kazhala/close-buffers.nvim {:mod :kazhala/close-buffers.nvim} 
+  :kazhala/close-buffers.nvim {:mod :close-buffers} 
 
   ;; coc
   :neoclide/coc.nvim {:branch "release"
