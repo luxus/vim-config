@@ -171,9 +171,13 @@
                                                :chen244/csharpls-extended-lsp.nvim
                                                :j-hui/fidget.nvim
                                                :Hoffs/omnisharp-extended-lsp.nvim
-                                               :jose-elias-alvarez/null-ls.nvim
                                                :neovim/nvim-lspconfig]
                                     :mod :lspconfig}
+
+  ;; null-ls
+   ;; :jose-elias-alvarez/null-ls.nvim {:requires [:MunifTanjim/eslint.nvim]
+   ;;                                   :mod :null-ls}
+
   ; dap
   :mfussenegger/nvim-dap {:requires [:rcarriga/nvim-dap-ui
                                     :theHamsta/nvim-dap-virtual-text]

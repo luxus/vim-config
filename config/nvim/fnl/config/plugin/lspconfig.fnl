@@ -7,12 +7,7 @@
              illuminate illuminate
              omnisharp_extended omnisharp_extended
              csharpls_extended csharpls_extended
-             fidget fidget
-             null-ls null-ls}})
-
-(null-ls.setup {:sources [null-ls.builtins.formatting.stylua
-                          null-ls.builtins.formatting.eslint
-                          null-ls.builtins.formatting.spell]})
+             fidget fidget}})
 
 (set vim.g.Illuminate_delay 500)
 
