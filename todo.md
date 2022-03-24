@@ -1,4 +1,7 @@
 # Todo
+
+[ ] Plugin idea - named norm - save norm command for later and recall with telescope
+
 [x] which-key
 [x] command history
 [x] save session
