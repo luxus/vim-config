@@ -171,6 +171,7 @@
                                                :chen244/csharpls-extended-lsp.nvim
                                                :j-hui/fidget.nvim
                                                :Hoffs/omnisharp-extended-lsp.nvim
+                                               :jose-elias-alvarez/null-ls.nvim
                                                :neovim/nvim-lspconfig]
                                     :mod :lspconfig}
   ; dap
