@@ -61,6 +61,7 @@
   :D4KU/vim-textobj-chainmember {}
   :kana/vim-textobj-entire {}
   :Julian/vim-textobj-variable-segment {}
+  :AckslD/nvim-revJ.lua {:mode :nvim-revJ.lua}
 
   ; Harpoon
   :ThePrimeagen/harpoon {:requires :nvim-lua/plenary.nvim
