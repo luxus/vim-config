@@ -1,7 +1,8 @@
 (module config.plugin.treesitter
   {autoload {treesitter nvim-treesitter.configs 
              treesitter-context treesitter-context
-             logsitter logsitter}})
+             logsitter logsitter
+             js logsitter.lang.javascript}})
 
 (treesitter.setup {:highlight {:enable true}
                    :indent {:enable true}
@@ -34,3 +35,13 @@
  augroup END
  "
  )
+
+
+;; (set js.log 
+;;      (fn [text position]
+;;       (let [label (text:gsub "\"" "\\\"")
+;;         filepath (vim.fn.expand "%:.")
+;;         line (. position 1)]
+;;         
+;;         (string.format "oconsole.log(\"LS -> %s:%s -> %s: \", %s)" filepath line
+;;                        label text)))
