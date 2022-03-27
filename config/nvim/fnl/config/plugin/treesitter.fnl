@@ -37,11 +37,14 @@
  )
 
 
-;; (set js.log 
-;;      (fn [text position]
-;;       (let [label (text:gsub "\"" "\\\"")
-;;         filepath (vim.fn.expand "%:.")
-;;         line (. position 1)]
-;;         
-;;         (string.format "oconsole.log(\"LS -> %s:%s -> %s: \", %s)" filepath line
-;;                        label text)))
+(comment
+  (set js.log 
+       (fn [text position]
+        (let [label (text:gsub "\"" "\\\"")
+          filepath (vim.fn.expand "%:.")
+          line (. position 1)]
+          
+          (string.format "oconsole.log(\"OVERRIDDEN -> %s:%s -> %s: \", %s)" filepath line
+                         label text))
+        )
+  )
