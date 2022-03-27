@@ -2,6 +2,7 @@
   {autoload {treesitter nvim-treesitter.configs 
              treesitter-context treesitter-context
              logsitter logsitter
+             plenary plenary
              js logsitter.lang.javascript}})
 
 (treesitter.setup {:highlight {:enable true}
@@ -37,7 +38,10 @@
  )
 
 
+
 (comment
+
+  (plenary.path)
   (set js.log 
        (fn [text position]
         (let [label (text:gsub "\"" "\\\"")
