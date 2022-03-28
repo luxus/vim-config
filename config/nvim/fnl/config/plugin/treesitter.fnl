@@ -39,16 +39,30 @@
 
 
 
+(defn get-fwd-slash-path [path]
+  (-> path
+      (string.gsub "\\" "/")
+      (string.gsub "//" "/")))
+
+(set js.log 
+     (fn [text position]
+      (let [label (text:gsub "\"" "\\\"")
+        ;; filepath (vim.fn.expand "%:.")
+        ;; filepath (string.gsub (vim.fn.expand "%:.") "\\" "/")
+        filepath (get-fwd-slash-path (vim.fn.expand "%:."))
+        line (. position 1)]
+        
+        (string.format "oconsole.log(\"LS -> %s:%s -> %s: \", %s)" filepath line label text))))
+
 (comment
 
-  (plenary.path)
-  (set js.log 
-       (fn [text position]
-        (let [label (text:gsub "\"" "\\\"")
-          filepath (vim.fn.expand "%:.")
-          line (. position 1)]
-          
-          (string.format "oconsole.log(\"OVERRIDDEN -> %s:%s -> %s: \", %s)" filepath line
-                         label text))
-        )
+  (plenary.path.normalize (vim.fn.expand "%:."))
+  
+  ((. (plenary.path.new (vim.fn.expand "%:.")) :make_relative) "C:\\repos\\vim-config\\")
+
+  (: (plenary.path.new (vim.fn.expand "%:.")) :expand)
+  (: (plenary.path.new (vim.fn.expand "%:.")) :make_relative )
+
+  
+
   )
