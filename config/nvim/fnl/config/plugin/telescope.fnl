@@ -1,6 +1,7 @@
 (module config.plugin.telescope
   {autoload {nvim aniseed.nvim
              telescope telescope
+             putils telescope.previewers.utils
              telescope-actions telescope.actions
              project project_nvim
              workspaces workspaces
@@ -9,11 +10,39 @@
 
 (nvim-web-devicons.setup {:default true})
 
+(defn is-minified-file [filepath]
+  (let [excluded (vim.tbl_filter 
+                   (fn [ending] 
+                     (filepath:match ending)) 
+                   [".*%.min.js" ".*%.min.css"])
+
+        is-minified (not (vim.tbl_isempty excluded))]
+    
+    is-minified))
+
+(comment 
+  
+  (vim.inspect (is-minified-file "C:/repos/file.min.js")) ;; Returns true
+  (vim.inspect (is-minified-file "C:/repos/other.js")) ;; Returns false
+  )
+
+
+(defn show-is-minified-preview-msg [filename bufnr opts]
+  "Displays a message inidicating that the file is minified"
+  (putils.set_preview_message bufnr opts.winid
+                              (string.format "%s is minifed" filename)))
+
 (telescope.setup {:defaults {:file_ignore_patterns ["node_modules" "wwwroot/lib/*"] 
                              ;;:vimgrep_arguments ["rg" "--color=never" "--no-heading" "--with-filename" "--line-number" "--column" "--smart-case" "--hidden"]
                              :mappings {:i {"<C-Down>" (. telescope-actions :cycle_history_next) 
                                             "<C-Up>" (. telescope-actions :cycle_history_prev) }}
-                             :preview {:treesitter false}
+                             :preview {:treesitter false
+                                       :filetype_hook (fn [filepath bufnr opts] 
+                                                        (if (is-minified-file filepath)
+                                                          (do
+                                                            (show-is-minified-preview-msg filepath bufnr opts)
+                                                            false)
+                                                          true))}
                              }
 
                   :pickers {:grep_string {:theme :ivy}
