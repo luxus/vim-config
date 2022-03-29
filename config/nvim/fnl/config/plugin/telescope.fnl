@@ -10,6 +10,7 @@
 
 (nvim-web-devicons.setup {:default true})
 
+; Issue regarding freezing on min.js files: https://github.com/nvim-telescope/telescope.nvim/issues/1379
 (defn is-minified-file [filepath]
   (let [excluded (vim.tbl_filter 
                    (fn [ending] 
