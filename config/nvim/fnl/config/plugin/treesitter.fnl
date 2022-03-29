@@ -7,7 +7,7 @@
 
 (treesitter.setup {:highlight {:enable true}
                    :indent {:enable true}
-                   :ensure_installed ["clojure" "c_sharp" "javascript" "css"]
+                   :ensure_installed ["clojure" "c_sharp" "javascript" "css" "fennel"]
                    :textobjects {:select {
                                     :enable true
 
