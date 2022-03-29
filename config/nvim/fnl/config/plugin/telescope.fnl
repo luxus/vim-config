@@ -38,11 +38,7 @@
                                             "<C-Up>" (. telescope-actions :cycle_history_prev) }}
                              :preview {:treesitter false
                                        :filetype_hook (fn [filepath bufnr opts] 
-                                                        (if (is-minified-file filepath)
-                                                          (do
-                                                            (show-is-minified-preview-msg filepath bufnr opts)
-                                                            false)
-                                                          true))}
+                                                        (not (is-minified-file filepath)))}
                              }
 
                   :pickers {:grep_string {:theme :ivy}
