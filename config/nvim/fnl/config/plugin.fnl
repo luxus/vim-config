@@ -44,10 +44,8 @@
   :folke/which-key.nvim {:mod :whichkey}
   ; tpope
   :tpope/vim-abolish {}
-  ;:tpope/vim-commentary {}
   :tpope/vim-sensible {}
   :tpope/vim-dispatch {}
-  ;;:tpope/vim-vinegar {}
   :tpope/vim-unimpaired {}
 
   ; comments
