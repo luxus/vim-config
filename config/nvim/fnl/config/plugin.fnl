@@ -45,8 +45,6 @@
   ; tpope
   :tpope/vim-abolish {}
   ;:tpope/vim-commentary {}
-  :tpope/vim-surround {}
-  :tpope/vim-repeat {}
   :tpope/vim-sensible {}
   :tpope/vim-dispatch {}
   ;;:tpope/vim-vinegar {}
@@ -120,8 +118,10 @@
   :nyngwang/NeoZoom.lua {:mod :neozoom}
 
   ;; lisp
+  :guns/vim-sexp {:mod :sexp}
   :tpope/vim-sexp-mappings-for-regular-people {}
-  :guns/vim-sexp {}
+  :tpope/vim-surround {}
+  :tpope/vim-repeat {}
 
 
   ;; Cursor-line
