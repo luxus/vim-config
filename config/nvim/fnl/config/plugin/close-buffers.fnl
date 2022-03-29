@@ -11,7 +11,7 @@
 
 (nvim.set_keymap :n :<leader>bdh
                          "<CMD>lua require('close_buffers').delete({type = 'hidden'})<CR>"
-                         {:noremap true :silent true})
+                         {:noremap true :silent false})
 (nvim.set_keymap :n :<leader>bdu
                          "<CMD>lua require('close_buffers').delete({type = 'nameless'})<CR>"
                          {:noremap true :silent true})

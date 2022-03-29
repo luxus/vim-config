@@ -49,7 +49,7 @@
       (let [label (text:gsub "\"" "\\\"")
         ;; filepath (vim.fn.expand "%:.")
         ;; filepath (string.gsub (vim.fn.expand "%:.") "\\" "/")
-        filepath (get-fwd-slash-path (vim.fn.expand "%:."))
+        filepath (get-fwd-slash-path (vim.fn.expand "%:t"))
         line (. position 1)]
         
         (string.format "oconsole.log(\"LS -> %s:%s -> %s: \", %s)" filepath line label text))))
