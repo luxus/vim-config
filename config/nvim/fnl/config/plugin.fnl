@@ -104,7 +104,7 @@
   ;;                            :mod :nvim-tree}
 
   ;; session
-  :rmagatti/auto-session {}
+  :rmagatti/auto-session {:mod :auto-session}
 
   ; Show indents
   :lukas-reineke/indent-blankline.nvim {:mod :indent-blankline}
