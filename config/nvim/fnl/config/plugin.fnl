@@ -15,19 +15,19 @@
   each of them. Works around Fennel not liking mixed associative and sequential
   tables as well."
   (let [pkgs [...]
-        spec-func 
-        (fn [use]
-          (for [i 1 (a.count pkgs) 2]
-            (let [name (. pkgs i)
-                  opts (. pkgs (+ i 1))]
-              (-?> (. opts :mod) (safe-require-plugin-config))
-              (use (a.assoc opts 1 name)))))
+        spec-func (fn [use]
+                    (for [i 1 (a.count pkgs) 2]
+                      (let [name (. pkgs i)
+                            opts (. pkgs (+ i 1))]
+                        (-?> (. opts :mod) (safe-require-plugin-config))
+                        (use (a.assoc opts 1 name)))))
 
-        spec-config {:config {:compile_path (.. (vim.fn.stdpath "config") "/lua/packer_compiled.lua")}}
-        spec (a.assoc spec-config 1 spec-func)]
+        compile-path (.. (vim.fn.stdpath "config") "/lua/packer_compiled.lua")
+        spec-config {1 spec-func
+                     :config {:compile_path compile-path}}]
 
     ;(print (vim.inspect spec))
-    (packer.startup spec))
+    (packer.startup spec-config))
   nil)
 
 ;plugins managed by packer
@@ -84,8 +84,8 @@
   :kazhala/close-buffers.nvim {:mod :close-buffers} 
 
   ;; coc
-  :neoclide/coc.nvim {:branch "release"
-                      :mod :coc}
+  ;; :neoclide/coc.nvim {:branch "release"
+  ;;                     :mod :coc}
 
   ;; editing
   :mg979/vim-visual-multi {:branch "master"}
@@ -99,9 +99,6 @@
   :ms-jpq/chadtree {:branch "chad"
                     :run "python -m chadtree deps"
                     :mod :chadtree}
-
-  ;; :kyazdani42/nvim-tree.lua {:require :kyazdani42/nvim-web-devicons
-  ;;                            :mod :nvim-tree}
 
   ;; session
   :rmagatti/auto-session {:mod :auto-session}
@@ -133,21 +130,23 @@
   :nvim-telescope/telescope.nvim {:requires [:kyazdani42/nvim-web-devicons
                                              :rmagatti/session-lens
                                              :TC72/telescope-tele-tabby.nvim
-                                             :nvim-telescope/telescope-dap.nvim
                                              :nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim
+                                             :ahmedkhalf/project.nvim
                                              :nvim-telescope/telescope-file-browser.nvim
                                              :LinArcX/telescope-env.nvim
-                                             :natecraddock/workspaces.nvim
-                                             :fannheyward/telescope-coc.nvim
-                                             :ahmedkhalf/project.nvim]
+
+                                             ;; :nvim-telescope/telescope-dap.nvim
+                                             ;; :natecraddock/workspaces.nvim
+                                             ;; :fannheyward/telescope-coc.nvim
+                                             ]
                                   :mod :telescope}
 
   :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()")) }
   :junegunn/fzf.vim {:mod :fzf}
 
   ; Search
-  :pelodelfuego/vim-swoop {:mod :vim-swoop}
+  ;; :pelodelfuego/vim-swoop {:mod :vim-swoop}
 
   ; quickfix
   :kevinhwang91/nvim-bqf {:mod :bqf
@@ -156,8 +155,8 @@
   :wincent/ferret {}
 
   ; clipboard
-  :AckslD/nvim-neoclip.lua {:requires [:nvim-telescope/telescope.nvim]
-                            :mod :neoclip}
+  ;; :AckslD/nvim-neoclip.lua {:requires [:nvim-telescope/telescope.nvim]
+  ;;                           :mod :neoclip}
 
    ;parsing system
   :nvim-treesitter/nvim-treesitter {:requires [:gaelph/logsitter.nvim
@@ -178,9 +177,9 @@
    ;;                                   :mod :null-ls}
 
   ; dap
-  :mfussenegger/nvim-dap {:requires [:rcarriga/nvim-dap-ui
-                                    :theHamsta/nvim-dap-virtual-text]
-                         :mod :dap}
+  ;; :mfussenegger/nvim-dap {:requires [:rcarriga/nvim-dap-ui
+  ;;                                   :theHamsta/nvim-dap-virtual-text]
+  ;;                        :mod :dap}
 
   ; buffer history
   :ton/vim-bufsurf {:mod :vim-bufsurf}

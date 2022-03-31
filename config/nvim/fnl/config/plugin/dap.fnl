@@ -70,3 +70,16 @@
 (nvim.set_keymap :n "<leader>dui" "<cmd>lua require'dapui'.toggle()<CR>" {:noremap true})
 (nvim.set_keymap :v :<M-k> "<Cmd>lua require('dapui').eval()<CR>" {:noremap true})
 
+
+;; Telescope bindings
+
+(nvim.set_keymap :n "<leader>dcc"
+          "<cmd>lua require'telescope'.extensions.dap.commands{}<CR>" {:noremap true})
+(nvim.set_keymap :n "<leader>dco"
+          "<cmd>lua require'telescope'.extensions.dap.configurations{}<CR>" {:noremap true})
+(nvim.set_keymap :n "<leader>dlb"
+          "<cmd>lua require'telescope'.extensions.dap.list_breakpoints{}<CR>" {:noremap true})
+(nvim.set_keymap :n "<leader>dv"
+          "<cmd>lua require'telescope'.extensions.dap.variables{}<CR>" {:noremap true})
+(nvim.set_keymap :n "<leader>df"
+          "<cmd>lua require'telescope'.extensions.dap.frames{}<CR>" {:noremap true})

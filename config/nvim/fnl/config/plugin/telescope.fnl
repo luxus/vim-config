@@ -4,7 +4,6 @@
              putils telescope.previewers.utils
              telescope-actions telescope.actions
              project project_nvim
-             workspaces workspaces
              nvim-web-devicons nvim-web-devicons}})
 
 
@@ -67,11 +66,7 @@
                                ;    :base_dirs  ["~/repos" "~/source/repos"  "C:/repos"]
                                ;    :hidden_files true }
                                }})
-(workspaces.setup {
-    :hooks {:open ["Telescope find_files"]}})
 
-
-(telescope.load_extension "workspaces")
 (telescope.load_extension "fzf")
 (telescope.load_extension "projects")
 (telescope.load_extension "dap")
@@ -117,16 +112,3 @@
 (nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.projects.projects{}<CR>" {:noremap true :silent true})
 (nvim.set_keymap :n :<leader>ft ":lua require('telescope').extensions.tele_tabby.list()<CR>" {:noremap true :silent true})
 (nvim.set_keymap :n :<leader>fs ":lua require('session-lens').search_session()<CR>" {:noremap true})
-
-
-;; telescope-dap
-(nvim.set_keymap :n "<leader>dcc"
-          "<cmd>lua require'telescope'.extensions.dap.commands{}<CR>" {:noremap true})
-(nvim.set_keymap :n "<leader>dco"
-          "<cmd>lua require'telescope'.extensions.dap.configurations{}<CR>" {:noremap true})
-(nvim.set_keymap :n "<leader>dlb"
-          "<cmd>lua require'telescope'.extensions.dap.list_breakpoints{}<CR>" {:noremap true})
-(nvim.set_keymap :n "<leader>dv"
-          "<cmd>lua require'telescope'.extensions.dap.variables{}<CR>" {:noremap true})
-(nvim.set_keymap :n "<leader>df"
-          "<cmd>lua require'telescope'.extensions.dap.frames{}<CR>" {:noremap true})

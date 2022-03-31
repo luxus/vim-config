@@ -14,7 +14,7 @@
 (nvim.set_keymap :o :<leader>hw ":lua require'hop'.hint_words()<cr>" {:noremap true})
 
 (vim.api.nvim_set_keymap :n :f
-f                        "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>"
+                         "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>"
                          {})
 (vim.api.nvim_set_keymap :n :F
                          "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>"
