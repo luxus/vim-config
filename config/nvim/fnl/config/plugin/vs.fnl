@@ -33,6 +33,7 @@
 
 
 (defn open-in-vs-pwsh [devenv-path] 
+  (vim.api.nvim_command "norm Vy")
   (let [current-file (vim.fn.expand "%")]
     (vim.api.nvim_command 
       ;; '&' executes the string containing the path to the devenv executable
