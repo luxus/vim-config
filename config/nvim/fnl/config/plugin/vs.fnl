@@ -111,6 +111,3 @@
    
    (nvim.set_keymap :n :<leader>ov (get-lua-cmd "open-in-vs-pwsh" [devenv-path]) {:nowait true :noremap true})
    ))
-
-
-;; (nvim.set_keymap :n :<leader>ov (get-lua-cmd "open-in-vs" ["C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe"]) {:nowait true :noremap true})
