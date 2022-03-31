@@ -64,8 +64,10 @@
                          :mod :harpoon}
 
   ;; movement
-  :phaazon/hop.nvim {:branch "v1"
-                     :mod :hop}
+  ;; :phaazon/hop.nvim {:branch "v1"
+  ;;                    :mod :hop}
+
+  :ggandor/lightspeed.nvim {:mod :lightspeed}
 
   :matze/vim-move {:mod :vim-move}
 
