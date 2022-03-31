@@ -3,8 +3,10 @@
              neoclip neoclip
              telescope telescope}})
 
-(neoclip.setup
+; NOT IN USE
+
+(neoclip.setup 
   ;{:keys {:telescope {:i {:custom { ["<C-p>"] telescope.actions.move_selection_next}}}}}
-)
+  )
 
 (telescope.load_extension "neoclip")

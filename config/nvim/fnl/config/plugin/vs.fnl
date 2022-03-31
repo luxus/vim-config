@@ -5,7 +5,6 @@
              autil aniseed.nvim.util
              path plenary.path
              job plenary.job
-             uv vim.loop ;; This doesn't seem to actually work
              }})
 
 

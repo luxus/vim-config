@@ -4,6 +4,8 @@
              nvim-dap-virtual-text nvim-dap-virtual-text
              nvim aniseed.nvim}})
 
+; NOT IN USE
+
 (dap-ui.setup)
 (nvim-dap-virtual-text.setup)
 ; (set vim.g.dap_virtual_text true)

@@ -2,7 +2,7 @@
   {autoload {nvim aniseed.nvim
              auto-session auto-session}})
 
-(auto-session.setup {:auto_restore_enabled false})
+(auto-session.setup {:auto_restore_enabled true})
 
 
 

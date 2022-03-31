@@ -70,7 +70,7 @@
   :matze/vim-move {:mod :vim-move}
 
   ;; git
-  :tpope/vim-fugitive {:requires [:junegunn/gv.vim :rbong/vim-flog]}
+  :tpope/vim-fugitive {:requires [:junegunn/gv.vim]}
   
   :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim 
                                       :sindrets/diffview.nvim
@@ -82,10 +82,6 @@
 
   ;; buffers
   :kazhala/close-buffers.nvim {:mod :close-buffers} 
-
-  ;; coc
-  ;; :neoclide/coc.nvim {:branch "release"
-  ;;                     :mod :coc}
 
   ;; editing
   :mg979/vim-visual-multi {:branch "master"}
@@ -106,7 +102,7 @@
   ; Show indents
   :lukas-reineke/indent-blankline.nvim {:mod :indent-blankline}
 
-  ; ;; autoread
+  ; autoread
   ; :djoshea/vim-autoread {}
 
   ;; zoom
@@ -125,7 +121,7 @@
   ;; line
   :feline-nvim/feline.nvim {:mod :feline}
 
-  ;file searching
+  ; file searching
   :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
   :nvim-telescope/telescope.nvim {:requires [:kyazdani42/nvim-web-devicons
                                              :rmagatti/session-lens
@@ -145,18 +141,11 @@
   :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()")) }
   :junegunn/fzf.vim {:mod :fzf}
 
-  ; Search
-  ;; :pelodelfuego/vim-swoop {:mod :vim-swoop}
-
   ; quickfix
   :kevinhwang91/nvim-bqf {:mod :bqf
                           :ft [:qf]}
 
   :wincent/ferret {}
-
-  ; clipboard
-  ;; :AckslD/nvim-neoclip.lua {:requires [:nvim-telescope/telescope.nvim]
-  ;;                           :mod :neoclip}
 
    ;parsing system
   :nvim-treesitter/nvim-treesitter {:requires [:gaelph/logsitter.nvim
@@ -172,14 +161,8 @@
                                                :neovim/nvim-lspconfig]
                                     :mod :lspconfig}
 
-  ;; null-ls
-   ;; :jose-elias-alvarez/null-ls.nvim {:requires [:MunifTanjim/eslint.nvim]
-   ;;                                   :mod :null-ls}
 
-  ; dap
-  ;; :mfussenegger/nvim-dap {:requires [:rcarriga/nvim-dap-ui
-  ;;                                   :theHamsta/nvim-dap-virtual-text]
-  ;;                        :mod :dap}
+
 
   ; buffer history
   :ton/vim-bufsurf {:mod :vim-bufsurf}
@@ -210,6 +193,26 @@
                                              :marko-cerovac/material.nvim
                                              :EdenEast/nightfox.nvim] 
                                   :mod :theme }
+
+  ; Search
+  ;; :pelodelfuego/vim-swoop {:mod :vim-swoop}
+
+  ; clipboard
+  ;; :AckslD/nvim-neoclip.lua {:requires [:nvim-telescope/telescope.nvim]
+  ;;                           :mod :neoclip}
+
+  ;; coc
+  ;; :neoclide/coc.nvim {:branch "release"
+  ;;                     :mod :coc}
+
+  ;; null-ls
+   ;; :jose-elias-alvarez/null-ls.nvim {:requires [:MunifTanjim/eslint.nvim]
+   ;;                                   :mod :null-ls}
+
+  ; dap
+  ;; :mfussenegger/nvim-dap {:requires [:rcarriga/nvim-dap-ui
+  ;;                                   :theHamsta/nvim-dap-virtual-text]
+  ;;                        :mod :dap}
   )
 
 ;; TODO: Don't run this config if not on windows with powershell

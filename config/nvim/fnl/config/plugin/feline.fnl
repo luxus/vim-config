@@ -1,4 +1,4 @@
-(module config.plugin.lualine
+(module config.plugin.feline
   {autoload {nvim aniseed.nvim
              feline feline}})
 
