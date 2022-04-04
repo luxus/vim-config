@@ -185,6 +185,10 @@
   :abecodes/tabout.nvim {:require [:nvim-treesitter/nvim-treesitter :hrsh7th/nvim-cmp]
                          :mod :tabout}
 
+
+  ; scratch
+  :mtth/scratch.vim {}
+
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [
                                              :rebelot/kanagawa.nvim
