@@ -3,6 +3,7 @@
              treesitter-context treesitter-context
              logsitter logsitter
              plenary plenary
+             nvim aniseed.nvim
              js logsitter.lang.javascript}})
 
 (treesitter.setup {:highlight {:enable true}
@@ -37,6 +38,8 @@
  "
  )
 
+; select arg, paste behing, surround with quotes,
+(nvim.set_keymap :n :<localleader>la "<cmd>norm yiaPgpS\"`]a, <CR>" {:noremap true})
 
 
 (defn get-fwd-slash-path [path]
