@@ -72,7 +72,8 @@
   :matze/vim-move {:mod :vim-move}
 
   ;; git
-  :tpope/vim-fugitive {:requires [:junegunn/gv.vim]}
+  :tpope/vim-fugitive {:requires [:AndrewRadev/linediff.vim
+                                  :junegunn/gv.vim]}
   
   :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim 
                                       :sindrets/diffview.nvim
