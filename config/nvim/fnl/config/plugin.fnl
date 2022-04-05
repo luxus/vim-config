@@ -188,7 +188,7 @@
 
 
   ; scratch
-  :mtth/scratch.vim {}
+  :mtth/scratch.vim {:mod :scratch}
 
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [
