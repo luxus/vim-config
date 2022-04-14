@@ -80,6 +80,8 @@
   
   )
 
+;; TODO: Deal with: Could not open file: C:\WINDOWS\system32\config\systemprofile\.nvim-listen-address: Permission denied
+;; This is likely due to using "~" which in the context of visual studio might not be user home? Is it running as admin?
 (defn- write-nvim-listen-address-pwsh []
   "Write the address using :! and powershell. Kept for reference only"
   ;; execute shell commands silently: https://vi.stackexchange.com/questions/1942/how-to-execute-shell-commands-silently

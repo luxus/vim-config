@@ -15,6 +15,6 @@
 ;; (set vim.g.material_style "deep ocean")
 ;; (material.setup)
 
-;; (nvim.ex.colorscheme :kanagawa)
+(nvim.ex.colorscheme :kanagawa)
 
 ;; (nvim.ex.colorscheme :nightfox)
