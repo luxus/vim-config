@@ -74,7 +74,7 @@
 ;; (telescope.load_extension "coc")
 ;; (telescope.load_extension "dap")
 
-(project.setup {:manual_mode false
+(project.setup {:manual_mode true
                 :exclude_dirs ["~/source/repos/fairplayams/"
                                "~/source/repos/fairplayams2/"]
                 :detection_methods [
