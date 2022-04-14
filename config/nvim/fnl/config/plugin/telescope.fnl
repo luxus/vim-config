@@ -11,6 +11,7 @@
 
 ; Issue regarding freezing on min.js files: https://github.com/nvim-telescope/telescope.nvim/issues/1379
 (defn is-minified-file [filepath]
+  "Check if the file name is indicative of a minified js or css file"
   (let [excluded (vim.tbl_filter 
                    (fn [ending] 
                      (filepath:match ending)) 
@@ -76,13 +77,16 @@
 
 (project.setup {:manual_mode false
                 :exclude_dirs ["~/source/repos/fairplayams/"
-                               "~/source/repos/fairplayams2/"]
+                               "~/source/repos/fairplayams2/"
+                               "C:/"
+                               "c:/"
+                               ]
                 :detection_methods [
                                     "pattern"
                                     ;; "lsp"
                                     ]
                 :silent_chdir true
-                :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" 
+                :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" "deps.edn"
                            ; "*.csproj" 
                             ".west"
                            ; "!^AMSApp"

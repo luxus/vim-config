@@ -9,11 +9,12 @@
 
 ;;(nvim.ex.colorscheme :nightfly)
 ; (nvim.ex.colorscheme :embark)
-;; (nvim.ex.colorscheme :falcon)
+(nvim.ex.colorscheme :falcon)
 
-; (set vim.g.material_style "deep ocean")
-; (material.setup)
+
+;; (set vim.g.material_style "deep ocean")
+;; (material.setup)
 
 ;; (nvim.ex.colorscheme :kanagawa)
 
-(nvim.ex.colorscheme :nightfox)
+;; (nvim.ex.colorscheme :nightfox)
