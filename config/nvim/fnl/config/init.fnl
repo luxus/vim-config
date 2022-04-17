@@ -21,6 +21,10 @@
 (set vim.o.softtabstop 4)
 (set vim.o.expandtab true)
 
+;; cmdline height
+;; After updating to nvim 0.7 cmdheight was set to 24 for unknown reasons
+(set vim.o.cmdheight 1)
+
 ; font 
 (set vim.o.guifont "FiraCode NF:h11")
 
