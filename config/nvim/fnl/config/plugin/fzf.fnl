@@ -65,8 +65,11 @@ command! -bang -nargs=* GGrep
       
       result))
 
-(autil.fn-bridge "s:fzf_root" "config.plugin.fzf" "fzf-root")
-(nvim.set_keymap :n :<leader>fu ":exe 'Files ' . <SID>fzf_root()<CR>" {:noremap true})
+(vim.keymap.set :n :<leader>fu (fn [] 
+                                 (vim.cmd (.. ":Files " (fzf-root)))) {:noremap true})
+
+
+
 
 (defn get-lua-cmd [func-name params]
   (.. ":lua require('" *module-name* "')['" func-name "']('" (astring.join ", " params) "')<CR>"))
