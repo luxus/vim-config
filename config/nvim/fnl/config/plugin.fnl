@@ -33,15 +33,19 @@
 ;plugins managed by packer
 (use
   :lewis6991/impatient.nvim {:mod :impatient}
-  ;plugin Manager
+  ; plugin Manager
   :wbthomason/packer.nvim {}
   ;nvim config and plugins in Fennel
   :Olical/aniseed {:require [:Olical/nvim-local-fennel]
                    :branch :develop}
-  ;clojure
+  ; clojure
   :Olical/conjure {:branch :master :mod :conjure}
+  ; https://github.com/Olical/conjure/wiki/Quick-start:-Clojure
+  ;; :clojure-vim/vim-jack-in {:require [:tpope/vim-dispatch :radenling/vim-dispatch-neovim]}
+
   ; which-key
   :folke/which-key.nvim {:mod :whichkey}
+
   ; tpope
   :tpope/vim-abolish {}
   :tpope/vim-sensible {}
