@@ -81,10 +81,8 @@
                                "C:/"
                                "c:/"
                                ]
-                :detection_methods [
-                                    "pattern"
-                                    ;; "lsp"
-                                    ]
+                :detection_methods ["pattern"
+                                    "lsp"]
                 :silent_chdir true
                 :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" "deps.edn"
                            ; "*.csproj" 
@@ -116,3 +114,4 @@
 (nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.projects.projects{}<CR>" {:noremap true :silent true})
 (nvim.set_keymap :n :<leader>ft ":lua require('telescope').extensions.tele_tabby.list()<CR>" {:noremap true :silent true})
 (nvim.set_keymap :n :<leader>fs ":lua require('session-lens').search_session()<CR>" {:noremap true})
+(vim.keymap.set :n :<leader>pr (fn [] (vim.cmd "ProjectRoot")) {:noremap true})
