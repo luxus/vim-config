@@ -1,6 +1,7 @@
 (module config.plugin.theme
   {autoload {nvim aniseed.nvim
              theme github-theme
+             mosel mosel.nvim
              material material}})
 
 ;; For github theme
@@ -10,7 +11,7 @@
 
 ;;(nvim.ex.colorscheme :nightfly)
 ; (nvim.ex.colorscheme :embark)
-(nvim.ex.colorscheme :falcon)
+;; (nvim.ex.colorscheme :falcon)
 
 
 ;; (set vim.g.material_style "deep ocean")
@@ -18,4 +19,18 @@
 
 ;; (nvim.ex.colorscheme :kanagawa)
 
-;; (nvim.ex.colorscheme :nightfox)
+(defn set-theme [is-dark]
+  (if is-dark
+    (do 
+      (nvim.ex.colorscheme :nightfox) 
+      (set vim.o.background :dark))
+
+    (do 
+      (theme.setup {:theme_style "light"
+                    :comment_style "italic"})
+      (set vim.o.background :light))))
+
+(vim.keymap.set :n :<leader>tt #(set-theme (not (= vim.o.background "dark"))) {:noremap true})
+
+
+;; (nvim.ex.colorscheme :mosel)

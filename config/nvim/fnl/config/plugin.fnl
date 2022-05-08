@@ -195,7 +195,7 @@
   :mtth/scratch.vim {:mod :scratch}
 
   ; theme
-  :bluz71/vim-nightfly-guicolors {:requires [
+  :bluz71/vim-nightfly-guicolors {:requires [:Domeee/mosel.nvim
                                              :rebelot/kanagawa.nvim
                                              :tomasr/molokai
                                              :embark-theme/vim
