@@ -30,5 +30,7 @@
                     :comment_style "italic"})
       (set vim.o.background :light))))
 
+(set-theme true)
+
 ; Toggle theme
 (vim.keymap.set :n :<leader>tt #(set-theme (-> vim.o.background (= "dark") not)) {:noremap true})
