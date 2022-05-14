@@ -13,11 +13,11 @@
 
 (defn update-omnisharp-handler [opts default-handlers]
   (let [merged-handlers (c.merge default-handlers {:textDocument/definition omnisharp_extended.handler})]
-          (c.assoc-in opts [:handlers] merged-handlers)))
+       (c.assoc-in opts [:handlers] merged-handlers)))
 
 (defn update-csharp-ls-handler [opts default-handlers]
   (let [merged-handlers (c.merge default-handlers {:textDocument/definition csharpls_extended.handler})]
-          (c.assoc-in opts [:handlers] merged-handlers)))
+       (c.assoc-in opts [:handlers] merged-handlers)))
 
 (comment
 
@@ -37,10 +37,10 @@
         warn  (.. prefix "SignWarn")
         info  (.. prefix "SignInfo")
         hint  (.. prefix "SignHint")]
-  (vim.fn.sign_define error {:text "x" :texthl error})
-  (vim.fn.sign_define warn  {:text "!" :texthl warn})
-  (vim.fn.sign_define info  {:text "i" :texthl info})
-  (vim.fn.sign_define hint  {:text "?" :texthl hint})))
+   (vim.fn.sign_define error {:text "x" :texthl error})
+   (vim.fn.sign_define warn  {:text "!" :texthl warn})
+   (vim.fn.sign_define info  {:text "i" :texthl info})
+   (vim.fn.sign_define hint  {:text "?" :texthl hint})))
 
 (if (= (nvim.fn.has "nvim-0.6") 1)
   (define-signs "Diagnostic")
@@ -101,28 +101,28 @@
           (c.assoc-in opts [:cmd ] [ "clangd" "--compile-commands-dir" "./light_bulb_dongle/build-dk"]))
 
         (when (= server.name "omnisharp")
-          (update-omnisharp-handler opts handlers)
+          (update-omnisharp-handler opts handlers))
           ;; (let [pid (vim.fn.getpid)
           ;;       omnisharp-bin ""] 
           ;;   (c.update-in opts [:cmd] [""]) )
           
-          )
+          
 
         (when (= server.name "csharp_ls")
-          (update-csharp-ls-handler opts handlers)
+          (update-csharp-ls-handler opts handlers))
           ;; (let [pid (vim.fn.getpid)
           ;;       omnisharp-bin ""] 
           ;;   (c.update-in opts [:cmd] [""]) )
           
-          )
+          
 
-      (server:setup opts))))
+       (server:setup opts)))))
 
   ;; Clojure
   ; (lsp.clojure_lsp.setup {:on_attach on_attach
   ;                         :handlers handlers
   ;                         :capabilities capabilities})
-  )
+  
 
 
 
