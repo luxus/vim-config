@@ -9,6 +9,8 @@
              csharpls_extended csharpls_extended
              fidget fidget}})
 
+(nvim-lsp-installer.setup {})
+
 (set vim.g.Illuminate_delay 500)
 
 (defn update-omnisharp-handler [opts default-handlers]
@@ -54,14 +56,17 @@
                    :update_in_insert false
                    :underline true
                    :virtual_text false})
+
                 "textDocument/hover"
                 (vim.lsp.with
                   vim.lsp.handlers.hover
                   {:border "single"})
+
                 "textDocument/signatureHelp"
                 (vim.lsp.with
                   vim.lsp.handlers.signature_help
                   {:border "single"})}
+
       capabilities (cmplsp.update_capabilities (vim.lsp.protocol.make_client_capabilities))
       on_attach (fn [client bufnr]
                   (do
@@ -87,37 +92,43 @@
                     ;; Highlight word under cursor
                     (illuminate.on_attach client)))]
 
-  (nvim-lsp-installer.on_server_ready 
-    (fn on-server-ready-handler [server]
 
-      (let [opts {:on_attach on_attach
-                  :handlers handlers
-                  :capabilities capabilities}]
+  (do 
+    (->> ["omnisharp" "clangd" "csharp_ls" "tsserver" "clojure_lsp"]
+         (c.map (fn [server-name]
+                  (print (vim.inspect server-name))
+                  (let [opts {:on_attach             on_attach
+                              :handlers              handlers
+                              :capabilities          capabilities
+                              :debounce_text_changes 150}]
        
-      ; Include additional filetypes for clangd as it does not recognise c.doxygen by default
-        (when (= server.name "clangd")
-          (c.assoc-in opts [:filetypes ] [ "c" "cpp" "objc" "objcpp" "c.doxygen"])
-          ; Hard coded the clangd --compile-commands-dir argument
-          (c.assoc-in opts [:cmd ] [ "clangd" "--compile-commands-dir" "./light_bulb_dongle/build-dk"]))
+                   ; Include additional filetypes for clangd as it does not recognise c.doxygen by default
+                   (when (= server-name "clangd")
+                     (c.assoc-in opts [:filetypes ] [ "c" "cpp" "objc" "objcpp" "c.doxygen"])
+                     ; Hard coded the clangd --compile-commands-dir argument
+                     (c.assoc-in opts [:cmd ] [ "clangd" "--compile-commands-dir" "./light_bulb_dongle/build-dk"]))
 
-        (when (= server.name "omnisharp")
-          (update-omnisharp-handler opts handlers))
-          ;; (let [pid (vim.fn.getpid)
-          ;;       omnisharp-bin ""] 
-          ;;   (c.update-in opts [:cmd] [""]) )
+                   (when (= server-name "omnisharp")
+                     (update-omnisharp-handler opts handlers))
+                     ;; (let [pid (vim.fn.getpid)
+                     ;;       omnisharp-bin ""] 
+                     ;;   (c.update-in opts [:cmd] [""]) )
           
+                   (when (= server-name "csharp_ls")
+                     (update-csharp-ls-handler opts handlers))
+                     ;; (let [pid (vim.fn.getpid)
+                     ;;       omnisharp-bin ""] 
+                     ;;   (c.update-in opts [:cmd] [""]))
           
+                   ((. lsp server-name :setup) opts))))))) 
 
-        (when (= server.name "csharp_ls")
-          (update-csharp-ls-handler opts handlers))
-          ;; (let [pid (vim.fn.getpid)
-          ;;       omnisharp-bin ""] 
-          ;;   (c.update-in opts [:cmd] [""]) )
-          
-          
-
-       (server:setup opts)))))
-
+;; (print (vim.inspect lsp))
+;;
+;; (let [m {:aaa {:bbb 2}}]
+;;   (print (vim.inspect m))
+;;   (. m :aa :bbb))
+  
+    
   ;; Clojure
   ; (lsp.clojure_lsp.setup {:on_attach on_attach
   ;                         :handlers handlers
