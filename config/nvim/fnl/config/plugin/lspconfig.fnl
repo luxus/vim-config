@@ -24,7 +24,9 @@
 (comment
 
   (def aa {:aa "aa"})
+  ; Does not mutate
   (c.merge aa {:cc "cc"})
+  ; Mutates
   (c.assoc-in aa [:bb] "bb")
 
   (update-omnisharp-handler {:handlers                  {:textDocument/definition :something}
