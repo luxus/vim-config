@@ -124,13 +124,6 @@
           
                    ((. lsp server-name :setup) opts))))))) 
 
-;; (print (vim.inspect lsp))
-;;
-;; (let [m {:aaa {:bbb 2}}]
-;;   (print (vim.inspect m))
-;;   (. m :aa :bbb))
-  
-    
   ;; Clojure
   ; (lsp.clojure_lsp.setup {:on_attach on_attach
   ;                         :handlers handlers
