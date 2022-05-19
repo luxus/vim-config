@@ -96,9 +96,10 @@
 
 
   (do 
-    (->> ["omnisharp" "clangd" "csharp_ls" "tsserver" "clojure_lsp"]
+    (->> ["omnisharp" "clangd" "tsserver" "clojure_lsp" 
+         ; "csharp_ls"
+          ]
          (c.map (fn [server-name]
-                  (print (vim.inspect server-name))
                   (let [opts {:on_attach             on_attach
                               :handlers              handlers
                               :capabilities          capabilities
