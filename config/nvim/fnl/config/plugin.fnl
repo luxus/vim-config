@@ -117,6 +117,7 @@
 
   ;; lisp
   :guns/vim-sexp {:mod :sexp}
+  :eraserhd/parinfer-rust {:run "cargo build --release"}
   :tpope/vim-sexp-mappings-for-regular-people {}
   :tpope/vim-surround {}
   :tpope/vim-repeat {}
@@ -137,15 +138,15 @@
                                              :nvim-lua/plenary.nvim
                                              :ahmedkhalf/project.nvim
                                              :nvim-telescope/telescope-file-browser.nvim
-                                             :LinArcX/telescope-env.nvim
+                                             :LinArcX/telescope-env.nvim]
 
                                              ;; :nvim-telescope/telescope-dap.nvim
                                              ;; :natecraddock/workspaces.nvim
                                              ;; :fannheyward/telescope-coc.nvim
-                                             ]
+                                             
                                   :mod :telescope}
 
-  :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()")) }
+  :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()"))}
   :junegunn/fzf.vim {:mod :fzf}
 
   ; quickfix
@@ -203,7 +204,7 @@
                                              :fenetikm/falcon
                                              :marko-cerovac/material.nvim
                                              :EdenEast/nightfox.nvim] 
-                                  :mod :theme }
+                                  :mod :theme})
 
   ; Search
   ;; :pelodelfuego/vim-swoop {:mod :vim-swoop}
@@ -224,7 +225,7 @@
   ;; :mfussenegger/nvim-dap {:requires [:rcarriga/nvim-dap-ui
   ;;                                   :theHamsta/nvim-dap-virtual-text]
   ;;                        :mod :dap}
-  )
+  
 
 ;; TODO: Don't run this config if not on windows with powershell
 (vs.setup {:devenv-path "C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe"
