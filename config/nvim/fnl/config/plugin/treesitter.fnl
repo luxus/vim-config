@@ -42,10 +42,10 @@
 (defn get-insert-string-cmd [s is-above]
   (.. "norm " (if is-above "O" "o") s))
 
-(vim.keymap.set :n :<localleader>dO (fn [] (vim.api.nvim_command (get-insert-string-cmd "debugger;" true))) {:noremap true})
-(vim.keymap.set :n :<localleader>do (fn [] (vim.api.nvim_command (get-insert-string-cmd "debugger;" false))) {:noremap true})
-(vim.keymap.set :n :<localleader>tO (fn [] (vim.api.nvim_command (get-insert-string-cmd "console.trace();" true))) {:noremap true})
-(vim.keymap.set :n :<localleader>to (fn [] (vim.api.nvim_command (get-insert-string-cmd "console.trace();" false))) {:noremap true})
+(vim.keymap.set :n :<localleader>dO (fn [] (vim.api.nvim_command (get-insert-string-cmd "debugger;" true))) {:noremap true :desc "Debugger above"})
+(vim.keymap.set :n :<localleader>do (fn [] (vim.api.nvim_command (get-insert-string-cmd "debugger;" false))) {:noremap true :desc "Debugger below"})
+(vim.keymap.set :n :<localleader>tO (fn [] (vim.api.nvim_command (get-insert-string-cmd "console.trace();" true))) {:noremap true :desc "Trace above"})
+(vim.keymap.set :n :<localleader>to (fn [] (vim.api.nvim_command (get-insert-string-cmd "console.trace();" false))) {:noremap true :desc "Trace below"})
 
 ; select arg, paste behing, surround with quotes,
 (nvim.set_keymap :n :<localleader>la "<cmd>norm yiaPgpS\"`]a, <CR>" {:noremap true})
