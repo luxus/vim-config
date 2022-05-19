@@ -6,6 +6,9 @@ nnoremap gp `[v`]
 
 inoremap jk <esc>
 
+noremap j gj
+noremap k gk
+
 :set smartcase
 :set ignorecase
 
