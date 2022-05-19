@@ -122,6 +122,8 @@
   :tpope/vim-surround {}
   :tpope/vim-repeat {}
 
+  ; Highlighting
+  :azabiong/vim-highlighter {:mod :vim-highlighter}
 
   ;; Cursor-line
   :mvllow/modes.nvim {:mod :modes}
