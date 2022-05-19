@@ -81,8 +81,8 @@
                                "C:/"
                                "c:/"
                                ]
-                :detection_methods ["pattern"
-                                    "lsp"]
+                :detection_methods ["lsp"
+                                    "pattern"]
                 :silent_chdir true
                 :patterns [ ".git" "_darcs" ".hg" ".bzr" ".svn" "Makefile" "package.json" "deps.edn"
                            ; "*.csproj" 
