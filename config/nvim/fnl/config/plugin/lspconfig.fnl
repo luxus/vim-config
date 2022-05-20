@@ -96,7 +96,7 @@
 
 
   (do 
-    (->> ["omnisharp" "clangd" "tsserver" "clojure_lsp" 
+    (->> ["omnisharp" "clangd" "tsserver" "clojure_lsp" "xml"
          ; "csharp_ls"
           ]
          (c.map (fn [server-name]
