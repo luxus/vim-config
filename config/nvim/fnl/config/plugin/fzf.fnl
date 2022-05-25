@@ -8,7 +8,13 @@
              path plenary.path
              fzf fzf
              which-key which-key
-             fennel fennel}})
+             fennel fennel}
+             
+   require-macros [debug-macros]})
+
+(comment  
+  ;; (import-macros {: dbg} :debug-macros)
+  (dbg (+ 1 2 3)))
 
 ;;(vim.fn.fzf#install)
 
@@ -237,84 +243,7 @@ command! -bang -nargs=* GGrep
 (set vim.g.fzf_preview_window "")
 
 
-(comment
-  (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})
-
-  (fennel.view t) ; "{:aa \"aa\" :bb {:things-in-b [\"b\" \"bb\" \"bbb\"]}}"
-
-  (fennel.view (unpack ["a"])) ; nil
-; "\"a\""
-
-  (fennel.view ["a"]) ; "[\"a\"]"
-
-  (print (fennel.view t))
-  (vim.inspect t)
-; "{
-;   aa = \"aa\",
-;   bb = {
-;     [\"things-in-b\"] = { \"b\", \"bb\", \"bbb\" }
-;   }
-; }"
-  (print (vim.inspect t))
-
-  (do
-    (defn search [] 
-      (vim.call "fzf#vim#files" ".")
-      (vim.api.nvim_exec "<cmd>Rg")
-      (vim.api.nvim_feedkeys "<c-u>"))
-
-    (search)))
- 
-
-;; Clojure example code of a debug macro
-;; (do 
-;;   (macro dbg [& forms] 
-;;     `(do (apply prn (rest '~&form)) 
-;;          (let [res# (do ~@forms)] (prn (symbol "=>") res#) res#)))
-;;   
-;;   
-;;   (dbg (+ 1 2 3))))
-
-(macro dbg [form] 
-  (let [form-as-str# (view form)]
-    `(do (print ,form-as-str# "=>") ;
-       (let [res# (do ,form)]
-         (print "  " res#)
-         res#))))
-
-
-(comment 
-  (print (fennel.view (fennel.list "aa" "bb")))
-  (print "a" "b")
-
-  (do
-    (dbg (+ 1 2 3))
-    (dbg (+ (dbg (/ 6 2)) 4))))
   
-
-;; (fn get-dbg-form [form]
-;;   (list))
-
-
-(comment 
-  
-  (match [1 2 3]
-    (where [a b c] (= a 1)) (.. "this" "-" "matched")
-    (where [a b c] (= a 2)) :no-match) 
-  
-  (do
-    (macro dbgn [form]
-      (let [[head & tail] form]
-        (print "Form:" (view form))
-        (print "Head:" (view head))
-        (match head
-          (where [h] (list? h)) (print "IS LIST")
-          (where [h] (sym? h)) (print "IS SYM")
-          _ (print "primitive?"))
-
-        form))
-
-    (dbgn (+ 1 2 3))))
    
   
   
