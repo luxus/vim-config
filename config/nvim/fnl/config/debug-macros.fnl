@@ -64,7 +64,7 @@
         (print-form-elem form)))
       
 
-    (dbgn (+ 1 2 3))))
+    (dbgn (+ 1 2 (- 3 1)))))
 
 (comment
   (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})
