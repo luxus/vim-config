@@ -19,6 +19,11 @@
   (print (fennel.view (fennel.list "aa" "bb")))
   (print "a" "b")
 
+  (type type) ; "function"
+  (type []) ; "table"
+  (type {}) ; "table"
+  (type 1) ; "number"
+
   (do
     (dbg (+ 1 2 3))
     (dbg (+ (dbg (/ 6 2)) 4))))
@@ -26,6 +31,8 @@
 
 ;; (fn get-dbg-form [form]
 ;;   (list))
+
+
 
 
 (comment 
@@ -36,15 +43,14 @@
   
   (do
     (macro dbgn [form]
-      (let [[head & tail] form]
-        (print "Form:" (view form))
-        (print "Head:" (view head))
-        (match head
-          (where [h] (list? h)) (print "IS LIST")
-          (where [h] (sym? h)) (print "IS SYM")
-          _ (print "primitive?"))
-
-        form))
+      (print (view form))
+      (match form
+          (where f (-> f list?)) (print "IS LIST")
+          (where f (= (type f) "function")) (print "IS FUNCTION")
+          (where f (= (type f) "number")) (print "IS NUMBER")
+          (where f (= (type f) "table")) (print "IS TABLE")
+          (where f (sym? f)) (print "IS SYM")
+          _ (print "primitive?")))
 
     (dbgn (+ 1 2 3))))
 
