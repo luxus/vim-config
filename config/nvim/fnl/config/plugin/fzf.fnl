@@ -10,7 +10,7 @@
              which-key which-key
              fennel fennel}
              
-   require-macros [debug-macros]})
+   require-macros [config.debug-macros]})
 
 (comment  
   ;; (import-macros {: dbg} :debug-macros)
