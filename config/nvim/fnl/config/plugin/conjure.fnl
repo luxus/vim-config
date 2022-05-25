@@ -29,7 +29,22 @@
 
 (vim.keymap.set :n :<localleader>cs clerk-show {:noremap true})
 
+(defn wrap-fnl-dbg []
+  (vim.api.nvim_command "norm ,wdbg"))
 
+(let [group (vim.api.nvim_create_augroup "WrapDebugMacro" {:clear true})]
+     (vim.api.nvim_create_autocmd 
+       "FileType"
+       {:pattern ["fennel"]
+        :callback (fn [] 
+                    (vim.schedule 
+                      (fn [] 
+                        (print "Adding fennel keymaps")
+                        (vim.keymap.set :n :<localleader>db wrap-fnl-dbg {:noremap true :buffer true :desc "Wrap debug macro"}))))
+                                    
+        :group group}))
+
+;; How to map this with autocommand based on filetype??
 (defn wrap-dbg []
   (vim.api.nvim_command "norm ,wd/dbg"))
 
