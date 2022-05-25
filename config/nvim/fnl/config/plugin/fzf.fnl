@@ -266,44 +266,27 @@ command! -bang -nargs=* GGrep
     (search)))
  
 
-(comment 
+;; Clojure example code of a debug macro
+;; (do 
+;;   (macro dbg [& forms] 
+;;     `(do (apply prn (rest '~&form)) 
+;;          (let [res# (do ~@forms)] (prn (symbol "=>") res#) res#)))
+;;   
+;;   
+;;   (dbg (+ 1 2 3))))
 
-  
+(macro dbg [form] 
+  (let [form-as-str# (view form)]
+    `(do (print ,form-as-str#) ;
+       (let [res# (do ,form)]
+         (print "=>" res#)
+         res#))))
+
+(comment 
   (print (fennel.view (fennel.list "aa" "bb")))
   (print "a" "b")
 
   (do
-   ;; (macro dbg [form] 
-   ;;   `(do (print (fennel.view form))
-   ;;      (let [res# (do ,form)]
-   ;;        (print "=>" res#)
-   ;;        (res#))))
-
-    (macro dbg [form] 
-      (let [form-as-str# (view form)]
-        `(do (print ,form-as-str#) ;
-           (let [res# (do ,form)]
-             (print "=>" res#)
-             res#))))
-   
-    (dbg (+ (/ 6 2) 4))
-    (dbg (+ 1 2 3))))
+    (dbg (+ 1 2 3))
+    (dbg (+ (dbg (/ 6 2)) 4))))
   
-  
-
-  
-  
-   
-  
-  
-    
-
-  ;; (do 
-  ;;   (macro dbg [& forms] 
-  ;;     `(do (apply prn (rest '~&form)) 
-  ;;          (let [res# (do ~@forms)] (prn (symbol "=>") res#) res#)))
-  ;;   
-  ;;   
-  ;;   (dbg (+ 1 2 3))))
-  
-      
