@@ -7,7 +7,8 @@
              scandir plenary.scandir
              path plenary.path
              fzf fzf
-             which-key which-key}})
+             which-key which-key
+             fennel fennel}})
 
 ;;(vim.fn.fzf#install)
 
@@ -35,15 +36,15 @@
 (set vim.g.fzf_history_dir "~/.local/share/fzf-history")
 
 (defn get-rg-expanded-cmd [x]
-  (let [expanded (vim.fn.expand x)
+  (let [expanded (vim.fn.expand x)]
         ;escaped (vim.fn.shellescape expanded)
-        ]
+        
     
     (core.str ":Rg " expanded)))
 
 ; RG from git root
 (vim.cmd
-"
+ "
 command! -bang -nargs=* GGrep
 \\ call fzf#vim#grep(
 \\   'git grep --line-number -- '.shellescape(<q-args>), 0,
@@ -103,18 +104,18 @@ command! -bang -nargs=* GGrep
 
    call s:getVisualSelection()
    "
-   true)
-  )
+   true))
+  
 
-(defn get-escaped-visual-selection []
+(defn get-escaped-visual-selection [])
  ;; (print (vim.inspect (vim.fn.substitute (getVisualSelection) "[" "AAA" "")))
  ;;(vim.fn.substitute (getVisualSelection) "[" "\\\\$1" "")
-                                             )
+                                             
 
 (comment 
   
-  (vim.fn.substitute "abc" "(a)" "\\1aaa" "")
-  )
+  (vim.fn.substitute "abc" "(a)" "\\1aaa" ""))
+  
 
 (nvim.set_keymap :v :<leader>fn (get-lua-cmd "get-escaped-visual-selection" []) {:noremap true})
 
@@ -159,7 +160,7 @@ command! -bang -nargs=* GGrep
         base2 (fs.basename base1)
         parent (-> (string.gsub base1 base2 "")
                    (remove-leading-slash))]
-          parent))
+       parent))
 
 (def- file-patterns
   [{:suffix "Controller"} 
@@ -202,7 +203,7 @@ command! -bang -nargs=* GGrep
            (core.first)) ; use the first result
 
       ; If nothing, use original filename
-       filename))
+      filename))
 
 (get-this-full-filename)
 
@@ -212,7 +213,7 @@ command! -bang -nargs=* GGrep
   (get-common-name "xxx"))
 
 (defn fzf-file-query [query]
-  (vim.fn.fzf#vim#files "." (vim.fn.fzf#vim#with_preview {:options ["--query" query "--layout=reverse" "--info=inline" ]})))
+  (vim.fn.fzf#vim#files "." (vim.fn.fzf#vim#with_preview {:options ["--query" query "--layout=reverse" "--info=inline"]})))
 
 (defn fzf-this-file []
   (let [this-file (get-this-filename)
@@ -226,11 +227,83 @@ command! -bang -nargs=* GGrep
    (nvim.set_keymap :n :<leader>fF ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})<cr>" {:noremap true :silent false})
    (vim.cmd ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})")
    (vim.api.nvim_command "lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})")
-   (vim.api.nvim_exec ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})" true)
+   (vim.api.nvim_exec ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})" true))
 
-   )
+   
 
 (nvim.set_keymap :n :<leader>fg "<cmd>Rg<CR>" {:noremap true})
 
 ;; Disable preview window as it interferes with input on work machine
 (set vim.g.fzf_preview_window "")
+
+
+(comment
+  (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})
+
+  (fennel.view t) ; "{:aa \"aa\" :bb {:things-in-b [\"b\" \"bb\" \"bbb\"]}}"
+
+  (fennel.view (unpack ["a"])) ; nil
+; "\"a\""
+
+  (fennel.view ["a"]) ; "[\"a\"]"
+
+  (print (fennel.view t))
+  (vim.inspect t)
+; "{
+;   aa = \"aa\",
+;   bb = {
+;     [\"things-in-b\"] = { \"b\", \"bb\", \"bbb\" }
+;   }
+; }"
+  (print (vim.inspect t))
+
+  (do
+    (defn search [] 
+      (vim.call "fzf#vim#files" ".")
+      (vim.api.nvim_exec "<cmd>Rg")
+      (vim.api.nvim_feedkeys "<c-u>"))
+
+    (search)))
+ 
+
+(comment 
+
+  
+  (print (fennel.view (fennel.list "aa" "bb")))
+  (print "a" "b")
+
+  (do
+   ;; (macro dbg [form] 
+   ;;   `(do (print (fennel.view form))
+   ;;      (let [res# (do ,form)]
+   ;;        (print "=>" res#)
+   ;;        (res#))))
+
+    (macro dbg [form] 
+      (let [form-as-str# (view form)]
+        `(do (print ,form-as-str#) ;
+           (let [res# (do ,form)]
+             (print "=>" res#)
+             res#))))
+   
+    (dbg (+ (/ 6 2) 4))
+    (dbg (+ 1 2 3))))
+  
+  
+
+  
+  
+   
+  
+  
+    
+
+  ;; (do 
+  ;;   (macro dbg [& forms] 
+  ;;     `(do (apply prn (rest '~&form)) 
+  ;;          (let [res# (do ~@forms)] (prn (symbol "=>") res#) res#)))
+  ;;   
+  ;;   
+  ;;   (dbg (+ 1 2 3))))
+  
+      
