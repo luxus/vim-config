@@ -155,6 +155,9 @@
   :kevinhwang91/nvim-bqf {:mod :bqf
                           :ft [:qf]}
 
+  ; Narrow region
+  :chrisbra/NrrwRgn {}
+
   :wincent/ferret {}
 
    ;parsing system
