@@ -32,26 +32,32 @@
 (defn wrap-fnl-dbg []
   (vim.api.nvim_command "norm ,wdbg"))
 
+(defn wrap-clj-dbg []
+  (vim.api.nvim_command "norm ,wd/dbg"))
+
+(defn wrap-clj-dbgn []
+  (vim.api.nvim_command "norm ,wd/dbgn"))
+
 (let [group (vim.api.nvim_create_augroup "WrapDebugMacro" {:clear true})]
      (vim.api.nvim_create_autocmd 
        "FileType"
        {:pattern ["fennel"]
+        :group group
         :callback (fn [] 
                     (vim.schedule 
-                      (fn [] 
-                        (print "Adding fennel keymaps")
-                        (vim.keymap.set :n :<localleader>db wrap-fnl-dbg {:noremap true :buffer true :desc "Wrap debug macro"}))))
-                                    
-        :group group}))
+                      (fn [] (print "Adding fennel keymaps")))
+                    (vim.keymap.set :n :<localleader>db wrap-fnl-dbg {:noremap true :buffer true :desc "Wrap debug"}))})
+        
+     (vim.api.nvim_create_autocmd
+       "FileType"
+       {:pattern ["clojure"]
+        :group group
+        :callback (fn [] 
+                     (vim.schedule 
+                       (fn [] (print "Adding clojure keymaps")))
+                     (vim.keymap.set :n :<localleader>db wrap-clj-dbg {:noremap true :buffer true :desc "Wrap debug"})
+                     (vim.keymap.set :n :<localleader>dn wrap-clj-dbgn {:noremap true :buffer true :desc "Wrap nested debug"}))}))
+        
 
 ;; How to map this with autocommand based on filetype??
-(defn wrap-dbg []
-  (vim.api.nvim_command "norm ,wd/dbg"))
-
-(vim.keymap.set :n :<localleader>db wrap-dbg {:noremap true})
-
-(defn wrap-dbgn []
-  (vim.api.nvim_command "norm ,wd/dbgn"))
-
-(vim.keymap.set :n :<localleader>dn wrap-dbg {:noremap true})
 
