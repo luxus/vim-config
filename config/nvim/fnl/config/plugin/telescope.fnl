@@ -24,8 +24,8 @@
 (comment 
   
   (vim.inspect (is-minified-file "C:/repos/file.min.js")) ;; Returns true
-  (vim.inspect (is-minified-file "C:/repos/other.js")) ;; Returns false
-  )
+  (vim.inspect (is-minified-file "C:/repos/other.js"))) ;; Returns false
+  
 
 
 (defn show-is-minified-preview-msg [filename bufnr opts]
@@ -36,11 +36,11 @@
 (telescope.setup {:defaults {:file_ignore_patterns ["node_modules" "wwwroot/lib/*"] 
                              ;;:vimgrep_arguments ["rg" "--color=never" "--no-heading" "--with-filename" "--line-number" "--column" "--smart-case" "--hidden"]
                              :mappings {:i {"<C-Down>" (. telescope-actions :cycle_history_next) 
-                                            "<C-Up>" (. telescope-actions :cycle_history_prev) }}
+                                            "<C-Up>" (. telescope-actions :cycle_history_prev)}}
                              :preview {:treesitter false
                                        :filetype_hook (fn [filepath bufnr opts] 
-                                                        (not (is-minified-file filepath)))}
-                             }
+                                                        (not (is-minified-file filepath)))}}
+                             
 
                   :pickers {:grep_string {:theme :ivy}
                             :current_buffer_fuzzy_find {:theme :ivy}
@@ -61,12 +61,12 @@
                                      :override-generic-sorter true
                                      :override-file-sorter true
                                      :case-mode "smart_case"}
-                               :tele_tabby {:use_highlighter true}
+                               :tele_tabby {:use_highlighter true}}})
 
                                ; :project {
                                ;    :base_dirs  ["~/repos" "~/source/repos"  "C:/repos"]
                                ;    :hidden_files true }
-                               }})
+                               
 
 (telescope.load_extension "fzf")
 (telescope.load_extension "projects")
@@ -79,8 +79,8 @@
                 :exclude_dirs ["~/source/repos/fairplayams/"
                                "~/source/repos/fairplayams2/"
                                "C:/"
-                               "c:/"
-                               ]
+                               "c:/"]
+                               
                 :detection_methods ["lsp"
                                     "pattern"]
                 :silent_chdir true
@@ -94,24 +94,24 @@
                           ; "=AMSApp"
                           ; "=Applications/AMSApp"
                           ; "=Applications/AMS"
-                           "*.sln" 
-                           ]})
+                           "*.sln"]}) 
+                           
 
 (vim.cmd "autocmd User TelescopePreviewerLoaded setlocal wrap")
 
-(nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').find_files()<CR>" {:noremap true})
+(nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').find_files()<CR>" {:noremap true :desc "files"})
 ;;(nvim.set_keymap :n :<leader>fg ":lua require('telescope.builtin').live_grep()<CR>" {:noremap true}) ;; Removed in favour of fzf
-(nvim.set_keymap :x :<leader>fv ":lua require('telescope.builtin').grep_string()<CR>" {})
-(nvim.set_keymap :n :<leader>fv ":lua require('telescope.builtin').grep_string()<CR>" {:noremap true})
-(nvim.set_keymap :n :<leader>fi ":lua require('telescope.builtin').command_history()<CR>" {:noremap true})
-(nvim.set_keymap :x :<leader>fi ":lua require('telescope.builtin').command_history()<CR>" {:noremap true})
-(nvim.set_keymap :n :<leader>fb ":lua require('telescope.builtin').buffers()<CR>" {:noremap true})
-(nvim.set_keymap :n :<leader>fh ":lua require('telescope.builtin').help_tags()<CR>" {:noremap true})
-(nvim.set_keymap :n :<leader>fd ":lua require('telescope').extensions.file_browser.file_browser()<CR>" {:noremap true})
-(nvim.set_keymap :n :<leader>fc ":lua require('telescope.builtin').commands()<CR>" {:noremap true})
-(nvim.set_keymap :n :<leader>fz ":lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>" {:noremap true})
-(nvim.set_keymap :n :<leader>fr ":lua require('telescope.builtin').resume()<CR>" {:noremap true})
-(nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.projects.projects{}<CR>" {:noremap true :silent true})
-(nvim.set_keymap :n :<leader>ft ":lua require('telescope').extensions.tele_tabby.list()<CR>" {:noremap true :silent true})
-(nvim.set_keymap :n :<leader>fs ":lua require('session-lens').search_session()<CR>" {:noremap true})
-(vim.keymap.set :n :<leader>pr (fn [] (vim.cmd "ProjectRoot")) {:noremap true})
+(nvim.set_keymap :x :<leader>fv ":lua require('telescope.builtin').grep_string()<CR>" {:desc "grep string"})
+(nvim.set_keymap :n :<leader>fv ":lua require('telescope.builtin').grep_string()<CR>" {:noremap true :desc "grep string"})
+(nvim.set_keymap :n :<leader>fi ":lua require('telescope.builtin').command_history()<CR>" {:noremap true :desc "command history"})
+(nvim.set_keymap :x :<leader>fi ":lua require('telescope.builtin').command_history()<CR>" {:noremap true :desc "command history"})
+(nvim.set_keymap :n :<leader>fb ":lua require('telescope.builtin').buffers()<CR>" {:noremap true :desc "buffers"})
+(nvim.set_keymap :n :<leader>fh ":lua require('telescope.builtin').help_tags()<CR>" {:noremap true :desc "help tags"})
+(nvim.set_keymap :n :<leader>fd ":lua require('telescope').extensions.file_browser.file_browser()<CR>" {:noremap true :desc "file browser"})
+(nvim.set_keymap :n :<leader>fc ":lua require('telescope.builtin').commands()<CR>" {:noremap true :desc "commands"})
+(nvim.set_keymap :n :<leader>fz ":lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>" {:noremap true :desc "buf fuzzy find"})
+(nvim.set_keymap :n :<leader>fr ":lua require('telescope.builtin').resume()<CR>" {:noremap true :desc "resume"})
+(nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.projects.projects{}<CR>" {:noremap true :silent true :desc "projs"})
+(nvim.set_keymap :n :<leader>ft ":lua require('telescope').extensions.tele_tabby.list()<CR>" {:noremap true :silent true :desc "tabs"})
+(nvim.set_keymap :n :<leader>fs ":lua require('session-lens').search_session()<CR>" {:noremap true :desc "session"})
+(vim.keymap.set :n :<leader>pr (fn [] (vim.cmd "ProjectRoot")) {:noremap true :desc "proj root"})
