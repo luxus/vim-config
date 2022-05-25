@@ -277,10 +277,11 @@ command! -bang -nargs=* GGrep
 
 (macro dbg [form] 
   (let [form-as-str# (view form)]
-    `(do (print ,form-as-str#) ;
+    `(do (print ,form-as-str# "=>") ;
        (let [res# (do ,form)]
-         (print "=>" res#)
+         (print "  " res#)
          res#))))
+
 
 (comment 
   (print (fennel.view (fennel.list "aa" "bb")))
@@ -290,3 +291,32 @@ command! -bang -nargs=* GGrep
     (dbg (+ 1 2 3))
     (dbg (+ (dbg (/ 6 2)) 4))))
   
+
+;; (fn get-dbg-form [form]
+;;   (list))
+
+
+(comment 
+  
+  (match [1 2 3]
+    (where [a b c] (= a 1)) (.. "this" "-" "matched")
+    (where [a b c] (= a 2)) :no-match) 
+  
+  (do
+    (macro dbgn [form]
+      (let [[head & tail] form]
+        (print "Form:" (view form))
+        (print "Head:" (view head))
+        (match head
+          (where [h] (list? h)) (print "IS LIST")
+          (where [h] (sym? h)) (print "IS SYM")
+          _ (print "primitive?"))
+
+        form))
+
+    (dbgn (+ 1 2 3))))
+   
+  
+  
+  
+      
