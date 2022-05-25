@@ -4,6 +4,7 @@
 (let [(ok? which-key) (pcall #(require :which-key))]
   (when ok?
     ; Temporary hack for handling <c-r> in telescope
+    ; https://github.com/folke/which-key.nvim/issues/273
     (let [show which-key.show]
       (set which-key.show 
            (fn [keys opts]
