@@ -1,6 +1,3 @@
-(module config.debug-macros
-  {autoload {nvim aniseed.nvim}})
-
 ;; Clojure example code of a debug macro
 ;; (do 
 ;;   (macro dbg [& forms] 
@@ -45,21 +42,26 @@
     (where [a b c] (= a 2)) :no-match) 
   
   (do
-    (macro dbgn [form]
-      (print (view form))
-      (print "is list??" (list? form))
-      (match form
-          (where [f] (list? f)) (let [[head & tail] form
-                                      (print "IS LIST")
-                                      (print "Form:" (view form))
-                                      (print "Head:" (view head))
-                                      form])
 
-          (where [f] (= (type f) "function")) (print "IS FUNCTION")
-          (where [f] (= (type f) "number")) (print "IS NUMBER")
-          (where [f] (= (type f) "table")) (print "IS TABLE")
-          (where [f] (sym? f)) (print "IS SYM")
+    (local fennel (require :fennel))
+    (local c (require :aniseed.core))
+
+    (macro dbgn [form]
+      (fn print-form-elem [form]
+        (match form
+          (where f (-> f list?)) (let [[head & tail] f]
+                                      (print "IS LIST")
+                                      (print "tail: " (view tail)))
+
+          (where f (= (type f) "function")) (print "IS FUNCTION")
+          (where f (= (type f) "number")) (print "IS NUMBER")
+          (where f (= (type f) "table")) (print "IS TABLE")
+          (where f (sym? f)) (print "IS SYM")
           _ (print "primitive?")))
+
+      (print (view form))
+      (print-form-elem form))
+      
 
     (dbgn (+ 1 2 3))))
 

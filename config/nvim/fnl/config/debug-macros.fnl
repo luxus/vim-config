@@ -42,15 +42,26 @@
     (where [a b c] (= a 2)) :no-match) 
   
   (do
+
+    (local fennel (require :fennel))
+    (local c (require :aniseed.core))
+
     (macro dbgn [form]
-      (print (view form))
-      (match form
-          (where f (-> f list?)) (print "IS LIST")
+      (fn print-form-elem [form]
+        (match form
+          (where f (-> f list?)) (let [[head & tail] f]
+                                      (print "IS LIST")
+                                      (print "tail: " (view tail)))
+
           (where f (= (type f) "function")) (print "IS FUNCTION")
           (where f (= (type f) "number")) (print "IS NUMBER")
           (where f (= (type f) "table")) (print "IS TABLE")
           (where f (sym? f)) (print "IS SYM")
           _ (print "primitive?")))
+
+      (print (view form))
+      (print-form-elem form))
+      
 
     (dbgn (+ 1 2 3))))
 
