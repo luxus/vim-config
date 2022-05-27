@@ -44,26 +44,27 @@
   (do
 
     (local fennel (require :fennel))
-    (local c (require :aniseed.core))
-
+    
     (macro dbgn [form]
-      (fn print-form-elem [form]
-        (match form
-          (where f (-> f list?)) (let [[head & tail] f]
-                                      (print "IS LIST")
-                                      (print "tail: " (view tail)))
+      (let [c# (require :aniseed.core)] 
+        (fn print-form-elem [form]
+          (print (view form))
+          (match form
+            (where f (-> f list?)) (let [[head & tail] f]
+                                        (print "IS LIST")
+                                        (print "tail: " (view tail))
+                                        (c#.map print-form-elem tail))
 
-          (where f (= (type f) "function")) (print "IS FUNCTION")
-          (where f (= (type f) "number")) (print "IS NUMBER")
-          (where f (= (type f) "table")) (print "IS TABLE")
-          (where f (sym? f)) (print "IS SYM")
-          _ (print "primitive?")))
+            (where f (= (type f) "function")) (print "IS FUNCTION")
+            (where f (= (type f) "number")) (print "IS NUMBER")
+            (where f (= (type f) "table")) (print "IS TABLE")
+            (where f (sym? f)) (print "IS SYM")
+            _ (print "primitive?")))
 
-      (print (view form))
-      (print-form-elem form))
+        (print-form-elem form)))
       
 
-    (dbgn (+ 1 2 3))))
+    (dbgn (+ 1 2 (- 3 1)))))
 
 (comment
   (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})

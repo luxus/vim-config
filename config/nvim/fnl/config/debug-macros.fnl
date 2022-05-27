@@ -48,23 +48,42 @@
     (macro dbgn [form]
       (let [c# (require :aniseed.core)] 
         (fn print-form-elem [form]
-          (print (view form))
+          (print (view form) "=>")
           (match form
-            (where f (-> f list?)) (let [[head & tail] f]
-                                        (print "IS LIST")
-                                        (print "tail: " (view tail))
-                                        (c#.map print-form-elem tail))
+            (where f (-> f list?)) 
+            (let [[head & tail] f]
+              (print "IS LIST")
+              (print "tail: " (view tail))
+              (list head (unpack (c#.map print-form-elem tail))))
 
-            (where f (= (type f) "function")) (print "IS FUNCTION")
-            (where f (= (type f) "number")) (print "IS NUMBER")
-            (where f (= (type f) "table")) (print "IS TABLE")
-            (where f (sym? f)) (print "IS SYM")
+            (where f (= (type f) "function")) 
+            (do 
+              (print "IS FUNCTION")
+              f)
+              
+
+            (where f (= (type f) "number")) 
+            (do 
+              (print "IS NUMBER")
+              f)
+
+            (where f (= (type f) "table")) 
+            (do 
+              (print "IS TABLE")
+              f)
+
+            (where f (sym? f)) 
+            (do 
+              (print "IS SYM")
+              f)
+
             _ (print "primitive?")))
 
         (print-form-elem form)))
       
 
-    (dbgn (+ 1 2 (- 3 1)))))
+    (local x 42)
+    (dbgn (+ 1 x (- 2 1)))))
 
 (comment
   (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})
