@@ -47,8 +47,10 @@
     
     (macro dbgn [form]
       (let [c# (require :aniseed.core)] 
-        (fn dbg [form] 
-          (let [form-as-str# (view form)]
+        (fn dbg [form view-of-form] 
+          (let [form-as-str# (if view-of-form 
+                               view-of-form 
+                               (view form))]
             `(do (print ,form-as-str# "=>") ;
                (let [res# (do ,form)]
                  (print "  " res#)
@@ -58,14 +60,15 @@
           (print (view form) "=>")
           (if (not (-> form list?))
             
-            (let [[head & tail] f]
-              (print "IS LIST")
-              (print "tail: " (view tail))
-              (list head (unpack (c#.map print-form-elem tail))))
-            
             (do 
               (print "Type: " (type form))
-              (dbg form))))
+              (dbg form))
+            
+            (let [[head & tail] form
+                  view-of-form (view form)]
+              (print "Type: list")
+              (print "tail: " (view tail))
+              (dbg (list head (unpack (c#.map print-form-elem tail))) view-of-form))))
 
         (print-form-elem form)))
       
