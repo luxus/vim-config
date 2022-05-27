@@ -56,37 +56,16 @@
 
         (fn print-form-elem [form]
           (print (view form) "=>")
-          (match form
-            (where f (-> f list?)) 
+          (if (not (-> form list?))
+            
             (let [[head & tail] f]
               (print "IS LIST")
               (print "tail: " (view tail))
               (list head (unpack (c#.map print-form-elem tail))))
-
-            (where f (= (type f) "function")) 
+            
             (do 
-              (print "IS FUNCTION")
-              f)
-              
-            (where f (= (type f) "number")) 
-            (do 
-              (print "IS NUMBER")
-              f)
-
-            (where f (= (type f) "table")) 
-            (do 
-              (print "IS TABLE")
-              (dbg f))
-
-            (where f (sym? f)) 
-            (do 
-              (print "IS SYM")
-              f)
-
-            _ 
-            (do 
-              (print "primitive?")
-              form)))
+              (print "Type: " (type form))
+              (dbg form))))
 
         (print-form-elem form)))
       
