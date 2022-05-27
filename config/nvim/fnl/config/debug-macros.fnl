@@ -50,10 +50,14 @@
         (fn dbg [form view-of-form] 
           (let [form-as-str# (if view-of-form 
                                view-of-form 
-                               (view form))]
+                               (view form))
+                res-prefix# (if (list? form)
+                              (.. form-as-str# " =>")
+                              "  ")]
+                             
             `(do (print ,form-as-str# "=>") ;
                (let [res# (do ,form)]
-                 (print "  " res#)
+                 (print ,res-prefix# res#)
                  res#))))
 
         (fn print-form-elem [form]
@@ -76,7 +80,8 @@
       
 
     (local x 42)
-    (dbgn (+ 1 x (- 2 (/ 6 2))))))
+    (local y 2)
+    (dbgn (+ 1 x (- 2 (/ 6 y))))))
 
 (comment
   (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})
