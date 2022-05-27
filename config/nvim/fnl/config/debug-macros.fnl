@@ -47,6 +47,13 @@
     
     (macro dbgn [form]
       (let [c# (require :aniseed.core)] 
+        (fn dbg [form] 
+          (let [form-as-str# (view form)]
+            `(do (print ,form-as-str# "=>") ;
+               (let [res# (do ,form)]
+                 (print "  " res#)
+                 res#))))
+
         (fn print-form-elem [form]
           (print (view form) "=>")
           (match form
@@ -61,7 +68,6 @@
               (print "IS FUNCTION")
               f)
               
-
             (where f (= (type f) "number")) 
             (do 
               (print "IS NUMBER")
@@ -70,14 +76,17 @@
             (where f (= (type f) "table")) 
             (do 
               (print "IS TABLE")
-              f)
+              (dbg f))
 
             (where f (sym? f)) 
             (do 
               (print "IS SYM")
               f)
 
-            _ (print "primitive?")))
+            _ 
+            (do 
+              (print "primitive?")
+              form)))
 
         (print-form-elem form)))
       
