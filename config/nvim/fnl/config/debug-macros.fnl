@@ -62,7 +62,9 @@
             
             (do 
               (print "Type: " (type form))
-              (dbg form))
+              (if (= (type form) "number")
+                form 
+                (dbg form)))
             
             (let [[head & tail] form
                   view-of-form (view form)]
@@ -74,7 +76,7 @@
       
 
     (local x 42)
-    (dbgn (+ 1 x (- 2 1)))))
+    (dbgn (+ 1 x (- 2 (/ 6 2))))))
 
 (comment
   (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})
