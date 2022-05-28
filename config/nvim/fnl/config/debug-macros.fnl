@@ -52,7 +52,8 @@
     (local fennel (require :fennel))
     
     (macro dbgn [form]
-      (let [c# (require :aniseed.core)] 
+      (let [c# (require :aniseed.core)
+            mh (require :config.macro-helpers)] 
         (fn dbg [form view-of-form] 
           (let [form-as-str# (if view-of-form 
                                view-of-form 
@@ -77,17 +78,24 @@
                 (dbg form)))
             
             (let [[head & tail] form
-                  view-of-form (view form)]
+                  view-of-form (view form)
+                  is-binding-form (-> head 
+                                      (mh.get-syntax-tbl )
+                                      (. :binding-form?))]
               (print "Type: list")
               (print "tail: " (view tail))
-              (dbg (list head (unpack (c#.map print-form-elem tail))) view-of-form))))
+              (print "is-binding-form" is-binding-form)
+              (if is-binding-form
+                (let [[bindings & body] tail]
+                  (dbg (list head bindings (unpack (c#.map print-form-elem bindings)))))
+                (dbg (list head (unpack (c#.map print-form-elem tail))) view-of-form)))))
 
         (print-form-elem form)))
       
 
     (local x 42)
     (local y 2)
-    (dbgn (+ 1 x (- 2 (/ 6 y))))))
+    (dbgn (+ 1 x  (let [a 1] a)(- 2 (/ 6 y))))))
 
 
 ;; (fn get-syntax-tbl [operator]
