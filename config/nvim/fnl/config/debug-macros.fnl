@@ -8,11 +8,17 @@
 ;;   (dbg (+ 1 2 3))))
 
 (fn dbg [form] 
-  (let [form-as-str# (view form)]
+  (let [fennel#      (require :fennel)
+        form-as-str# (fennel#.view form)]
     `(do (print ,form-as-str# "=>") ;
        (let [res# (do ,form)]
          (print "  " res#)
          res#))))
+
+(comment
+ (import-macros {: dbg} :config.debug-macros)
+ (dbg "aa")
+ )
 
 
 (comment 
@@ -83,26 +89,30 @@
     (local y 2)
     (dbgn (+ 1 x (- 2 (/ 6 y))))))
 
+
+;; (fn get-syntax-tbl [operator]
+;;   (let [fennel#      (require :fennel)
+;;         syn#         (fennel#.syntax)
+;;         operator-str (view operator)]
+;;     (. syn# operator-str)))
+
+
+
 (comment 
   (do 
-    
-    (macro prn-syntax [form]
-      (fn get-syntax-tbl [operator]
-        (let [fennel#      (require :fennel)
-              syn#         (fennel#.syntax)
-              operator-str (view operator)]
-          (. syn# operator-str)))
 
+    (macro prn-syntax [form]
       (when (-> form list?) 
         (let [[operator & operands] form
-              syn-tbl               (get-syntax-tbl operator)]
+              mh                    (require :config.macro-helpers)
+              syn-tbl               (mh.get-syntax-tbl operator)]
           (print (view operator) " - " (view syn-tbl))
           syn-tbl)))
-    
+
     (prn-syntax (let [a "111"] (+ 1 2)))
 
     (prn-syntax (+ 1 2)))
-          
+
   (do
 
     (macro prn-list-props [form]
@@ -137,7 +147,8 @@
 ; }"
   (print (vim.inspect t))) ; nil
 
-{:dbg dbg}
+{:dbg dbg
+ :get-syntax-tbl get-syntax-tbl}
 
 
 

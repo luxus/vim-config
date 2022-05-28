@@ -47,25 +47,57 @@
     
     (macro dbgn [form]
       (let [c# (require :aniseed.core)] 
-        (fn print-form-elem [form]
-          (print (view form))
-          (match form
-            (where f (-> f list?)) (let [[head & tail] f]
-                                        (print "IS LIST")
-                                        (print "tail: " (view tail))
-                                        (c#.map print-form-elem tail))
+        (fn dbg [form view-of-form] 
+          (let [form-as-str# (if view-of-form 
+                               view-of-form 
+                               (view form))
+                res-prefix# (if (list? form)
+                              (.. form-as-str# " =>")
+                              "  ")]
+                             
+            `(do (print ,form-as-str# "=>") ;
+               (let [res# (do ,form)]
+                 (print ,res-prefix# res#)
+                 res#))))
 
-            (where f (= (type f) "function")) (print "IS FUNCTION")
-            (where f (= (type f) "number")) (print "IS NUMBER")
-            (where f (= (type f) "table")) (print "IS TABLE")
-            (where f (sym? f)) (print "IS SYM")
-            _ (print "primitive?")))
+        (fn print-form-elem [form]
+          (print (view form) "=>")
+          (if (not (-> form list?))
+            
+            (do 
+              (print "Type: " (type form))
+              (if (= (type form) "number")
+                form 
+                (dbg form)))
+            
+            (let [[head & tail] form
+                  view-of-form (view form)]
+              (print "Type: list")
+              (print "tail: " (view tail))
+              (dbg (list head (unpack (c#.map print-form-elem tail))) view-of-form))))
 
         (print-form-elem form)))
       
 
-    (dbgn (+ 1 2 (- 3 1)))))
+    (local x 42)
+    (local y 2)
+    (dbgn (+ 1 x (- 2 (/ 6 y))))))
 
+(comment 
+  (do
+
+    (macro prn-list-props [form]
+      (when (-> form list?)
+        (print "Line: " (. form :line))
+        ; Check if filename is emitted when macro is used into another file
+        (print "Filename:" (. form :filename)) 
+        (print "Bytestart: " (. form :bytestart))
+        (print "Byteend " (. form :byteend))))
+
+
+    (prn-list-props (+ 1 2)))
+  
+  )
 (comment
   (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})
 
