@@ -87,16 +87,17 @@
   (do 
     
     (macro prn-syntax [form]
-      (let [fennel# (require :fennel)
-            syn#    (fennel#.syntax)]
-        
-       (when (-> form list?) 
-         (let [[operator & operands] form
-               head-as-str           (view operator)
-               syn-tbl               (. syn# head-as-str)]
-           (print (view operator))
-           (print (view syn-tbl))
-           syn-tbl))))
+      (fn get-syntax-tbl [operator]
+        (let [fennel#      (require :fennel)
+              syn#         (fennel#.syntax)
+              operator-str (view operator)]
+          (. syn# operator-str)))
+
+      (when (-> form list?) 
+        (let [[operator & operands] form
+              syn-tbl               (get-syntax-tbl operator)]
+          (print (view operator) " - " (view syn-tbl))
+          syn-tbl)))
     
     (prn-syntax (let [a "111"] (+ 1 2)))
 
