@@ -87,15 +87,16 @@
   (do 
     
     (macro prn-syntax [form]
-      (local fennel (require :fennel))
-      (local syn (fennel.syntax))
-      (when (-> form list?) 
-        (let [[head & tail] form
-              head-as-str (view head)
-              syn-tbl (. syn head-as-str)]
-          (print (view head))
-          (print (view syn-tbl))
-          syn-tbl)))
+      (let [fennel# (require :fennel)
+            syn#    (fennel#.syntax)]
+        
+       (when (-> form list?) 
+         (let [[operator & operands] form
+               head-as-str           (view operator)
+               syn-tbl               (. syn# head-as-str)]
+           (print (view operator))
+           (print (view syn-tbl))
+           syn-tbl))))
     
     (prn-syntax (let [a "111"] (+ 1 2)))
 
