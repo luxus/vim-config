@@ -8,11 +8,17 @@
 ;;   (dbg (+ 1 2 3))))
 
 (fn dbg [form] 
-  (let [form-as-str# (view form)]
+  (let [fennel#      (require :fennel)
+        form-as-str# (fennel#.view form)]
     `(do (print ,form-as-str# "=>") ;
        (let [res# (do ,form)]
          (print "  " res#)
          res#))))
+
+(comment
+ (import-macros {: dbg : dbgn} :config.debug-macros)
+ (dbg "aa")
+ )
 
 
 (comment 
@@ -33,7 +39,49 @@
 ;;   (list))
 
 
+(fn dbgn [form]
+  (let [c# (require :aniseed.core)
+        mh (require :config.macro-helpers)] 
+    (fn dbg [form view-of-form] 
+      (let [form-as-str# (if view-of-form 
+                           view-of-form 
+                           (view form))
+            res-prefix# (if (list? form)
+                          (.. form-as-str# " =>")
+                          "  ")]
 
+        `(do (print ,form-as-str# "=>") ;
+           (let [res# (do ,form)]
+             (print ,res-prefix# res#)
+             res#))))
+
+    (fn print-form-elem [form]
+      (print "form: " (view form))
+      (if (not (-> form list?))
+
+        (do 
+          (print "Type: " (type form))
+          (if (= (type form) "number")
+            form 
+            (dbg form)))
+
+        (let [[head & tail] form
+              view-of-form (view form)
+              is-binding-form (-> head 
+                                  (mh.get-syntax-tbl )
+                                  (. :binding-form?))]
+          (print "Type: list")
+          (print "tail: " (view tail))
+          (print "is-binding-form" is-binding-form)
+          (if is-binding-form
+            (let [[bindings & body] tail]
+              (print "bindings: " (view bindings))
+              (print "body: " (view body))
+              (dbg (list head bindings (unpack (c#.map print-form-elem body))) view-of-form)
+              )
+            (dbg (list head (unpack (c#.map print-form-elem tail))) view-of-form)))))
+
+    (print-form-elem form)))
 
 (comment 
   
@@ -45,59 +93,54 @@
 
     (local fennel (require :fennel))
     
-    (macro dbgn [form]
-      (let [c# (require :aniseed.core)] 
-        (fn dbg [form view-of-form] 
-          (let [form-as-str# (if view-of-form 
-                               view-of-form 
-                               (view form))
-                res-prefix# (if (list? form)
-                              (.. form-as-str# " =>")
-                              "  ")]
-                             
-            `(do (print ,form-as-str# "=>") ;
-               (let [res# (do ,form)]
-                 (print ,res-prefix# res#)
-                 res#))))
-
-        (fn print-form-elem [form]
-          (print (view form) "=>")
-          (if (not (-> form list?))
-            
-            (do 
-              (print "Type: " (type form))
-              (if (= (type form) "number")
-                form 
-                (dbg form)))
-            
-            (let [[head & tail] form
-                  view-of-form (view form)]
-              (print "Type: list")
-              (print "tail: " (view tail))
-              (dbg (list head (unpack (c#.map print-form-elem tail))) view-of-form))))
-
-        (print-form-elem form)))
+    
       
 
     (local x 42)
     (local y 2)
-    (dbgn (+ 1 x (- 2 (/ 6 y))))))
+    (dbgn (+ 1 x 
+             (let [a 1] (+ 1 a))
+             (- 2 
+                (/ 6 y))))))
+
+
+;; (fn get-syntax-tbl [operator]
+;;   (let [fennel#      (require :fennel)
+;;         syn#         (fennel#.syntax)
+;;         operator-str (view operator)]
+;;     (. syn# operator-str)))
+
+
 
 (comment 
+  (do 
+
+    (macro prn-syntax [form]
+      (when (-> form list?) 
+        (let [[operator & operands] form
+              mh                    (require :config.macro-helpers)
+              syn-tbl               (mh.get-syntax-tbl operator)]
+          (print (view operator) " - " (view syn-tbl))
+          syn-tbl)))
+
+    (prn-syntax (let [a "111"] (+ 1 2)))
+
+    (prn-syntax (+ 1 2)))
+
   (do
 
     (macro prn-list-props [form]
       (when (-> form list?)
         (print "Line: " (. form :line))
-        ; Check if filename is emitted when macro is used into another file
+        ; Check if filename is emitted when macro is used into another file (since macro files don't really have a lua equivalent)
         (print "Filename:" (. form :filename)) 
         (print "Bytestart: " (. form :bytestart))
         (print "Byteend " (. form :byteend))))
 
 
-    (prn-list-props (+ 1 2)))
+    (prn-list-props (+ 1 2))))
   
-  )
+  
 (comment
   (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})
 
@@ -118,7 +161,8 @@
 ; }"
   (print (vim.inspect t))) ; nil
 
-{:dbg dbg}
+{:dbg dbg
+ :dbgn dbgn }
 
 
 

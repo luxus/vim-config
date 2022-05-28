@@ -16,7 +16,7 @@
          res#))))
 
 (comment
- (import-macros {: dbg} :config.debug-macros)
+ (import-macros {: dbg : dbgn} :config.debug-macros)
  (dbg "aa")
  )
 
@@ -39,7 +39,49 @@
 ;;   (list))
 
 
+(fn dbgn [form]
+  (let [c# (require :aniseed.core)
+        mh (require :config.macro-helpers)] 
+    (fn dbg [form view-of-form] 
+      (let [form-as-str# (if view-of-form 
+                           view-of-form 
+                           (view form))
+            res-prefix# (if (list? form)
+                          (.. form-as-str# " =>")
+                          "  ")]
 
+        `(do (print ,form-as-str# "=>") ;
+           (let [res# (do ,form)]
+             (print ,res-prefix# res#)
+             res#))))
+
+    (fn print-form-elem [form]
+      (print "form: " (view form))
+      (if (not (-> form list?))
+
+        (do 
+          (print "Type: " (type form))
+          (if (= (type form) "number")
+            form 
+            (dbg form)))
+
+        (let [[head & tail] form
+              view-of-form (view form)
+              is-binding-form (-> head 
+                                  (mh.get-syntax-tbl )
+                                  (. :binding-form?))]
+          (print "Type: list")
+          (print "tail: " (view tail))
+          (print "is-binding-form" is-binding-form)
+          (if is-binding-form
+            (let [[bindings & body] tail]
+              (print "bindings: " (view bindings))
+              (print "body: " (view body))
+              (dbg (list head bindings (unpack (c#.map print-form-elem body))) view-of-form)
+              )
+            (dbg (list head (unpack (c#.map print-form-elem tail))) view-of-form)))))
+
+    (print-form-elem form)))
 
 (comment 
   
@@ -51,54 +93,15 @@
 
     (local fennel (require :fennel))
     
-    (macro dbgn [form]
-      (let [c# (require :aniseed.core)
-            mh (require :config.macro-helpers)] 
-        (fn dbg [form view-of-form] 
-          (let [form-as-str# (if view-of-form 
-                               view-of-form 
-                               (view form))
-                res-prefix# (if (list? form)
-                              (.. form-as-str# " =>")
-                              "  ")]
-                             
-            `(do (print ,form-as-str# "=>") ;
-               (let [res# (do ,form)]
-                 (print ,res-prefix# res#)
-                 res#))))
-
-        (fn print-form-elem [form]
-          (print "form: " (view form))
-          (if (not (-> form list?))
-            
-            (do 
-              (print "Type: " (type form))
-              (if (= (type form) "number")
-                form 
-                (dbg form)))
-            
-            (let [[head & tail] form
-                  view-of-form (view form)
-                  is-binding-form (-> head 
-                                      (mh.get-syntax-tbl )
-                                      (. :binding-form?))]
-              (print "Type: list")
-              (print "tail: " (view tail))
-              (print "is-binding-form" is-binding-form)
-              (if is-binding-form
-                (let [[bindings & body] tail]
-                  (print "bindings: " (view bindings))
-                  (print "body: " (view body))
-                  (dbg (list head bindings (unpack (c#.map print-form-elem body))) view-of-form)
-                  )
-                (dbg (list head (unpack (c#.map print-form-elem tail))) view-of-form)))))
-
-        (print-form-elem form)))
+    
       
 
     (local x 42)
     (local y 2)
-    (dbgn (+ 1 x (let [a 1] (+ 1 a)) (- 2 (/ 6 y))))))
+    (dbgn (+ 1 x 
+             (let [a 1] (+ 1 a))
+             (- 2 
+                (/ 6 y))))))
 
 
 ;; (fn get-syntax-tbl [operator]
@@ -159,8 +162,7 @@
   (print (vim.inspect t))) ; nil
 
 {:dbg dbg
- :dbgn dbgn
- :get-syntax-tbl get-syntax-tbl}
+ :dbgn dbgn }
 
 
 

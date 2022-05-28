@@ -14,7 +14,13 @@
 
 (comment  
   ;; (import-macros {: dbg} :debug-macros)
-  (dbg (+ 1 2 3)))
+  (dbg (+ 1 2 3))
+  (dbgn (+ 1 2 3 (- 1 2)))
+
+  (let [syntax (fennel.syntax)]
+    (. syntax "vim"))
+
+  )
 
 ;;(vim.fn.fzf#install)
 
@@ -257,4 +263,5 @@ command! -bang -nargs=* GGrep
       "marker"  ["fg" "Keyword"]
       "spinner" ["fg" "Label"]
       "header"  ["fg" "Comment"]})
-     
+
+
