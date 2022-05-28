@@ -86,8 +86,10 @@
             (do 
               (print "Type: " (type form))
               (match (type form)
+                ;; No need for extra printing for primitives at compile time
                 "number" form
                 "string" form
+                ;; Should add a case for tables as they need to be iterated over
                 _ (dbg form)))
 
             (let [[head & tail] form
