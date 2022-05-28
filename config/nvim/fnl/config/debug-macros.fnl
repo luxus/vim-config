@@ -22,6 +22,7 @@
 
 
 (comment 
+  (local fennel (require :fennel))
   (print (fennel.view (fennel.list "aa" "bb")))
   (print "a" "b")
 
@@ -29,6 +30,9 @@
   (type []) ; "table"
   (type {}) ; "table"
   (type 1) ; "number"
+
+
+  (fennel.view {:aa :bb}) ; "{:aa \"bb\"}"
 
   (do
     (dbg (+ 1 2 3))
@@ -39,8 +43,11 @@
 ;;   (list))
 
 
-
-
+;; Lua-api - https://fennel-lang.org/api
+;; - AST 
+;;   - Syntax
+;; Reference - https://fennel-lang.org/reference#eval-compiler
+;; Macros - https://fennel-lang.org/macros#using-functions-from-a-module
 (comment 
   
   (match [1 2 3]
@@ -70,7 +77,8 @@
 
             `(do (print ,form-as-str# ,first-line-suffix#) ;
                (let [res# (do ,form)]
-                 (print ,res-prefix# res#)
+                 ;; Printing view of result in all cases, but I think it only really needs to be done for tables
+                 (print ,res-prefix# (fennel.view res#))
                  res#))))
 
         (fn print-form-elem [form]
@@ -80,7 +88,7 @@
             (do 
               (print "Type: " (type form))
               (if (= (type form) "number")
-                form 
+                form ;; Don't need to print the number a second time
                 (dbg form)))
 
             (let [[head & tail] form
@@ -104,7 +112,9 @@
     (local x 42)
     (local y 2)
     (dbgn (+ 1 x 
-             (let [a 1] (+ 1 a))))))
+             (let [a 1] (+ 1 a))))
+    
+    (dbgn (. {:aa "aaa"} :aa))))
              
 
 
