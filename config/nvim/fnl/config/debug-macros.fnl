@@ -39,10 +39,6 @@
     (dbg (+ (dbg (/ 6 2)) 4))))
   
 
-;; (fn get-dbg-form [form]
-;;   (list))
-
-
 ;; Lua-api - https://fennel-lang.org/api
 ;; - AST 
 ;;   - Syntax
@@ -81,7 +77,7 @@
                  (print ,res-prefix# (fennel.view res#))
                  res#))))
 
-        (fn print-form-elem [form]
+        (fn get-dbg-form [form]
           (print "form: " (view form))
           (if (not (-> form list?))
 
@@ -103,11 +99,11 @@
                 (let [[bindings & body] tail]
                   (print "bindings: " (view bindings))
                   (print "body: " (view body))
-                  (dbg (list head bindings (unpack (c.map print-form-elem body))) view-of-form))
+                  (dbg (list head bindings (unpack (c.map get-dbg-form body))) view-of-form))
 
-                (dbg (list head (unpack (c.map print-form-elem tail))) view-of-form)))))
+                (dbg (list head (unpack (c.map get-dbg-form tail))) view-of-form)))))
 
-        (print-form-elem form)))
+        (get-dbg-form form)))
 
     (local x 42)
     (local y 2)
