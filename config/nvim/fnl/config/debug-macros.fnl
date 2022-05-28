@@ -69,12 +69,14 @@
                                
                 res-prefix# (if (list? form)
                               (.. form-as-str# " =>")
-                              "  ")]
+                              "  ")
+                ]
 
             `(do (print ,form-as-str# ,first-line-suffix#) ;
-               (let [res# (do ,form)]
+               (let [res# (do ,form)
+                     fennel# (require :fennel)]
                  ;; Printing view of result in all cases, but I think it only really needs to be done for tables
-                 (print ,res-prefix# (fennel.view res#))
+                 (print ,res-prefix# (fennel#.view res#))
                  res#))))
 
         (fn get-dbg-form [form]
