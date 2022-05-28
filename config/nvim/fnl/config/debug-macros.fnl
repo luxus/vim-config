@@ -83,6 +83,21 @@
     (local y 2)
     (dbgn (+ 1 x (- 2 (/ 6 y))))))
 
+(comment 
+  (do
+
+    (macro prn-list-props [form]
+      (when (-> form list?)
+        (print "Line: " (. form :line))
+        ; Check if filename is emitted when macro is used into another file
+        (print "Filename:" (. form :filename)) 
+        (print "Bytestart: " (. form :bytestart))
+        (print "Byteend " (. form :byteend))))
+
+
+    (prn-list-props (+ 1 2)))
+  
+  )
 (comment
   (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})
 
