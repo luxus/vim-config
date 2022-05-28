@@ -68,7 +68,7 @@
                  res#))))
 
         (fn print-form-elem [form]
-          (print (view form) "=>")
+          (print "form: " (view form))
           (if (not (-> form list?))
             
             (do 
@@ -87,7 +87,10 @@
               (print "is-binding-form" is-binding-form)
               (if is-binding-form
                 (let [[bindings & body] tail]
-                  (dbg (list head bindings (unpack (c#.map print-form-elem bindings)))))
+                  (print "bindings: " (view bindings))
+                  (print "body: " (view body))
+                  (dbg (list head bindings (unpack (c#.map print-form-elem body))) view-of-form)
+                  )
                 (dbg (list head (unpack (c#.map print-form-elem tail))) view-of-form)))))
 
         (print-form-elem form)))
@@ -95,7 +98,7 @@
 
     (local x 42)
     (local y 2)
-    (dbgn (+ 1 x  (let [a 1] a)(- 2 (/ 6 y))))))
+    (dbgn (+ 1 x (let [a 1] (+ 1 a)) (- 2 (/ 6 y))))))
 
 
 ;; (fn get-syntax-tbl [operator]
@@ -156,6 +159,7 @@
   (print (vim.inspect t))) ; nil
 
 {:dbg dbg
+ :dbgn dbgn
  :get-syntax-tbl get-syntax-tbl}
 
 
