@@ -91,9 +91,11 @@
       (local syn (fennel.syntax))
       (when (-> form list?) 
         (let [[head & tail] form
-              head-as-str (view head)]
+              head-as-str (view head)
+              syn-tbl (. syn head-as-str)]
           (print (view head))
-          (print (view (. syn head-as-str))))))
+          (print (view syn-tbl))
+          syn-tbl)))
     
     (prn-syntax (let [a "111"] (+ 1 2)))
 
