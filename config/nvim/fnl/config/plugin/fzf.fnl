@@ -12,27 +12,6 @@
              
    require-macros [config.debug-macros]})
 
-(comment  
-  ;; (import-macros {: dbg} :debug-macros)
-  (dbg (+ 1 2 3))
-  (dbgn (+ 1 2 3 (- 1 2)))
-
-
-  (let [syntax (fennel.syntax)]
-    (. syntax "vim")))
-
-  
-(comment 
-
-  (collect [k v (pairs {:apple "red" :orange "orange" :lemon "yellow"})]
-    (if (not= k "yellow")
-      (values (.. "color-" v) k))) ; {:color-orange "orange" :color-red "apple" :color-yellow "lemon"}
-
-  (collect [k v (pairs ["a" "b" "c" "d"])]
-    (if (not= k "yellow")
-      (values (.. "color-" v) k))) ; {:color-a 1 :color-b 2 :color-c 3 :color-d 4}
-  )
-
 ;;(vim.fn.fzf#install)
 
 ; FZF layout set to bottom of screen

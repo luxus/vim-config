@@ -53,8 +53,8 @@
 
             res-prefix# (if (list? form)
                           (.. form-as-str# " =>")
-                          "  ")
-            ]
+                          "  ")]
+            
 
         `(do (print ,form-as-str# ,first-line-suffix#) ;
            (let [res# (do ,form)
@@ -99,24 +99,6 @@
 ;;   - Syntax
 ;; Reference - https://fennel-lang.org/reference#eval-compiler
 ;; Macros - https://fennel-lang.org/macros#using-functions-from-a-module
-(comment 
-  
-  (match [1 2 3]
-    (where [a b c] (= a 1)) (.. "this" "-" "matched")
-    (where [a b c] (= a 2)) :no-match) 
-  
-  (do
-
-    ;; (import-macros {: dbgn} :config.debug-macros)
-    
-    
-
-    (local x 42)
-    (local y 2)
-    (dbgn (+ 1 x 
-             (let [a 1] (+ 1 a))))
-    
-    (dbgn (. {:aa "aaa"} :aa))))
              
 
 
