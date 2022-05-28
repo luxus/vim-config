@@ -85,9 +85,10 @@
 
             (do 
               (print "Type: " (type form))
-              (if (= (type form) "number")
-                form ;; Don't need to print the number a second time
-                (dbg form)))
+              (match (type form)
+                "number" form
+                "string" form
+                _ (dbg form)))
 
             (let [[head & tail] form
                   view-of-form (view form)
