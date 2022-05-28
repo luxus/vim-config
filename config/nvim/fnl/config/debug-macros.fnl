@@ -38,6 +38,61 @@
     (dbg (+ 1 2 3))
     (dbg (+ (dbg (/ 6 2)) 4))))
   
+(fn dbgn [form]
+  (let [c (require :aniseed.core)
+        mh (require :config.macro-helpers)] 
+
+    (fn dbg [form view-of-form] 
+      (let [form-as-str# (if view-of-form 
+                           view-of-form 
+                           (view form))
+
+            first-line-suffix#    (if (list? form)
+                                    "..."
+                                    " =>")
+
+            res-prefix# (if (list? form)
+                          (.. form-as-str# " =>")
+                          "  ")
+            ]
+
+        `(do (print ,form-as-str# ,first-line-suffix#) ;
+           (let [res# (do ,form)
+                 fennel# (require :fennel)]
+             ;; Printing view of result in all cases, but I think it only really needs to be done for tables
+             (print ,res-prefix# (fennel#.view res#))
+             res#))))
+
+    (fn get-dbg-form [form]
+      (print "form: " (view form))
+      (if (not (-> form list?))
+
+        (do 
+          (print "Type: " (type form))
+          (match (type form)
+            ;; No need for extra printing for primitives at compile time
+            "number" form
+            "string" form
+            ;; Should add a case for tables as they need to be iterated over
+            _ (dbg form)))
+
+        (let [[head & tail] form
+              view-of-form (view form)
+              is-binding-form (-> head 
+                                  (mh.get-syntax-tbl)
+                                  (. :binding-form?))]
+          (print "Type: list")
+          (print "tail: " (view tail))
+          (print "is-binding-form" is-binding-form)
+          (if is-binding-form
+            (let [[bindings & body] tail]
+              (print "bindings: " (view bindings))
+              (print "body: " (view body))
+              (dbg (list head bindings (unpack (c.map get-dbg-form body))) view-of-form))
+
+            (dbg (list head (unpack (c.map get-dbg-form tail))) view-of-form)))))
+
+    (get-dbg-form form)))
 
 ;; Lua-api - https://fennel-lang.org/api
 ;; - AST 
@@ -54,61 +109,7 @@
 
     ;; (import-macros {: dbgn} :config.debug-macros)
     
-    (macro dbgn [form]
-      (let [c (require :aniseed.core)
-            mh (require :config.macro-helpers)] 
-
-        (fn dbg [form view-of-form] 
-          (let [form-as-str# (if view-of-form 
-                               view-of-form 
-                               (view form))
-
-                first-line-suffix#    (if (list? form)
-                                       "..."
-                                       " =>")
-                               
-                res-prefix# (if (list? form)
-                              (.. form-as-str# " =>")
-                              "  ")
-                ]
-
-            `(do (print ,form-as-str# ,first-line-suffix#) ;
-               (let [res# (do ,form)
-                     fennel# (require :fennel)]
-                 ;; Printing view of result in all cases, but I think it only really needs to be done for tables
-                 (print ,res-prefix# (fennel#.view res#))
-                 res#))))
-
-        (fn get-dbg-form [form]
-          (print "form: " (view form))
-          (if (not (-> form list?))
-
-            (do 
-              (print "Type: " (type form))
-              (match (type form)
-                ;; No need for extra printing for primitives at compile time
-                "number" form
-                "string" form
-                ;; Should add a case for tables as they need to be iterated over
-                _ (dbg form)))
-
-            (let [[head & tail] form
-                  view-of-form (view form)
-                  is-binding-form (-> head 
-                                      (mh.get-syntax-tbl)
-                                      (. :binding-form?))]
-              (print "Type: list")
-              (print "tail: " (view tail))
-              (print "is-binding-form" is-binding-form)
-              (if is-binding-form
-                (let [[bindings & body] tail]
-                  (print "bindings: " (view bindings))
-                  (print "body: " (view body))
-                  (dbg (list head bindings (unpack (c.map get-dbg-form body))) view-of-form))
-
-                (dbg (list head (unpack (c.map get-dbg-form tail))) view-of-form)))))
-
-        (get-dbg-form form)))
+    
 
     (local x 42)
     (local y 2)
