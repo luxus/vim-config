@@ -84,20 +84,35 @@
     (dbgn (+ 1 x (- 2 (/ 6 y))))))
 
 (comment 
+  (do 
+    
+    (macro prn-syntax [form]
+      (local fennel (require :fennel))
+      (local syn (fennel.syntax))
+      (when (-> form list?) 
+        (let [[head & tail] form
+              head-as-str (view head)]
+          (print (view head))
+          (print (view (. syn head-as-str))))))
+    
+    (prn-syntax (let [a "111"] (+ 1 2)))
+
+    (prn-syntax (+ 1 2)))
+          
   (do
 
     (macro prn-list-props [form]
       (when (-> form list?)
         (print "Line: " (. form :line))
-        ; Check if filename is emitted when macro is used into another file
+        ; Check if filename is emitted when macro is used into another file (since macro files don't really have a lua equivalent)
         (print "Filename:" (. form :filename)) 
         (print "Bytestart: " (. form :bytestart))
         (print "Byteend " (. form :byteend))))
 
 
-    (prn-list-props (+ 1 2)))
+    (prn-list-props (+ 1 2))))
   
-  )
+  
 (comment
   (def t {:aa "aa" :bb {:things-in-b [:b :bb :bbb]}})
 
