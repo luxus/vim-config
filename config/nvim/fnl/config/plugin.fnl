@@ -117,7 +117,7 @@
 
   ;; lisp
   :guns/vim-sexp {:mod :sexp}
-  :eraserhd/parinfer-rust {:run "cargo build --release"}
+  ;; :eraserhd/parinfer-rust {:run "cargo build --release"}
   :tpope/vim-sexp-mappings-for-regular-people {}
   :tpope/vim-surround {}
   :tpope/vim-repeat {}
