@@ -4,7 +4,7 @@
 (comment  
     (do
         (import-macros {: dbg : dbgn} :config.debug-macros)
-        ;; (dbg (+ 1 2 3))
+        (dbg (+ 1 2 3))
         (dbgn [1 2 3 (+ 2 2)]))
         ;; (dbgn (+ 1 2 3 (- 1 2)))
         

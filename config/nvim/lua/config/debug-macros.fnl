@@ -38,61 +38,141 @@
     (dbg (+ 1 2 3))
     (dbg (+ (dbg (/ 6 2)) 4))))
   
-(fn dbgn [form]
-  (let [c (require :aniseed.core)
-        mh (require :config.macro-helpers)] 
 
-    (fn dbg [form view-of-form] 
-      (let [form-as-str# (if view-of-form 
-                           view-of-form 
-                           (view form))
+;; TODO
+;; Priority
+;; - [x] Handle sequences?
+;;   - Need to check this but since sequences are just a table it might be ok as is with the current table handler
+;;     - Confirmed to work!
+;; - [ ] Handle func declarations
+;;   - [ ] Check API for describing fennel syntax
+;;   - [ ] ((fennel.syntax) "fn")
+;;     - Should return {:function? true} which could be used to skip the function name (symbol?), binding/params and just traverse the body
+;;     - Although this could be refering to whether a symbol is function... might need to do ((fennel.syntax "func-name")) instead
+;; Nice to have
+;; - [  ] print form, is list, is sym, type on same line for easier reading
+;; - [ ] Tail call optimisation 
+;; - [ ] Support depth number printing
+;; - [ ] Support indentation based on depth
 
-            first-line-suffix#    (if (list? form)
-                                    "..."
-                                    " =>")
+;; (do 
+ 
+  (fn dbgn [form]
+    ;; Requires so that the macro has its dependecies
+    (let [c (require :aniseed.core)
+          mh (require :config.macro-helpers)] 
 
-            res-prefix# (if (list? form)
-                          (.. form-as-str# " =>")
-                          "  ")]
-            
+      (fn dbg [form view-of-form] 
+        (let [;; Get string representation of form before eval
+              form-as-str# (if view-of-form 
+                             view-of-form 
+                             (view form))
 
-        `(do (print ,form-as-str# ,first-line-suffix#) ;
-           (let [res# (do ,form)
-                 fennel# (require :fennel)]
-             ;; Printing view of result in all cases, but I think it only really needs to be done for tables
-             (print ,res-prefix# (fennel#.view res#))
-             res#))))
+              ;; "..." to indicate there may be nesting since it's a list
+              ;; "=>" to indicate the final result
+              ;; This needs some work... perhaps check for nested lists and symbols. If there are none, don't even print the first line
+              first-line-suffix#    (if (list? form)
+                                      "..."
+                                      " =>")
 
-    (fn get-dbg-form [form]
-      (print "forms: " (view form))
-      (if (not (-> form list?))
+              ;; If the form is a list, it can potentially have a lot of nested values which will have been expanded out. This can make it hard to tell what the final eval is for. So if it's a list, re-print the view of the form to provide context
+              res-prefix# (if (list? form)
+                            (.. form-as-str# " =>")
+                            "  ")]
 
-        (do 
-          (print "Type: " (type form))
-          (match (type form)
-            ;; No need for extra printing for primitives at compile time
-            "number" form
-            "string" form
-            ;; Should add a case for tables as they need to be iterated over
-            _ (dbg form)))
+          ;; Produce the dbg'd form here
+          `(do 
+             ;; Example:
+             ;; form = (+ 1 2)
+             ;;
+             ;; "(+ 1 2) ..."
+             (print ,form-as-str# ,first-line-suffix#) 
+             (let [res# (do ,form)
+                   fennel# (require :fennel)]
+               ;; Printing view of result in all cases, but I think it only really needs to be done for tables
+               ;; "(+ 1 2) => 3"
+               (print ,res-prefix# (fennel#.view res#))
+               ;; Return the evaluated result
+               res#))))
 
-        (let [[head & tail] form
-              view-of-form (view form)
-              is-binding-form (-> head 
-                                  (mh.get-syntax-tbl)
-                                  (. :binding-form?))]
-          (print "Type: list")
-          (print "tail: " (view tail))
-          (print "is-binding-form" is-binding-form)
-          (if is-binding-form
-            (let [[bindings & body] tail]
-              (print "bindings: " (view bindings))
-              (print "body: " (view body))
-              (dbg (list head bindings (unpack (c.map get-dbg-form body))) view-of-form))
+      (fn get-dbg-form [form]
+        (print "form: " (view form))
+        (print "Type: " (type form))
 
-            (dbg (list head (unpack (c.map get-dbg-form tail))) view-of-form)))))
+        (if (not (-> form list?))
+          (if (sym? form)
+            ;; You don't want your symbol accidentally treated as a table
+            (do 
+              (print "is symbol")
+              (dbg form))
 
-    (get-dbg-form form)))
+            (match (type form)
+              ;; No need for extra printing for primitives at compile time
+              :number form
+              :string form
+              ;; Tables that are neither lists nor sybols should have their keys and values replaced with dbg-forms
+              :table (let [view-of-table (view form)
+                           dbg-table (collect [k v (pairs form)]
+                                       ;;      new key          new value
+                                       (values (get-dbg-form k) (get-dbg-form v)))] 
+                       (dbg dbg-table view-of-table))
+
+              _ (dbg form)))
+
+          (let [[operator & operands] form
+                view-of-form (view form)
+                is-binding-form (-> operator 
+                                    (mh.get-syntax-tbl)
+                                    (. :binding-form?))]
+            (print "is table")
+            (print "operands: " (view operands))
+            (print "is-binding-form: " is-binding-form)
+            ;; Need to check if is fn here as well?
+            (if is-binding-form 
+              ;; Traversing bindings is its own problem... just deal with the body
+              (let [[bindings & body] operands]
+                (print "bindings: " (view bindings))
+                (print "body: " (view body))
+                ;; Reconstruct the form 
+                (dbg (list operator bindings (unpack (c.map get-dbg-form body))) view-of-form))
+              ;; Reconstruct the form
+              (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form)))))
+
+      (get-dbg-form form)))
+  
+  
+  ;; (dbgn [1 2 3 (+ 2 2)])
+
+  ;; (local a 1)
+  ;; (dbgn (+ 1 a))
+
+  ;; (dbgn (fn test-fn [a b]
+  ;;         (let [c 3]
+  ;;           (+ a b c))))
+  ;; (test-fn 1 2)
+
+  ;; (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
+  ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
+  
+
+  ;; )
+  
+
+
+(comment 
+  
+  
+  (do 
+    (macro get-compile-type [form]
+      (sym? form))
+    
+    (local a 1)
+
+    (get-compile-type a)))
+
+    ;; (get-compile-type 1)
+    
+    
 
 ;; Lua-api - https://fennel-lang.org/api
 ;; - AST 
