@@ -41,28 +41,41 @@
 (do 
  
   (macro dbgn [form]
+    ;; Requires so that the macro has its dependecies
     (let [c (require :aniseed.core)
           mh (require :config.macro-helpers)] 
 
       (fn dbg [form view-of-form] 
-        (let [form-as-str# (if view-of-form 
+        (let [;; Get string representation of form before eval
+              form-as-str# (if view-of-form 
                              view-of-form 
                              (view form))
 
+              ;; "..." to indicate there may be nesting since it's a list
+              ;; "=>" to indicate the final result
+              ;; This needs some work... perhaps check for nested lists and symbols. If there are none, don't even print the first line
               first-line-suffix#    (if (list? form)
                                       "..."
                                       " =>")
 
+              ;; If the form is a list, it can potentially have a lot of nested values which will have been expanded out. This can make it hard to tell what the final eval is for. So if it's a list, re-print the view of the form to provide context
               res-prefix# (if (list? form)
                             (.. form-as-str# " =>")
                             "  ")]
 
-
-          `(do (print ,form-as-str# ,first-line-suffix#) ;
+          ;; Produce the dbg'd form here
+          `(do 
+             ;; Example:
+             ;; form = (+ 1 2)
+             ;;
+             ;; "(+ 1 2) ..."
+             (print ,form-as-str# ,first-line-suffix#) 
              (let [res# (do ,form)
                    fennel# (require :fennel)]
                ;; Printing view of result in all cases, but I think it only really needs to be done for tables
+               ;; "(+ 1 2) => 3"
                (print ,res-prefix# (fennel#.view res#))
+               ;; Return the evaluated result
                res#))))
 
       (fn get-dbg-form [form]
@@ -71,42 +84,45 @@
 
         (if (not (-> form list?))
           (if (sym? form)
+            ;; You don't want your symbol accidentally treated as a table
             (dbg form)
+
             (match (type form)
               ;; No need for extra printing for primitives at compile time
               :number form
               :string form
-              ;; Should add a case for tables as they need to be iterated over
+              ;; Tables that are neither lists nor sybols should have their keys and values replaced with dbg-forms
               :table (let [view-of-table (view form)
                            dbg-table (collect [k v (pairs form)]
+                                       ;;      new key          new value
                                        (values (get-dbg-form k) (get-dbg-form v)))] 
                        (dbg dbg-table view-of-table))
 
               _ (dbg form)))
 
-          (let [[head & tail] form
+          (let [[operator & operands] form
                 view-of-form (view form)
-                is-binding-form (-> head 
+                is-binding-form (-> operator 
                                     (mh.get-syntax-tbl)
                                     (. :binding-form?))]
-            (print "tail: " (view tail))
-            (print "is-binding-form" is-binding-form)
-            (if is-binding-form
-              (let [[bindings & body] tail]
+            (print "operands: " (view operands))
+            (print "is-binding-form: " is-binding-form)
+            (if is-binding-form 
+              ;; Traversing bindings is its own problem... just deal with the body
+              (let [[bindings & body] operands]
                 (print "bindings: " (view bindings))
                 (print "body: " (view body))
-                (dbg (list head bindings (unpack (c.map get-dbg-form body))) view-of-form))
-
-              (dbg (list head (unpack (c.map get-dbg-form tail))) view-of-form)))))
+                ;; Reconstruct the form 
+                (dbg (list operator bindings (unpack (c.map get-dbg-form body))) view-of-form))
+              ;; Reconstruct the form
+              (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form)))))
 
       (get-dbg-form form)))
   
-
-
   ;; (local a 1)
   ;; (dbgn (+ 1 a))
-  ;; (dbgn (+ 1 2 (let [a 1] (+ a (/ 3 1)))))
-  (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
+  (dbgn (+ 1 2 (let [a 1] (+ a (/ 3 1)))))
+  ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
   )
 
