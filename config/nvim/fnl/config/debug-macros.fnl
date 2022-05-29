@@ -121,7 +121,7 @@
   
   ;; (local a 1)
   ;; (dbgn (+ 1 a))
-  (dbgn (+ 1 2 (let [a 1] (+ a (/ 3 1)))))
+  (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
   )
