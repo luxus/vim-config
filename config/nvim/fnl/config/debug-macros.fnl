@@ -67,10 +67,11 @@
 
       (fn get-dbg-form [form]
         (print "form: " (view form))
-        (if (not (-> form list?))
+        (print "Type: " (type form))
 
-          (do 
-            (print "Type: " (type form))
+        (if (not (-> form list?))
+          (if (sym? form)
+            (dbg form)
             (match (type form)
               ;; No need for extra printing for primitives at compile time
               :number form
@@ -88,7 +89,6 @@
                 is-binding-form (-> head 
                                     (mh.get-syntax-tbl)
                                     (. :binding-form?))]
-            (print "Type: list")
             (print "tail: " (view tail))
             (print "is-binding-form" is-binding-form)
             (if is-binding-form
@@ -103,11 +103,10 @@
   
 
 
-  (local a 1)
-  (dbgn (+ 1 a))
+  ;; (local a 1)
+  ;; (dbgn (+ 1 a))
   ;; (dbgn (+ 1 2 (let [a 1] (+ a (/ 3 1)))))
-
-  ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
+  (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
   )
 
