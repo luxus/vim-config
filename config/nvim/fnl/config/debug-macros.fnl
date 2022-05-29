@@ -38,6 +38,23 @@
     (dbg (+ 1 2 3))
     (dbg (+ (dbg (/ 6 2)) 4))))
   
+
+;; TODO
+;; Priority
+;; - [x] Handle sequences?
+;;   - Need to check this but since sequences are just a table it might be ok as is with the current table handler
+;;     - Confirmed to work!
+;; - [ ] Handle func declarations
+;;   - [ ] Check API for describing fennel syntax
+;;   - [ ] ((fennel.syntax) "fn")
+;;     - Should return {:function? true} which could be used to skip the function name (symbol?), binding/params and just traverse the body
+;;     - Although this could be refering to whether a symbol is function... might need to do ((fennel.syntax "func-name")) instead
+;; Nice to have
+;; - [  ] print form, is list, is sym, type on same line for easier reading
+;; - [ ] Tail call optimisation 
+;; - [ ] Support depth number printing
+;; - [ ] Support indentation based on depth
+
 (do 
  
   (macro dbgn [form]
@@ -85,7 +102,9 @@
         (if (not (-> form list?))
           (if (sym? form)
             ;; You don't want your symbol accidentally treated as a table
-            (dbg form)
+            (do 
+              (print "is symbol")
+              (dbg form))
 
             (match (type form)
               ;; No need for extra printing for primitives at compile time
@@ -105,8 +124,10 @@
                 is-binding-form (-> operator 
                                     (mh.get-syntax-tbl)
                                     (. :binding-form?))]
+            (print "is table")
             (print "operands: " (view operands))
             (print "is-binding-form: " is-binding-form)
+            ;; Need to check if is fn here as well?
             (if is-binding-form 
               ;; Traversing bindings is its own problem... just deal with the body
               (let [[bindings & body] operands]
@@ -119,9 +140,17 @@
 
       (get-dbg-form form)))
   
+  ;; (dbgn [1 2 3 (+ 2 2)])
+
   ;; (local a 1)
   ;; (dbgn (+ 1 a))
-  (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
+
+  ;; (dbgn (fn test-fn [a b]
+  ;;         (let [c 3]
+  ;;           (+ a b c))))
+  ;; (test-fn 1 2)
+
+  ;; (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
   )
