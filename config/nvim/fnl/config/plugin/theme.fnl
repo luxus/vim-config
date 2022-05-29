@@ -14,8 +14,6 @@
 ;; (nvim.ex.colorscheme :falcon)
 
 
-;; (set vim.g.material_style "deep ocean")
-;; (material.setup)
 
 ;; (nvim.ex.colorscheme :kanagawa)
 
@@ -26,9 +24,16 @@
       (set vim.o.background :dark))
 
     (do 
-      (theme.setup {:theme_style "light"
-                    :comment_style "italic"})
-      (set vim.o.background :light))))
+      (set vim.g.material_style :lighter)
+      (material.setup {:high_visibility {:lighter true}})
+      (nvim.ex.colorscheme :material)
+      (set vim.o.background :light))
+
+    ;; (do 
+    ;;   (theme.setup {:theme_style "light"
+    ;;                 :comment_style "italic"})
+    ;;   (set vim.o.background :light))
+    ))
 
 (set-theme true)
 

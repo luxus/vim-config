@@ -12,10 +12,6 @@
              
    require-macros [config.debug-macros]})
 
-(comment  
-  ;; (import-macros {: dbg} :debug-macros)
-  (dbg (+ 1 2 3)))
-
 ;;(vim.fn.fzf#install)
 
 ; FZF layout set to bottom of screen
@@ -242,10 +238,20 @@ command! -bang -nargs=* GGrep
 ;; Disable preview window as it interferes with input on work machine
 (set vim.g.fzf_preview_window "")
 
+; See fzf.txt - Examples  "Customize fzf colors to match your color scheme"
+(vim.api.nvim_set_var :fzf_colors
+     {"fg"      ["fg" "Normal"]
+      "bg"      ["bg" "Normal"]
+      "hl"      ["fg" "Comment"]
+      "fg+"     ["fg" "CursorLine" "CursorColumn" "Normal"]
+      "bg+"     ["bg" "CursorLine" "CursorColumn"]
+      "hl+"     ["fg" "Statement"]
+      "info"    ["fg" "PreProc"]
+      "border"  ["fg" "Ignore"]
+      "prompt"  ["fg" "Conditional"]
+      "pointer" ["fg" "Exception"]
+      "marker"  ["fg" "Keyword"]
+      "spinner" ["fg" "Label"]
+      "header"  ["fg" "Comment"]})
 
-  
-   
-  
-  
-  
-      
+
