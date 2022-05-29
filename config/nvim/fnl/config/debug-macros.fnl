@@ -78,7 +78,7 @@
               ;; Should add a case for tables as they need to be iterated over
               :table (let [view-of-table (view form)
                            dbg-table (collect [k v (pairs form)]
-                                       (values (dbg k) (dbg v)))] 
+                                       (values (get-dbg-form k) (get-dbg-form v)))] 
                        (dbg dbg-table view-of-table))
 
               _ (dbg form)))
@@ -103,10 +103,29 @@
   
 
 
-  ;; (dbgn (+ 1 2 (/ 3 1)))
-  (dbgn { (.. "aa" "bb") (+ 3 4)})
+  (local a 1)
+  (dbgn (+ 1 a))
+  ;; (dbgn (+ 1 2 (let [a 1] (+ a (/ 3 1)))))
+
+  ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
   )
+
+
+(comment 
+  
+  
+  (do 
+    (macro get-compile-type [form]
+      (sym? form))
+    
+    (local a 1)
+
+    (get-compile-type a)
+
+    ;; (get-compile-type 1)
+    
+    ))
 
 ;; Lua-api - https://fennel-lang.org/api
 ;; - AST 
