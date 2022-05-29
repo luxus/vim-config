@@ -21,8 +21,8 @@
 
     (collect [k v (pairs ["a" "b" "c" "d"])]
         (if (not= k "yellow")
-            (values (.. "color-" v) k))) ; {:color-a 1 :color-b 2 :color-c 3 :color-d 4}
-    )
+            (values (.. "color-" v) k)))) ; {:color-a 1 :color-b 2 :color-c 3 :color-d 4}
+    
 
 (comment 
   
