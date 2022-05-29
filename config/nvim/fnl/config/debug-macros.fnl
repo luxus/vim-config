@@ -55,9 +55,9 @@
 ;; - [ ] Support depth number printing
 ;; - [ ] Support indentation based on depth
 
-(do 
+;; (do 
  
-  (macro dbgn [form]
+  (fn dbgn [form]
     ;; Requires so that the macro has its dependecies
     (let [c (require :aniseed.core)
           mh (require :config.macro-helpers)] 
@@ -140,6 +140,7 @@
 
       (get-dbg-form form)))
   
+  
   ;; (dbgn [1 2 3 (+ 2 2)])
 
   ;; (local a 1)
@@ -153,7 +154,9 @@
   ;; (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
-  )
+
+  ;; )
+  
 
 
 (comment 
@@ -165,11 +168,11 @@
     
     (local a 1)
 
-    (get-compile-type a)
+    (get-compile-type a)))
 
     ;; (get-compile-type 1)
     
-    ))
+    
 
 ;; Lua-api - https://fennel-lang.org/api
 ;; - AST 

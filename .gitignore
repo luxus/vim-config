@@ -5,3 +5,4 @@ config/nvim/plugin/
 config/nvim/lua/*.lua
 config/nvim/lua/config/*.lua
 config/nvim/lua/config/plugin/*.lua
+config/nvim/lua/config/*.fnl
