@@ -100,6 +100,7 @@
 (vim.cmd "autocmd User TelescopePreviewerLoaded setlocal wrap")
 
 ;;(nvim.set_keymap :n :<leader>fg ":lua require('telescope.builtin').live_grep()<CR>" {:noremap true}) ;; Removed in favour of fzf
+(nvim.set_keymap :n :<leader>fa ":Telescope<CR>" {:noremap true :desc "all"})
 (nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').find_files()<CR>" {:noremap true :desc "files"})
 (nvim.set_keymap :x :<leader>fv ":lua require('telescope.builtin').grep_string()<CR>" {:desc "grep string"})
 (nvim.set_keymap :n :<leader>fv ":lua require('telescope.builtin').grep_string()<CR>" {:noremap true :desc "grep string"})
