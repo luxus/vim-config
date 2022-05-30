@@ -69,8 +69,8 @@
  \" notification after file change
  autocmd FileChangedShellPost *
  \\ echohl WarningMsg | echo 'File changed on disk. Buffer reloaded.' | echohl None
- "
- )
+ ")
+ 
 
 (vim.cmd "
 augroup highlight_yank
@@ -112,8 +112,8 @@ augroup END")
   "
   nnoremap <expr> j v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'
   nnoremap <expr> k v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'k' : 'gk'
-  "
-  )
+  ")
+  
 
 ;sets a nvim global options
 (let [options
