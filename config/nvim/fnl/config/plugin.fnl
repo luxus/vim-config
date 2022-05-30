@@ -128,7 +128,8 @@
   :mvllow/modes.nvim {:mod :modes}
 
   ;; line
-  :feline-nvim/feline.nvim {:mod :feline}
+  :feline-nvim/feline.nvim {:mod :feline
+                            :requires [:SmiteshP/nvim-gps]}
 
   ; file searching
   :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
@@ -165,6 +166,9 @@
                                                :romgrk/nvim-treesitter-context]
                                     :run ":TSUpdate"
                                     :mod :treesitter}
+
+  :SmiteshP/nvim-gps {:requires [:nvim-treesitter/nvim-treesitter]}
+
   ;; lsp
   :williamboman/nvim-lsp-installer {:requires [:RRethy/vim-illuminate
                                                :chen244/csharpls-extended-lsp.nvim
@@ -200,8 +204,7 @@
   :mtth/scratch.vim {:mod :scratch}
 
   ; theme
-  :bluz71/vim-nightfly-guicolors {:requires [:Domeee/mosel.nvim
-                                             :rebelot/kanagawa.nvim
+  :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim
                                              :tomasr/molokai
                                              :embark-theme/vim
                                              :projekt0n/github-nvim-theme

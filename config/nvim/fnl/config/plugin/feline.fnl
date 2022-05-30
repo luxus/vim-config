@@ -1,6 +1,7 @@
 (module config.plugin.feline
   {autoload {nvim aniseed.nvim
-             feline feline}})
+             feline feline
+             nvim-gps nvim-gps}})
 
 (set nvim.o.termguicolors true)
 
@@ -17,8 +18,8 @@
                :fg (vi-mode-utils.get_mode_color)
                :style :bold})}
        {:provider {:name :file_info
-                   :opts {:type :unique}}
-        
+                   :opts {:type :unique-short}}
+
         :hl {:fg :white :bg :oceanblue :style :bold}
         :left_sep [:slant_left_2
                    {:str " " :hl {:bg :oceanblue :fg :NONE}}]
@@ -30,6 +31,8 @@
        {:provider :position
         :left_sep " "
         :right_sep [" " {:str :slant_right_2_thin :hl {:fg :fg :bg :bg}}]}
+       {:provider (fn [] (nvim-gps.get_location))
+        :enabled (fn [] (nvim-gps.is_available))}
        {:provider :diagnostic_errors :hl {:fg :red}}
        {:provider :diagnostic_warnings :hl {:fg :yellow}}
        {:provider :diagnostic_hints :hl {:fg :cyan}}
