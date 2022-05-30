@@ -130,9 +130,9 @@ augroup END")
 
 
 ;; treesitter folder
-(set vim.opt.foldmethod "expr")
-(set vim.opt.foldexpr "nvim_treesitter#foldexpr()")
-(vim.cmd "autocmd BufReadPost,FileReadPost * normal zR")
+;; (set vim.opt.foldmethod "expr")
+;; (set vim.opt.foldexpr "nvim_treesitter#foldexpr()")
+;; (vim.cmd "autocmd BufReadPost,FileReadPost * normal zR")
 
 ;import plugin.fnl
 (require :config.plugin)
