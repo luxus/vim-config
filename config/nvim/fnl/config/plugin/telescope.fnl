@@ -113,5 +113,6 @@
 (nvim.set_keymap :n :<leader>fr ":lua require('telescope.builtin').resume()<CR>" {:noremap true :desc "resume"})
 (nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.projects.projects{}<CR>" {:noremap true :silent true :desc "projs"})
 (nvim.set_keymap :n :<leader>ft ":lua require('telescope').extensions.tele_tabby.list()<CR>" {:noremap true :silent true :desc "tabs"})
-(nvim.set_keymap :n :<leader>fs ":lua require('session-lens').search_session()<CR>" {:noremap true :desc "session"})
+(nvim.set_keymap :n :<leader>fs ":lua require('telescope.builtin').git_status()<CR>" {:noremap true :desc "git status"})
+(nvim.set_keymap :n :<leader>ss ":lua require('session-lens').search_session()<CR>" {:noremap true :desc "session"})
 (vim.keymap.set :n :<leader>pr (fn [] (vim.cmd "ProjectRoot")) {:noremap true :desc "proj root"})
