@@ -20,8 +20,8 @@
 (defn set-theme [is-dark]
   (if is-dark
     (do 
-      (nvim.ex.colorscheme :falcon)
-      ;; (nvim.ex.colorscheme :nightfox) 
+      ;; (nvim.ex.colorscheme :falcon)
+      (nvim.ex.colorscheme :nightfox)
       (set vim.o.background :dark))
 
     (do 
