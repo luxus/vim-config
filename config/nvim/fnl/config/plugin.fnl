@@ -78,8 +78,8 @@
   ;; git
   :tpope/vim-fugitive {:requires [:AndrewRadev/linediff.vim
                                   :junegunn/gv.vim]}
-  
-  :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim 
+
+  :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim
                                       :sindrets/diffview.nvim
                                       :lewis6991/gitsigns.nvim]
                            :mod :neogit}
@@ -88,14 +88,14 @@
   :AndrewRadev/bufferize.vim {}
 
   ;; buffers
-  :kazhala/close-buffers.nvim {:mod :close-buffers} 
+  :kazhala/close-buffers.nvim {:mod :close-buffers}
 
   ;; editing
   :mg979/vim-visual-multi {:branch "master"}
   :bkad/CamelCaseMotion {:mod :camelcasemotion}
-  :vim-scripts/ReplaceWithRegister {} 
-  :terryma/vim-expand-region {} 
-  :jiangmiao/auto-pairs {} 
+  :vim-scripts/ReplaceWithRegister {}
+  :terryma/vim-expand-region {}
+  :jiangmiao/auto-pairs {}
   :mbbill/undotree {:mod :undotree}
 
   ;; folders
@@ -127,10 +127,6 @@
   ;; Cursor-line
   :mvllow/modes.nvim {:mod :modes}
 
-  ;; line
-  :feline-nvim/feline.nvim {:mod :feline
-                            :requires [:SmiteshP/nvim-gps]}
-
   ; file searching
   :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
   :nvim-telescope/telescope.nvim {:requires [:kyazdani42/nvim-web-devicons
@@ -145,7 +141,7 @@
                                              ;; :nvim-telescope/telescope-dap.nvim
                                              ;; :natecraddock/workspaces.nvim
                                              ;; :fannheyward/telescope-coc.nvim
-                                             
+
                                   :mod :telescope}
 
   :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()"))}
@@ -168,6 +164,10 @@
                                     :mod :treesitter}
 
   :SmiteshP/nvim-gps {:requires [:nvim-treesitter/nvim-treesitter]}
+
+  ;; line
+  :feline-nvim/feline.nvim {:mod :feline
+                            :requires [:SmiteshP/nvim-gps]}
 
   ;; lsp
   :williamboman/nvim-lsp-installer {:requires [:RRethy/vim-illuminate
@@ -210,7 +210,7 @@
                                              :projekt0n/github-nvim-theme
                                              :fenetikm/falcon
                                              :marko-cerovac/material.nvim
-                                             :EdenEast/nightfox.nvim] 
+                                             :EdenEast/nightfox.nvim]
                                   :mod :theme})
 
   ; Search
@@ -232,7 +232,7 @@
   ;; :mfussenegger/nvim-dap {:requires [:rcarriga/nvim-dap-ui
   ;;                                   :theHamsta/nvim-dap-virtual-text]
   ;;                        :mod :dap}
-  
+
 
 ;; TODO: Don't run this config if not on windows with powershell
 (vs.setup {:devenv-path "C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe"
