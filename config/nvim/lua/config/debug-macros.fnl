@@ -55,12 +55,13 @@
 ;; - [ ] Support depth number printing
 ;; - [ ] Support indentation based on depth
 
-;; (do 
+(do
  
-  (fn dbgn [form]
+  (macro dbgn [form]
     ;; Requires so that the macro has its dependecies
     (let [c (require :aniseed.core)
-          mh (require :config.macro-helpers)] 
+          mh (require :config.macro-helpers)
+          fennel (require :fennel)] 
 
       (fn dbg [form view-of-form] 
         (let [;; Get string representation of form before eval
@@ -121,13 +122,29 @@
 
           (let [[operator & operands] form
                 view-of-form (view form)
-                is-binding-form (-> operator 
-                                    (mh.get-syntax-tbl)
-                                    (. :binding-form?))]
-            (print "is table")
+                syntax-tbl (mh.get-syntax-tbl operator)
+                is-binding-form (. syntax-tbl :binding-form?)
+                is-define (. syntax-tbl :define?) ;; define is a local or fn
+                syn (fennel.syntax)]
+            (print "syntax-tbl" (view syntax-tbl))
+            (print "is list")
+
+            (when is-define 
+              (let [first-param-of-define (. operands 1)]
+
+                (print "is-define")
+                (print "fn name: " first-param-of-define) ;; get fn name
+                (print "fn type: " (type first-param-of-define)) 
+                (print "fn symbol " (sym? first-param-of-define)) ;; Is a symbol if the value is returned
+                (print (vim.inspect first-param-of-define)) ;; get fn name
+                ;; (print (view syn))
+                (print "Syntax tbl for fn" (view (mh.get-syntax-tbl (. operands 1))))))
+
             (print "operands: " (view operands))
             (print "is-binding-form: " is-binding-form)
             ;; Need to check if is fn here as well?
+            ;; (match syntax-tbl
+            ;;   (where [t] (-> t :define) ))
             (if is-binding-form 
               ;; Traversing bindings is its own problem... just deal with the body
               (let [[bindings & body] operands]
@@ -146,21 +163,21 @@
   ;; (local a 1)
   ;; (dbgn (+ 1 a))
 
-  ;; (dbgn (fn test-fn [a b]
-  ;;         (let [c 3]
-  ;;           (+ a b c))))
-  ;; (test-fn 1 2)
+  (dbgn (fn test-fn [a b]
+          (let [c 3]
+            (+ a b c))))
+  (test-fn 1 2)
 
   ;; (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
 
-  ;; )
+  )
   
 
 
 (comment 
-  
+  (. [:a :b] 1)
   
   (do 
     (macro get-compile-type [form]
