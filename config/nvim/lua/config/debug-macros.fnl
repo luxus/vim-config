@@ -55,13 +55,14 @@
 ;; - [ ] Support depth number printing
 ;; - [ ] Support indentation based on depth
 
-(do
+;; (do
  
-  (macro dbgn [form]
+  (fn dbgn [form]
     ;; Requires so that the macro has its dependecies
     (let [c (require :aniseed.core)
           mh (require :config.macro-helpers)
-          fennel (require :fennel)] 
+          fennel (require :fennel)
+          ] 
 
       (fn dbg [form view-of-form] 
         (let [;; Get string representation of form before eval
@@ -131,29 +132,54 @@
 
             (when is-define 
               (let [first-param-of-define (. operands 1)]
-
-                (print "is-define")
-                (print "fn name: " first-param-of-define) ;; get fn name
-                (print "fn type: " (type first-param-of-define)) 
-                (print "fn symbol " (sym? first-param-of-define)) ;; Is a symbol if the value is returned
-                (print (vim.inspect first-param-of-define)) ;; get fn name
+                (print "is-define, " 
+                       "fn name: " first-param-of-define  ;; get fn name
+                       "fn type: " (type first-param-of-define)
+                       "fn symbol: " (sym? first-param-of-define) ;; Is a symbol if the value is returned
+                       "vim.inspect: " (vim.inspect first-param-of-define)
+                       "Syntax tbl for fn: " (view (mh.get-syntax-tbl (. operands 1)))) 
                 ;; (print (view syn))
-                (print "Syntax tbl for fn" (view (mh.get-syntax-tbl (. operands 1))))))
+                ))
+
 
             (print "operands: " (view operands))
             (print "is-binding-form: " is-binding-form)
-            ;; Need to check if is fn here as well?
-            ;; (match syntax-tbl
-            ;;   (where [t] (-> t :define) ))
-            (if is-binding-form 
-              ;; Traversing bindings is its own problem... just deal with the body
+            (match (mh.get-syntax-tbl operator)
+              {:binding-form? binding-form?}
               (let [[bindings & body] operands]
                 (print "bindings: " (view bindings))
                 (print "body: " (view body))
                 ;; Reconstruct the form 
                 (dbg (list operator bindings (unpack (c.map get-dbg-form body))) view-of-form))
-              ;; Reconstruct the form
-              (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form)))))
+
+              {:define? define?}
+              (let [t (-> (c.reduce 
+                            (fn [{: res : seen-seq} x]
+                              (print :res (view res))
+                              (print :seen-seq (view seen-seq))
+                              (print :x (view x))
+                              (table.insert res (if seen-seq (get-dbg-form x) x))
+                              {:res res
+                               :seen-seq (or seen-seq (sequence? x))})
+                            {:res [] :seen-seq false}
+                            operands)
+                          (. :res))]
+                ;; Don't debug the fn, wrapping it in dos will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
+                (list operator (unpack t)))
+              ;; (do 
+              ;;   (local seen-seq false)
+              ;;   (collect [k v (pairs operands)]
+              ;;     (values k (if seen-seq (dbg v) v))
+              ;;     (when (sequence? v)
+              ;;       (set seen-seq true)))
+              ;; )
+              _ 
+              (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form))
+
+            ;; Need to check if is fn here as well?
+            ;; (match syntax-tbl
+            ;;   (where [t] (-> t :define) ))
+            )))
 
       (get-dbg-form form)))
   
@@ -163,16 +189,16 @@
   ;; (local a 1)
   ;; (dbgn (+ 1 a))
 
-  (dbgn (fn test-fn [a b]
-          (let [c 3]
-            (+ a b c))))
-  (test-fn 1 2)
+  ;; (dbgn (fn test-fn [a b]
+  ;;         (let [c 3]
+  ;;           (+ a b c))))
+  ;; (test-fn 1 2)
 
   ;; (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
 
-  )
+  ;; )
   
 
 
