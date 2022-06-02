@@ -162,8 +162,6 @@
               (let [t (-> (c.reduce 
                             (fn [{: res : seen-seq &as acc} x]
                               (print :acc (view acc))
-                              (print :res (view res))
-                              (print :seen-seq (view seen-seq))
                               (print :x (view x))
                               (table.insert res (if seen-seq (get-dbg-form x) x))
                               {:res res
