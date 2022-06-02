@@ -44,6 +44,7 @@
 ;; - [x] Handle sequences?
 ;;   - Need to check this but since sequences are just a table it might be ok as is with the current table handler
 ;;     - Confirmed to work!
+;; - [ ] Handle locals/vars
 ;; - [ ] Handle func declarations
 ;;   - [ ] Check API for describing fennel syntax
 ;;   - [ ] ((fennel.syntax) "fn")
@@ -55,9 +56,9 @@
 ;; - [ ] Support depth number printing
 ;; - [ ] Support indentation based on depth
 
-;; (do
+(do
  
-  (fn dbgn [form]
+  (macro dbgn [form]
     ;; Requires so that the macro has its dependecies
     (let [c (require :aniseed.core)
           mh (require :config.macro-helpers)
@@ -98,7 +99,7 @@
                res#))))
 
       (fn get-dbg-form [form]
-        (print "form: " (view form))
+        (print "Form: " (view form))
         (print "Type: " (type form))
 
         (if (not (-> form list?))
@@ -124,11 +125,12 @@
           (let [[operator & operands] form
                 view-of-form (view form)
                 syntax-tbl (mh.get-syntax-tbl operator)
-                is-binding-form (. syntax-tbl :binding-form?)
-                is-define (. syntax-tbl :define?) ;; define is a local or fn
+                ;; nil safe table lookup because 
+                is-binding-form (?. syntax-tbl :binding-form?)
+                is-define (?. syntax-tbl :define?) ;; define is a local or fn
                 syn (fennel.syntax)]
-            (print "syntax-tbl" (view syntax-tbl))
             (print "is list")
+            (print "syntax-tbl" (view syntax-tbl))
 
             (when is-define 
               (let [first-param-of-define (. operands 1)]
@@ -144,7 +146,10 @@
 
             (print "operands: " (view operands))
             (print "is-binding-form: " is-binding-form)
+
             (match (mh.get-syntax-tbl operator)
+
+              ;; e.g. let
               {:binding-form? binding-form?}
               (let [[bindings & body] operands]
                 (print "bindings: " (view bindings))
@@ -152,9 +157,11 @@
                 ;; Reconstruct the form 
                 (dbg (list operator bindings (unpack (c.map get-dbg-form body))) view-of-form))
 
+              ;; e.g. fn
               {:define? define?}
               (let [t (-> (c.reduce 
-                            (fn [{: res : seen-seq} x]
+                            (fn [{: res : seen-seq &as acc} x]
+                              (print :acc (view acc))
                               (print :res (view res))
                               (print :seen-seq (view seen-seq))
                               (print :x (view x))
@@ -166,19 +173,10 @@
                           (. :res))]
                 ;; Don't debug the fn, wrapping it in dos will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
                 (list operator (unpack t)))
-              ;; (do 
-              ;;   (local seen-seq false)
-              ;;   (collect [k v (pairs operands)]
-              ;;     (values k (if seen-seq (dbg v) v))
-              ;;     (when (sequence? v)
-              ;;       (set seen-seq true)))
-              ;; )
+
+              ;; other e.g. (+ a b c)
               _ 
               (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form))
-
-            ;; Need to check if is fn here as well?
-            ;; (match syntax-tbl
-            ;;   (where [t] (-> t :define) ))
             )))
 
       (get-dbg-form form)))
@@ -189,16 +187,17 @@
   ;; (local a 1)
   ;; (dbgn (+ 1 a))
 
-  ;; (dbgn (fn test-fn [a b]
-  ;;         (let [c 3]
-  ;;           (+ a b c))))
-  ;; (test-fn 1 2)
+  (dbgn (fn test-fn [a b]
+          (let [c 3
+                d (fn [] (+ 1 2 ))]
+            (+ a b c (d)))))
+  (test-fn 1 2)
 
   ;; (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
 
-  ;; )
+  )
   
 
 
