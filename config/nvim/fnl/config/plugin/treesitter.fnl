@@ -25,7 +25,7 @@
                                       "ia" "@parameter.inner"
       }}}})
 
-(treesitter-context.setup)
+(treesitter-context.setup {:max_lines 10})
 
 (vim.cmd
  "
@@ -56,6 +56,7 @@
       (string.gsub "\\" "/")
       (string.gsub "//" "/")))
 
+;; todo fix this - might just need to update the plugin - see commits
 (set js.log 
      (fn [text position]
       (let [label (text:gsub "\"" "\\\"")
