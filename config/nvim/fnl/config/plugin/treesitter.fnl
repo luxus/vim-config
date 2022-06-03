@@ -4,7 +4,8 @@
              logsitter logsitter
              plenary plenary
              nvim aniseed.nvim
-             js logsitter.lang.javascript}})
+             js logsitter.lang.javascript
+             logsitter-utils logsitter.utils }})
 
 (treesitter.setup {:highlight {:enable true}
                    :indent {:enable true}
@@ -47,7 +48,7 @@
 (vim.keymap.set :n :<localleader>tO (fn [] (vim.api.nvim_command (get-insert-string-cmd "console.trace();" true))) {:noremap true :desc "Trace above"})
 (vim.keymap.set :n :<localleader>to (fn [] (vim.api.nvim_command (get-insert-string-cmd "console.trace();" false))) {:noremap true :desc "Trace below"})
 
-; select arg, paste behing, surround with quotes,
+; select arg, paste behind, surround with quotes,
 (nvim.set_keymap :n :<localleader>la "<cmd>norm yiaPgpS\"`]a, <CR>" {:noremap true})
 
 
@@ -66,6 +67,18 @@
         line (. position 1)]
         
         (string.format "oconsole.log(\"LS -> %s:%s -> %s: \", %s)" filepath line label text))))
+
+
+
+(set logsitter-utils.node_text 
+     (fn [node]
+       (let [fennel (require :fennel)]
+         (print (fennel.view node))
+         (table.concat (vim.treesitter.query.get_node_text node 0) ", "))))
+
+;; function M.node_text(node)
+;; 	return table.concat(vim.treesitter.query.get_node_text(node, 0), ", ")
+;; end
 
 (comment
 
