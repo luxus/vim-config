@@ -70,13 +70,13 @@
 
 
 
-(set logsitter-utils.node_text 
-     (fn [node]
-       (let [fennel (require :fennel)
-             x (vim.treesitter.query.get_node_text node 0)]
-         ;; (table.concat x ", ")
-         x
-         )))
+;; (set logsitter-utils.node_text 
+;;      (fn [node]
+;;        (let [fennel (require :fennel)
+;;              x (vim.treesitter.query.get_node_text node 0)]
+;;          ;; (table.concat x ", ")
+;;          x
+;;          )))
 
 ;; function M.node_text(node)
 ;; 	return table.concat(vim.treesitter.query.get_node_text(node, 0), ", ")
