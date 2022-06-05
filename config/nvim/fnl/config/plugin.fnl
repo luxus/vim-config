@@ -157,7 +157,7 @@
   :wincent/ferret {}
 
    ;parsing system
-  :nvim-treesitter/nvim-treesitter {:requires [:gaelph/logsitter.nvim
+  :nvim-treesitter/nvim-treesitter {:requires [:kamholtz/logsitter.nvim
                                                :nvim-treesitter/nvim-treesitter-textobjects
                                                :romgrk/nvim-treesitter-context]
                                     :run ":TSUpdate"
