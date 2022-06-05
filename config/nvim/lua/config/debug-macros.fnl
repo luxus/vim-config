@@ -125,7 +125,7 @@
           (let [[operator & operands] form
                 view-of-form (view form)
                 syntax-tbl (mh.get-syntax-tbl operator)
-                ;; nil safe table lookup because 
+                ;; nil safe table lookup because functions defined in functions will no appear in the syntax table (might be possible but not sure how yet)
                 is-binding-form (?. syntax-tbl :binding-form?)
                 is-define (?. syntax-tbl :define?) ;; define is a local or fn
                 syn (fennel.syntax)]
@@ -162,8 +162,6 @@
               (let [t (-> (c.reduce 
                             (fn [{: res : seen-seq &as acc} x]
                               (print :acc (view acc))
-                              (print :res (view res))
-                              (print :seen-seq (view seen-seq))
                               (print :x (view x))
                               (table.insert res (if seen-seq (get-dbg-form x) x))
                               {:res res
