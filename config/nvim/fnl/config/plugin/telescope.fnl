@@ -109,7 +109,10 @@
 (nvim.set_keymap :n :<leader>fb ":lua require('telescope.builtin').buffers()<CR>" {:noremap true :desc "buffers"})
 (nvim.set_keymap :n :<leader>fh ":lua require('telescope.builtin').help_tags()<CR>" {:noremap true :desc "help tags"})
 (nvim.set_keymap :n :<leader>fd ":lua require('telescope').extensions.file_browser.file_browser()<CR>" {:noremap true :desc "file browser"})
-(nvim.set_keymap :n :<leader>fc ":lua require('telescope.builtin').commands()<CR>" {:noremap true :desc "commands"})
+
+(nvim.set_keymap :n :<leader>fc require('telescope.builtin').commands() {:noremap true :desc "commands"})
+(nvim.set_keymap :x :<leader>fc require('telescope.builtin').commands {:noremap true :desc "commands"})
+
 (nvim.set_keymap :n :<leader>fz ":lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>" {:noremap true :desc "buf fuzzy find"})
 (nvim.set_keymap :n :<leader>fr ":lua require('telescope.builtin').resume()<CR>" {:noremap true :desc "resume"})
 (nvim.set_keymap :n :<leader>fp ":lua require'telescope'.extensions.projects.projects{}<CR>" {:noremap true :silent true :desc "projs"})

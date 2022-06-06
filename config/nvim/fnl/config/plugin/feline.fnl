@@ -18,7 +18,7 @@
                :fg (vi-mode-utils.get_mode_color)
                :style :bold})}
        {:provider {:name :file_info
-                   :opts {:type :unique-short}}
+                   :opts {:type :unique}}
 
         :hl {:fg :white :bg :oceanblue :style :bold}
         :left_sep [:slant_left_2
