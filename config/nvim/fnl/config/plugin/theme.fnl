@@ -1,7 +1,6 @@
 (module config.plugin.theme
   {autoload {nvim aniseed.nvim
              theme github-theme
-             mosel mosel.nvim
              material material}})
 
 ;; For github theme
@@ -10,7 +9,7 @@
 ;;               :comment_style "italic"})
 
 ;;(nvim.ex.colorscheme :nightfly)
-; (nvim.ex.colorscheme :embark)
+;; (nvim.ex.colorscheme :embark)
 ;; 
 
 
