@@ -68,9 +68,6 @@
                          :mod :harpoon}
 
   ;; movement
-  ;; :phaazon/hop.nvim {:branch "v1"
-  ;;                    :mod :hop}
-
   :ggandor/lightspeed.nvim {:mod :lightspeed}
 
   :matze/vim-move {:mod :vim-move}
@@ -205,10 +202,7 @@
 
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim
-                                             :tomasr/molokai
-                                             :embark-theme/vim
                                              :projekt0n/github-nvim-theme
-                                             :fenetikm/falcon
                                              :marko-cerovac/material.nvim
                                              :EdenEast/nightfox.nvim]
                                   :mod :theme})
