@@ -113,6 +113,18 @@ augroup END")
   nnoremap <expr> j v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'j' : 'gj'
   nnoremap <expr> k v:count ? (v:count > 5 ? \"m'\" . v:count : '') . 'k' : 'gk'
   ")
+
+
+(var diagnostics-active true)
+(vim.keymap.set :n :<leader>dd (fn [] 
+                                (set diagnostics-active (not diagnostics-active))
+                                (print (.. "Diagnostics " (if diagnostics-active "active" "inactive")))
+                                (if diagnostics-active
+                                  (vim.diagnostic.show)
+                                  (vim.diagnostic.hide)))
+                                {:noremap true
+                                 :silent true 
+                                 :desc "Toggle diagnostics"})
   
 
 ;sets a nvim global options
