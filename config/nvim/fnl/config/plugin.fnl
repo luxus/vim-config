@@ -156,7 +156,8 @@
    ;parsing system
   :nvim-treesitter/nvim-treesitter {:requires [:gaelph/logsitter.nvim
                                                :nvim-treesitter/nvim-treesitter-textobjects
-                                               :romgrk/nvim-treesitter-context]
+                                               :romgrk/nvim-treesitter-context
+                                               :windwp/nvim-ts-autotag]
                                     :run ":TSUpdate"
                                     :mod :treesitter}
 

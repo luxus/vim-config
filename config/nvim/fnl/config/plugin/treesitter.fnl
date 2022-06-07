@@ -5,7 +5,8 @@
              plenary plenary
              nvim aniseed.nvim
              js logsitter.lang.javascript
-             logsitter-utils logsitter.utils }})
+             logsitter-utils logsitter.utils
+             nvim-ts-autotag nvim-ts-autotag}})
 
 (treesitter.setup {:highlight {:enable true}
                    :indent {:enable true}
@@ -27,6 +28,7 @@
       }}}})
 
 (treesitter-context.setup {:max_lines 10})
+(nvim-ts-autotag.setup {:filetypes ["html" "xml"]})
 
 (vim.cmd
  "
