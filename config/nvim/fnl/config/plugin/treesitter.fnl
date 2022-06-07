@@ -28,7 +28,12 @@
       }}}})
 
 (treesitter-context.setup {:max_lines 10})
-(nvim-ts-autotag.setup {:filetypes ["html" "xml"]})
+(nvim-ts-autotag.setup {:filetypes ["html" "javascript" "typescript" "javascriptreact" "typescriptreact" "svelte" "vue" "tsx" "jsx" "rescript"
+"xml"
+"php"
+"markdown"
+"glimmer" "handlebars" "hbs" "mason"]})
+
 
 (vim.cmd
  "
