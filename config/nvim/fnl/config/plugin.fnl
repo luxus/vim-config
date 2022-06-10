@@ -205,6 +205,7 @@
 
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim
+                                             :RRethy/nvim-base16
                                              :projekt0n/github-nvim-theme
                                              :marko-cerovac/material.nvim
                                              :EdenEast/nightfox.nvim]

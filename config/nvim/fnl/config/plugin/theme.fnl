@@ -8,9 +8,15 @@
 ;; (theme.setup {:theme_style "light"
 ;;               :comment_style "italic"})
 
-;;(nvim.ex.colorscheme :nightfly)
+;; (nvim.ex.colorscheme :nightfly)
 ;; (nvim.ex.colorscheme :embark)
 ;; 
+
+;; (nvim.ex.colorscheme :base16-gruvbox-dark-soft)
+;; (nvim.ex.colorscheme :base16-spacemacs)
+;; (nvim.ex.colorscheme :base16-apathy)
+(nvim.ex.colorscheme :base16-atelier-lakeside)
+
 
 
 
