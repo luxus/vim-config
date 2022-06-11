@@ -117,6 +117,7 @@
   :tpope/vim-sexp-mappings-for-regular-people {}
   :tpope/vim-surround {}
   :tpope/vim-repeat {}
+  :hylang/vim-hy {}
 
   ; Highlighting
   :azabiong/vim-highlighter {:mod :vim-highlighter}
