@@ -126,4 +126,4 @@
 (nvim.set_keymap :n :<leader>ft ":lua require('telescope').extensions.tele_tabby.list()<CR>" {:noremap true :silent true :desc "tabs"})
 (nvim.set_keymap :n :<leader>fs ":lua require('telescope.builtin').git_status()<CR>" {:noremap true :desc "git status"})
 (nvim.set_keymap :n :<leader>ss ":lua require('session-lens').search_session()<CR>" {:noremap true :desc "session"})
-(vim.keymap.set :n :<leader>pr  {:noremap true :desc "proj root"})
+(vim.keymap.set :n :<leader>pr set-proj-root {:noremap true :desc "proj root"})
