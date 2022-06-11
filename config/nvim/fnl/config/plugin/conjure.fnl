@@ -1,7 +1,8 @@
 (module config.plugin.conjure
   {autoload {nvim aniseed.nvim
              core aniseed.core
-             path plenary.path}})
+             path plenary.path
+             conjure-python config.plugin.conjure-python}})
 
 (set nvim.g.conjure#mapping#doc_word "K")
 (set nvim.g.conjure#client#clojure#nrepl#eval#auto_require false)
