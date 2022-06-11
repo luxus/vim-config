@@ -28,7 +28,8 @@
     (vim.api.nvim_command "w")
     (vim.api.nvim_command full-cmd)))
 
-(vim.keymap.set :n :<localleader>cs clerk-show {:noremap true})
+;; Undo commenting this
+;; (vim.keymap.set :n :<localleader>cs clerk-show {:noremap true})
 
 (defn wrap-fnl-dbg []
   (vim.api.nvim_command "norm ,wdbg"))
