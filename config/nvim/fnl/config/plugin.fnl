@@ -201,7 +201,9 @@
   ; scratch
   :mtth/scratch.vim {:mod :scratch}
 
+  ; REPL
   :geg2102/nvim-python-repl {:mod :nvim-python-repl}
+  ;; :jpalardy/vim-slime {:mod :vim-slime}
 
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim
