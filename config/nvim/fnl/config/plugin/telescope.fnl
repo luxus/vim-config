@@ -1,6 +1,7 @@
 (module config.plugin.telescope
   {autoload {nvim aniseed.nvim
              telescope telescope
+             builtin telescope.builtin
              putils telescope.previewers.utils
              telescope-actions telescope.actions
              project project_nvim
@@ -100,8 +101,14 @@
 (vim.cmd "autocmd User TelescopePreviewerLoaded setlocal wrap")
 
 ;;(nvim.set_keymap :n :<leader>fg ":lua require('telescope.builtin').live_grep()<CR>" {:noremap true}) ;; Removed in favour of fzf
+
+(defn set-proj-root [] (vim.cmd "ProjectRoot"))
+(defn find-files-in-current-proj []
+  (set-proj-root)
+  (builtin.find_files))
+
+(vim.keymap.set :n :<leader>ff find-files-in-current-proj {:noremap true :desc "files"})
 (nvim.set_keymap :n :<leader>fa ":Telescope<CR>" {:noremap true :desc "all"})
-(nvim.set_keymap :n :<leader>ff ":lua require('telescope.builtin').find_files()<CR>" {:noremap true :desc "files"})
 (nvim.set_keymap :x :<leader>fv ":lua require('telescope.builtin').grep_string()<CR>" {:desc "grep string"})
 (nvim.set_keymap :n :<leader>fv ":lua require('telescope.builtin').grep_string()<CR>" {:noremap true :desc "grep string"})
 (nvim.set_keymap :n :<leader>fi ":lua require('telescope.builtin').command_history()<CR>" {:noremap true :desc "command history"})
@@ -119,4 +126,4 @@
 (nvim.set_keymap :n :<leader>ft ":lua require('telescope').extensions.tele_tabby.list()<CR>" {:noremap true :silent true :desc "tabs"})
 (nvim.set_keymap :n :<leader>fs ":lua require('telescope.builtin').git_status()<CR>" {:noremap true :desc "git status"})
 (nvim.set_keymap :n :<leader>ss ":lua require('session-lens').search_session()<CR>" {:noremap true :desc "session"})
-(vim.keymap.set :n :<leader>pr (fn [] (vim.cmd "ProjectRoot")) {:noremap true :desc "proj root"})
+(vim.keymap.set :n :<leader>pr  {:noremap true :desc "proj root"})
