@@ -17,9 +17,9 @@
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
   )
 
-(set vim.g.conjure#filetype#python "config.plugin.conjure-python") 
-(set vim.g.conjure#filetypes ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp" "python"])
-(set vim.g.conjure#debug true)
+(set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
+(set vim.g.conjure#filetypes [:clojure :fennel :janet :hy :racket :scheme :lua :lisp :python])
+(set vim.g.conjure#debug false)
 
 (config.merge
   {:client
@@ -46,7 +46,7 @@
 
   (do 
     (let [g-repl (state :repl)]
-      (g-repl.send {:code "print('hi')\r\n"}
+      (g-repl.send {:code "print('hi')\n"}
                   
         (fn [msg]
           (log.dbg "msg" msg)
@@ -194,7 +194,6 @@
         (uv.kill repl.pid uv.constants.SIGINT)))))
 
 (defn on-filetype []
-  (print "python - on-filetype")
   (mapping.buf :n :PythonStart (cfg [:mapping :start]) *module-name* :start)
   (mapping.buf :n :PythonStop (cfg [:mapping :stop]) *module-name* :stop)
   (mapping.buf :n :PythonInterrupt (cfg [:mapping :interrupt]) *module-name* :interrupt))
