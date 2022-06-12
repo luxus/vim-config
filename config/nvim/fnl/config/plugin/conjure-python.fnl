@@ -9,7 +9,9 @@
              mapping conjure.mapping
              client conjure.client
              log conjure.log
-             ts conjure.tree-sitter}
+             ts conjure.tree-sitter
+             ts_util nvim-treesitter.ts_utils
+             fennel fennel}
    require-macros [conjure.macros]})
 
 (comment 
@@ -19,7 +21,7 @@
 
 (set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
 (set vim.g.conjure#filetypes [:clojure :fennel :janet :hy :racket :scheme :lua :lisp :python])
-(set vim.g.conjure#debug false)
+(set vim.g.conjure#debug true)
 
 (config.merge
   {:client
@@ -38,30 +40,43 @@
 
 (defonce- state (client.new-state #(do {:repl nil})))
 
+
+(defn send-to-repl [code] 
+  (with-repl-or-warn 
+    (fn [repl] 
+      (-> (prep-code code) 
+          (repl.send (fn [msg]
+                       (log.dbg "msg" msg)))))))
+
 (comment 
+
   (do
    (stop)
-   (start)
-   )
+   (start))
 
   (do 
-    (let [g-repl (state :repl)]
-      (g-repl.send {:code "print('hi')\n"}
-                  
-        (fn [msg]
-          (log.dbg "msg" msg)
-                   )))
-  
-  ))
+    (send-to-repl "print('hi')"))
+
+  (do 
+    (send-to-repl "(1 + 2 + 3)"))
+
+  )
 
 
 
 
 (def buf-suffix ".py")
 (def comment-prefix "# ")
-;; (def form-node? ts.node-surrounded-by-form-pair-chars?)
+(do 
+  (defn python-node? [node extra-pairs]
+    (print "python node: \n" (ts.node->str node))
+    (print "sexpr:" (node:sexpr))
+    true)
+  (def form-node? python-node?))
 
-(defn- with-repl-or-warn [f opts]
+(defn- with-repl-or-warn 
+  "If a REPL is active, call `f`, else display a warning"
+  [f opts]
   (let [repl (state :repl)]
     (if repl
       (f repl)
@@ -78,16 +93,30 @@
          (a.map #(.. prefix $1))
          log.append)))
 
+(if (= "aa" "aa"))
+
+(defn prep-code-2 [code] 
+  (let [[first & rest] (str.split code " ")]
+    (if (= first "def")
+      (.. code "\n\n")
+      (.. code "\n"))))
+
+(do
+ 
+  (prep-code-2 "def funcname():")
+  (prep-code-2 "(1 + 2)")
+ )
+
 (defn- prep-code [s]
   (.. s "\n"))
 
 (defn eval-str [opts]
-  (print "evaluating" opts)
+  (print "python: evaluating - " (fennel.view opts))
   (var last-value nil)
   (with-repl-or-warn
     (fn [repl]
       (repl.send
-        (prep-code opts.code)
+        (prep-code-2 opts.code)
         (fn [msg]
           (log.dbg "msg" msg)
           ; (let [msgs (a.filter #(not (= "" $1)) (str.split (or msg.err msg.out) "\n"))])
