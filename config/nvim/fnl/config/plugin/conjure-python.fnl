@@ -29,6 +29,7 @@
                 :stop "cS"
                 :interrupt "ei"}
       ;; :command "python -m IPython"
+      ;; https://stackoverflow.com/questions/55980470/how-to-print-output-of-an-interactive-child-process-from-parent-process
       :command "python -u -i -q"
       :prompt_pattern ">>> "}}}}
   {:overwrite? true})
