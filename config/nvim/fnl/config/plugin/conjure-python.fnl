@@ -96,6 +96,22 @@
 (if (= "aa" "aa"))
 
 (defn prep-code-2 [code] 
+  ;; Need to handle blank lines in multiline blocks of code, e.g a func definition
+  ;;
+  ;; This is ok:
+  ;; def aa():
+  ;;     print("aa")
+  ;;     print("aa again!")
+  ;;
+  ;; This is not:
+  ;;
+  ;; def aa():
+  ;;     print("aa")
+  ;; 
+  ;;     print("aa again!")
+  ;;
+  ;; Need to make sure the blank line between the two print statements actually has the correct indentation as the line previous to and before it
+
   (let [[first & rest] (str.split code " ")]
     (if (= first "def")
       (.. code "\n\n")
