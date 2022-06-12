@@ -29,8 +29,9 @@
                 :stop "cS"
                 :interrupt "ei"}
       ;; :command "python -m IPython"
-      :command "python -q"
-      :prompt_pattern ">>> "}}}})
+      :command "python -u -i -q"
+      :prompt_pattern ">>> "}}}}
+  {:overwrite? true})
 
 (def- cfg (config.get-in-fn [:client :python :stdio]))
 
@@ -44,7 +45,7 @@
 
   (do 
     (let [g-repl (state :repl)]
-      (g-repl.send {:code "print('hi')\n"}
+      (g-repl.send {:code "print('hi')\r\n"}
                   
         (fn [msg]
           (log.dbg "msg" msg)
