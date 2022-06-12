@@ -74,9 +74,8 @@
     true)
   (def form-node? python-node?))
 
-(defn- with-repl-or-warn 
+(defn- with-repl-or-warn [f opts]
   "If a REPL is active, call `f`, else display a warning"
-  [f opts]
   (let [repl (state :repl)]
     (if repl
       (f repl)
@@ -92,8 +91,6 @@
          (a.filter #(~= "" $1))
          (a.map #(.. prefix $1))
          log.append)))
-
-(if (= "aa" "aa"))
 
 (defn prep-code-2 [code] 
   ;; Need to handle blank lines in multiline blocks of code, e.g a func definition
