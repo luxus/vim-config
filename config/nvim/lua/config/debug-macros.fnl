@@ -58,12 +58,20 @@
 
 ;; (do
  
-  (fn dbgn [form]
+  (fn dbgn [form params]
+    
     ;; Requires so that the macro has its dependecies
     (let [c (require :aniseed.core)
           mh (require :config.macro-helpers)
           fennel (require :fennel)
+          ;; Need to create a symbol for `print` so that print isn't evaluated when it's 
+          default-params {:print-fn (fennel.sym :print) :debug? false}
+          {:debug? debug? :print-fn print-fn} (c.merge 
+                                                default-params 
+                                                params)
           ] 
+
+      (fn dbg-prn [...] (when debug? (print "MACRO-DBG " ...)))
 
       (fn dbg [form view-of-form] 
         (let [;; Get string representation of form before eval
@@ -89,24 +97,24 @@
              ;; form = (+ 1 2)
              ;;
              ;; "(+ 1 2) ..."
-             (print ,form-as-str# ,first-line-suffix#) 
+             (,print-fn ,form-as-str# ,first-line-suffix#) 
              (let [res# (do ,form)
                    fennel# (require :fennel)]
                ;; Printing view of result in all cases, but I think it only really needs to be done for tables
                ;; "(+ 1 2) => 3"
-               (print ,res-prefix# (fennel#.view res#))
+               (,print-fn ,res-prefix# (fennel#.view res#))
                ;; Return the evaluated result
                res#))))
 
       (fn get-dbg-form [form]
-        (print "Form: " (view form))
-        (print "Type: " (type form))
+        (dbg-prn "Form: " (view form))
+        (dbg-prn "Type: " (type form))
 
         (if (not (-> form list?))
           (if (sym? form)
             ;; You don't want your symbol accidentally treated as a table
             (do 
-              (print "is symbol")
+              (dbg-prn "is symbol")
               (dbg form))
 
             (match (type form)
@@ -129,31 +137,31 @@
                 is-binding-form (?. syntax-tbl :binding-form?)
                 is-define (?. syntax-tbl :define?) ;; define is a local or fn
                 syn (fennel.syntax)]
-            (print "is list")
-            (print "syntax-tbl" (view syntax-tbl))
+            (dbg-prn "is list")
+            (dbg-prn "syntax-tbl" (view syntax-tbl))
 
             (when is-define 
               (let [first-param-of-define (. operands 1)]
-                (print "is-define, " 
+                (dbg-prn "is-define, " 
                        "fn name: " first-param-of-define  ;; get fn name
                        "fn type: " (type first-param-of-define)
                        "fn symbol: " (sym? first-param-of-define) ;; Is a symbol if the value is returned
                        "vim.inspect: " (vim.inspect first-param-of-define)
                        "Syntax tbl for fn: " (view (mh.get-syntax-tbl (. operands 1)))) 
-                ;; (print (view syn))
+                ;; (dbg-prn (view syn))
                 ))
 
 
-            (print "operands: " (view operands))
-            (print "is-binding-form: " is-binding-form)
+            (dbg-prn "operands: " (view operands))
+            (dbg-prn "is-binding-form: " is-binding-form)
 
-            (match (mh.get-syntax-tbl operator)
+            (match syntax-tbl
 
               ;; e.g. let
               {:binding-form? binding-form?}
               (let [[bindings & body] operands]
-                (print "bindings: " (view bindings))
-                (print "body: " (view body))
+                (dbg-prn "bindings: " (view bindings))
+                (dbg-prn "body: " (view body))
                 ;; Reconstruct the form 
                 (dbg (list operator bindings (unpack (c.map get-dbg-form body))) view-of-form))
 
@@ -161,16 +169,22 @@
               {:define? define?}
               (let [t (-> (c.reduce 
                             (fn [{: res : seen-seq &as acc} x]
-                              (print :acc (view acc))
-                              (print :x (view x))
+                              (dbg-prn :acc (view acc))
+                              (dbg-prn :x (view x))
                               (table.insert res (if seen-seq (get-dbg-form x) x))
                               {:res res
                                :seen-seq (or seen-seq (sequence? x))})
                             {:res [] :seen-seq false}
                             operands)
                           (. :res))]
-                ;; Don't debug the fn, wrapping it in dos will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
+                ;; Don't debug the fn, wrapping it in `dos` will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
                 (list operator (unpack t)))
+
+              ;; e.g. -> 
+              ;; just dbg the form, do not replace the inner forms as that will interfere with the macro itself
+              ;; Consider inserting `dbg` between all inner forms??
+              {:macro? macro?}
+              (dbg form)
 
               ;; other e.g. (+ a b c)
               _ 
@@ -180,6 +194,18 @@
       (get-dbg-form form)))
   
   
+  (local c (require :aniseed.core))
+
+;; (c.merge {:aa "aa"} {:bb "bb"})
+
+  ;; (dbgn (let [aa (-> 1 (+ 2))]
+  ;;         (local bb {:bb-field 4})
+  ;;         (+ bb.bb-field
+  ;;            (-> aa (+ 3)))) 
+  ;;       {:debug? false 
+  ;;        ;; :print-fn (fn [...] (print "DBG: " ...))
+  ;;        })
+
   ;; (dbgn [1 2 3 (+ 2 2)])
 
   ;; (local a 1)
