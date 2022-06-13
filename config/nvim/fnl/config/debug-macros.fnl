@@ -56,9 +56,9 @@
 ;; - [ ] Support depth number printing
 ;; - [ ] Support indentation based on depth
 
-(do
+;; (do
  
-  (macro dbgn [form params]
+  (fn dbgn [form params]
     
     ;; Requires so that the macro has its dependecies
     (let [c (require :aniseed.core)
@@ -197,13 +197,15 @@
   (local c (require :aniseed.core))
 
 ;; (c.merge {:aa "aa"} {:bb "bb"})
-  (dbgn (let [aa (-> 1 (+ 2))]
-          (local bb {:bb-field 4})
-          (+ bb.bb-field
-             (-> aa (+ 3)))) 
-        {:debug? false 
-         ;; :print-fn (fn [...] (print "DBG: " ...))
-         })
+
+  ;; (dbgn (let [aa (-> 1 (+ 2))]
+  ;;         (local bb {:bb-field 4})
+  ;;         (+ bb.bb-field
+  ;;            (-> aa (+ 3)))) 
+  ;;       {:debug? false 
+  ;;        ;; :print-fn (fn [...] (print "DBG: " ...))
+  ;;        })
+
   ;; (dbgn [1 2 3 (+ 2 2)])
 
   ;; (local a 1)
@@ -219,7 +221,7 @@
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
 
-  )
+  ;; )
   
 
 
