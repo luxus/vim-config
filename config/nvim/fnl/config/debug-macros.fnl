@@ -58,13 +58,16 @@
 
 (do
  
-  (macro dbgn [form debug?]
-    (fn dbg-prn [...] (when debug? (print "MACRO-DBG " ...)))
+  (macro dbgn [form params]
+    
     ;; Requires so that the macro has its dependecies
     (let [c (require :aniseed.core)
           mh (require :config.macro-helpers)
           fennel (require :fennel)
+          {:debug? debug?} (or params {})
           ] 
+
+      (fn dbg-prn [...] (when debug? (print "MACRO-DBG " ...)))
 
       (fn dbg [form view-of-form] 
         (let [;; Get string representation of form before eval
@@ -190,7 +193,7 @@
   (dbgn (let [aa (-> 1 (+ 2))]
           (local bb (/ 2 1))
           (+ bb
-             (-> aa (+ 3)))) true)
+             (-> aa (+ 3)))) {:debug? true})
   ;; (dbgn [1 2 3 (+ 2 2)])
 
   ;; (local a 1)
