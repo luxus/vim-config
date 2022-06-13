@@ -12,7 +12,8 @@
              ts conjure.tree-sitter
              ts_util nvim-treesitter.ts_utils
              fennel fennel}
-   require-macros [conjure.macros]})
+   require-macros [conjure.macros
+                   config.debug-macros]})
 
 (comment 
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
@@ -44,18 +45,59 @@
 (defn send-to-repl [code] 
   (with-repl-or-warn 
     (fn [repl] 
-      (-> (prep-code code) 
+      (-> (prep-code-2 code) 
           (repl.send (fn [msg]
                        (log.dbg "msg" msg)))))))
 
+(local test-fn-str-1 
+"
+def bb():
+    def inner_cc():
+        print('inside cc3')
+  
+    inner_cc()
+
+    print('inside bb3')
+
+    return 'RESULT OF BB()'
+"
+)
+
+
+
+(local test-fn-str-2 
+"def cc():
+    print('inside cc 1')
+
+    print('inside cc 2')
+    return 'cc'"
+)
+
 (comment 
+
+  (prep-code-2 test-fn-str-1)
 
   (do
    (stop)
    (start))
 
+  (log.dbg "msg" "frog" "egg")
+
   (do 
     (send-to-repl "print('hi')"))
+
+  (do 
+    "... ... ... ..." ;; is due to indentation
+    (send-to-repl test-fn-str-1)
+    )
+
+  (do 
+    (send-to-repl test-fn-str-2)
+    )
+
+  (do 
+    (send-to-repl "cc()")
+    )
 
   (do 
     (send-to-repl "(1 + 2 + 3)"))
@@ -92,6 +134,15 @@
          (a.map #(.. prefix $1))
          log.append)))
 
+(defn replace-blank-lines [str-in]
+  (->> (str.split str-in "\n")
+       (a.filter #(not (str.blank? $1)))
+       (str.join "\n")))
+
+(comment
+ (replace-blank-lines test-fn-str-1)
+ )
+
 (defn prep-code-2 [code] 
   ;; Need to handle blank lines in multiline blocks of code, e.g a func definition
   ;;
@@ -109,10 +160,13 @@
   ;;
   ;; Need to make sure the blank line between the two print statements actually has the correct indentation as the line previous to and before it
 
-  (let [[first & rest] (str.split code " ")]
+  (let [fmt-code (replace-blank-lines code)
+        ;; fmt-code (string.gsub code "\n\n+" "\n")
+        [first & rest] (str.split fmt-code " ")]
     (if (= first "def")
-      (.. code "\n\n")
-      (.. code "\n"))))
+      (.. fmt-code "\n\n")
+      (.. fmt-code "\n"))))
+
 
 (do
  
