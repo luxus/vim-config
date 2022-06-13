@@ -64,7 +64,11 @@
     (let [c (require :aniseed.core)
           mh (require :config.macro-helpers)
           fennel (require :fennel)
-          {:debug? debug?} (or params {})
+          ;; Need to create a symbol for `print` so that print isn't evaluated when it's 
+          default-params {:print-fn (fennel.sym :print) :debug? false}
+          {:debug? debug? :print-fn print-fn} (c.merge 
+                                                default-params 
+                                                params)
           ] 
 
       (fn dbg-prn [...] (when debug? (print "MACRO-DBG " ...)))
@@ -93,12 +97,12 @@
              ;; form = (+ 1 2)
              ;;
              ;; "(+ 1 2) ..."
-             (print ,form-as-str# ,first-line-suffix#) 
+             (,print-fn ,form-as-str# ,first-line-suffix#) 
              (let [res# (do ,form)
                    fennel# (require :fennel)]
                ;; Printing view of result in all cases, but I think it only really needs to be done for tables
                ;; "(+ 1 2) => 3"
-               (print ,res-prefix# (fennel#.view res#))
+               (,print-fn ,res-prefix# (fennel#.view res#))
                ;; Return the evaluated result
                res#))))
 
@@ -190,10 +194,16 @@
       (get-dbg-form form)))
   
   
+  (local c (require :aniseed.core))
+
+;; (c.merge {:aa "aa"} {:bb "bb"})
   (dbgn (let [aa (-> 1 (+ 2))]
-          (local bb (/ 2 1))
-          (+ bb
-             (-> aa (+ 3)))) {:debug? true})
+          (local bb {:bb-field 4})
+          (+ bb.bb-field
+             (-> aa (+ 3)))) 
+        {:debug? false 
+         ;; :print-fn (fn [...] (print "DBG: " ...))
+         })
   ;; (dbgn [1 2 3 (+ 2 2)])
 
   ;; (local a 1)
