@@ -56,9 +56,9 @@
 ;; - [ ] Support depth number printing
 ;; - [ ] Support indentation based on depth
 
-;; (do
+(do
  
-  (fn dbgn [form]
+  (macro dbgn [form]
     ;; Requires so that the macro has its dependecies
     (let [c (require :aniseed.core)
           mh (require :config.macro-helpers)
@@ -147,7 +147,7 @@
             (print "operands: " (view operands))
             (print "is-binding-form: " is-binding-form)
 
-            (match (mh.get-syntax-tbl operator)
+            (match syntax-tbl
 
               ;; e.g. let
               {:binding-form? binding-form?}
@@ -169,8 +169,14 @@
                             {:res [] :seen-seq false}
                             operands)
                           (. :res))]
-                ;; Don't debug the fn, wrapping it in dos will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
+                ;; Don't debug the fn, wrapping it in `dos` will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
                 (list operator (unpack t)))
+
+              ;; e.g. -> 
+              ;; just dbg the form, do not replace the inner forms as that will interfere with the macro itself
+              ;; Consider inserting `dbg` between all inner forms??
+              {:macro? macro?}
+              (dbg form)
 
               ;; other e.g. (+ a b c)
               _ 
@@ -180,6 +186,10 @@
       (get-dbg-form form)))
   
   
+  (dbgn (let [aa (-> 1 (+ 2))]
+          (local bb (/ 2 1))
+          (+ bb
+             (-> aa (+ 3)))))
   ;; (dbgn [1 2 3 (+ 2 2)])
 
   ;; (local a 1)
@@ -195,7 +205,7 @@
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   
 
-  ;; )
+  )
   
 
 
