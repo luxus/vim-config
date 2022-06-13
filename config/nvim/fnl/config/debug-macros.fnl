@@ -58,7 +58,8 @@
 
 (do
  
-  (macro dbgn [form]
+  (macro dbgn [form debug?]
+    (fn dbg-prn [...] (when debug? (print "MACRO-DBG " ...)))
     ;; Requires so that the macro has its dependecies
     (let [c (require :aniseed.core)
           mh (require :config.macro-helpers)
@@ -99,14 +100,14 @@
                res#))))
 
       (fn get-dbg-form [form]
-        (print "Form: " (view form))
-        (print "Type: " (type form))
+        (dbg-prn "Form: " (view form))
+        (dbg-prn "Type: " (type form))
 
         (if (not (-> form list?))
           (if (sym? form)
             ;; You don't want your symbol accidentally treated as a table
             (do 
-              (print "is symbol")
+              (dbg-prn "is symbol")
               (dbg form))
 
             (match (type form)
@@ -129,31 +130,31 @@
                 is-binding-form (?. syntax-tbl :binding-form?)
                 is-define (?. syntax-tbl :define?) ;; define is a local or fn
                 syn (fennel.syntax)]
-            (print "is list")
-            (print "syntax-tbl" (view syntax-tbl))
+            (dbg-prn "is list")
+            (dbg-prn "syntax-tbl" (view syntax-tbl))
 
             (when is-define 
               (let [first-param-of-define (. operands 1)]
-                (print "is-define, " 
+                (dbg-prn "is-define, " 
                        "fn name: " first-param-of-define  ;; get fn name
                        "fn type: " (type first-param-of-define)
                        "fn symbol: " (sym? first-param-of-define) ;; Is a symbol if the value is returned
                        "vim.inspect: " (vim.inspect first-param-of-define)
                        "Syntax tbl for fn: " (view (mh.get-syntax-tbl (. operands 1)))) 
-                ;; (print (view syn))
+                ;; (dbg-prn (view syn))
                 ))
 
 
-            (print "operands: " (view operands))
-            (print "is-binding-form: " is-binding-form)
+            (dbg-prn "operands: " (view operands))
+            (dbg-prn "is-binding-form: " is-binding-form)
 
             (match syntax-tbl
 
               ;; e.g. let
               {:binding-form? binding-form?}
               (let [[bindings & body] operands]
-                (print "bindings: " (view bindings))
-                (print "body: " (view body))
+                (dbg-prn "bindings: " (view bindings))
+                (dbg-prn "body: " (view body))
                 ;; Reconstruct the form 
                 (dbg (list operator bindings (unpack (c.map get-dbg-form body))) view-of-form))
 
@@ -161,8 +162,8 @@
               {:define? define?}
               (let [t (-> (c.reduce 
                             (fn [{: res : seen-seq &as acc} x]
-                              (print :acc (view acc))
-                              (print :x (view x))
+                              (dbg-prn :acc (view acc))
+                              (dbg-prn :x (view x))
                               (table.insert res (if seen-seq (get-dbg-form x) x))
                               {:res res
                                :seen-seq (or seen-seq (sequence? x))})
@@ -189,7 +190,7 @@
   (dbgn (let [aa (-> 1 (+ 2))]
           (local bb (/ 2 1))
           (+ bb
-             (-> aa (+ 3)))))
+             (-> aa (+ 3)))) true)
   ;; (dbgn [1 2 3 (+ 2 2)])
 
   ;; (local a 1)
