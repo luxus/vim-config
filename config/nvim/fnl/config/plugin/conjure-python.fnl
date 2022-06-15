@@ -11,13 +11,15 @@
              log conjure.log
              ts conjure.tree-sitter
              ts_util nvim-treesitter.ts_utils
-             fennel fennel}
+             f fennel}
    require-macros [conjure.macros
                    config.debug-macros]})
 
 (comment 
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
+  (set vim.g.conjure#debug false)
+  (dbgn {:a "aa"})
   )
 
 (set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
@@ -178,7 +180,8 @@ def bb():
   (.. s "\n"))
 
 (defn eval-str [opts]
-  (print "python: evaluating - " (fennel.view opts))
+  ;; (local fennel (require :fennel))
+  (print "python: evaluating - " (f.view opts))
   (var last-value nil)
   (with-repl-or-warn
     (fn [repl]
