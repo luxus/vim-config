@@ -74,6 +74,7 @@
       (fn dbg-prn [...] (when debug? (print "MACRO-DBG " ...)))
 
       (fn dbg [form view-of-form] 
+        ;; `view-of-form` can be used to provide a string representation of the original form
         (let [;; Get string representation of form before eval
               form-as-str# (if view-of-form 
                              view-of-form 
