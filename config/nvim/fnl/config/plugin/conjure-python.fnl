@@ -15,6 +15,10 @@
    require-macros [conjure.macros
                    config.debug-macros]})
 
+;; TODO: 
+;; - Handle errors "..." which are a visual feedback for indents 
+;;   - Maybe this can be disabled as a param to python interactive
+;; - Try using `opts.range.start[1]` in `eval-str` to reindent the first line of opts.code and then remove extra indentation from ALL lines
 (comment 
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
@@ -111,6 +115,7 @@ def bb():
 
 (def buf-suffix ".py")
 (def comment-prefix "# ")
+
 (do 
   (defn python-node? [node extra-pairs]
     (print "python node: \n" (ts.node->str node))
@@ -145,7 +150,7 @@ def bb():
  (replace-blank-lines test-fn-str-1)
  )
 
-(defn prep-code-2 [code] 
+(defn prep-code-2 [code range] 
   ;; Need to handle blank lines in multiline blocks of code, e.g a func definition
   ;;
   ;; This is ok:
@@ -161,7 +166,9 @@ def bb():
   ;;     print("aa again!")
   ;;
   ;; Need to make sure the blank line between the two print statements actually has the correct indentation as the line previous to and before it
+  ;; (dbgn range {:print-fn (fn [...] (log.dbg "msg" ...))})
 
+  ;; (log.dbg "msg" "range" (f.view range))
   (let [fmt-code (replace-blank-lines code)
         ;; fmt-code (string.gsub code "\n\n+" "\n")
         [first & rest] (str.split fmt-code " ")]
@@ -180,13 +187,20 @@ def bb():
   (.. s "\n"))
 
 (defn eval-str [opts]
-  ;; (local fennel (require :fennel))
+;; {:action "eval"
+;;  :code "if (True):
+;;             print(\"in if of ee\")"
+;;  :file-path "c:\\Users\\xxx\\repos\\pytorch-experiment\\src\\test.py"
+;;  :on-result #<function: 0x01f5a3e841a0>
+;;  :origin "current-form"
+;;  :preview "# eval (current-form): if (True): print(\"in if of ee\")"
+;;  :range {:end [19 31] :start [18 8]}}
   (print "python: evaluating - " (f.view opts))
   (var last-value nil)
   (with-repl-or-warn
     (fn [repl]
       (repl.send
-        (prep-code-2 opts.code)
+        (prep-code-2 opts.code opts.range)
         (fn [msg]
           (log.dbg "msg" msg)
           ; (let [msgs (a.filter #(not (= "" $1)) (str.split (or msg.err msg.out) "\n"))])
