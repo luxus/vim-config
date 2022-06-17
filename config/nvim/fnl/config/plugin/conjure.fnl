@@ -1,11 +1,13 @@
 (module config.plugin.conjure
-  {autoload {nvim aniseed.nvim
+  {require {conjure-python config.plugin.conjure-python}
+   autoload {nvim aniseed.nvim
              core aniseed.core
              path plenary.path}})
 
 (set nvim.g.conjure#mapping#doc_word "K")
 (set nvim.g.conjure#client#clojure#nrepl#eval#auto_require false)
 (set nvim.g.conjure#client#clojure#nrepl#connection#auto_repl#enabled false)
+(set nvim.g.conjure#log#wrap true)
 
 
 ;; function! ClerkShow()
@@ -27,7 +29,8 @@
     (vim.api.nvim_command "w")
     (vim.api.nvim_command full-cmd)))
 
-(vim.keymap.set :n :<localleader>cs clerk-show {:noremap true})
+;; Undo commenting this
+;; (vim.keymap.set :n :<localleader>cs clerk-show {:noremap true})
 
 (defn wrap-fnl-dbg []
   (vim.api.nvim_command "norm ,wdbg"))

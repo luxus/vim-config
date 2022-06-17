@@ -2,6 +2,7 @@
   {autoload {core aniseed.core
              nvim aniseed.nvim
              util config.util
+             autil aniseed.nvim.util
              str aniseed.string}})
 
 (defn- noremap [mode from to]

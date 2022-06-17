@@ -13,11 +13,10 @@
 ;; 
 
 (comment
- ;; (nvim.ex.colorscheme :base16-gruvbox-dark-soft)
- ;; (nvim.ex.colorscheme :base16-spacemacs)
- ;; (nvim.ex.colorscheme :base16-apathy)
- (nvim.ex.colorscheme :base16-tomorrow-night)
- )
+  (nvim.ex.colorscheme :base16-atelier-sulphurpool) ;; yas
+  (nvim.ex.colorscheme :base16-embers) ;; easy on eyes
+  (nvim.ex.colorscheme :base16-twilight) ;; easy on eyes
+  )
 
 
 

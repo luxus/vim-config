@@ -117,6 +117,7 @@
   :tpope/vim-sexp-mappings-for-regular-people {}
   :tpope/vim-surround {}
   :tpope/vim-repeat {}
+  :hylang/vim-hy {}
 
   ; Highlighting
   :azabiong/vim-highlighter {:mod :vim-highlighter}
@@ -201,7 +202,9 @@
   ; scratch
   :mtth/scratch.vim {:mod :scratch}
 
+  ; REPL
   :geg2102/nvim-python-repl {:mod :nvim-python-repl}
+  ;; :jpalardy/vim-slime {:mod :vim-slime}
 
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim
