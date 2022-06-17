@@ -21,6 +21,9 @@
 (set vim.o.softtabstop 4)
 (set vim.o.expandtab true)
 
+(vim.keymap.set :n :n :nzz {:noremap true})
+(vim.keymap.set :n :N :Nzz {:noremap true})
+
 ;; cmdline height
 ;; After updating to nvim 0.7 cmdheight was set to 24 for unknown reasons
 (set vim.opt_global.cmdheight 1)
