@@ -31,8 +31,8 @@
        {:provider :position
         :left_sep " "
         :right_sep [" " {:str :slant_right_2_thin :hl {:fg :fg :bg :bg}}]}
-       {:provider (fn [] (nvim-gps.get_location))
-        :enabled (fn [] (nvim-gps.is_available))}
+       ;; {:provider (fn [] (nvim-gps.get_location))
+       ;;  :enabled (fn [] (nvim-gps.is_available))}
        {:provider :diagnostic_errors :hl {:fg :red}}
        {:provider :diagnostic_warnings :hl {:fg :yellow}}
        {:provider :diagnostic_hints :hl {:fg :cyan}}
