@@ -58,7 +58,7 @@
         (map :x :ih
              ":<C-U>Gitsigns select_hunk<CR>"))})
 
-(nvim.set_keymap :v :<leader>gl ":<c-u>exe 'Git log -L' line(\"'<\").','.line(\"'>\").':'.expand('%')<CR>" {:desc "Fugitive git log"})
+(nvim.set_keymap :v :<leader>gl ":<c-u>exe 'Git log -L' line(\"'<\").','.line(\"'>\").':'.expand('%:p')<CR>" {:desc "Fugitive git log"})
 (nvim.set_keymap :v :<leader>gL ":<c-u>exe '!git log -L' line(\"'<\").','.line(\"'>\").':'.expand('%')<CR>" {:desc "Raw git log"})
 
 (which-key.register 
