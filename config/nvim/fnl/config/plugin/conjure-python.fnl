@@ -180,7 +180,6 @@ def bb():
     ;; (string.sub "abcdef" 2 -1)
 
     (defn trim-code-left [code num-left]
-      (print "code:\n" code)
       (let [s-col (+ num-left 1)
             lines (str.split code "\n")
             trimmed-lines (a.map 
@@ -189,15 +188,31 @@ def bb():
                             lines)]
         (str.join "\n" trimmed-lines)))
 
-    ;; (defn get-indent-size [code]
-    ;;   (let [lines (str.split code "\n")
-    ;;         min-indent (a.reduce 
-    ;;                      (fn [line]
-    ;;                        (let [])) 
-    ;;                      lines)])
-    ;;   )
+    (defn get-indent-info [code]
+       (let [lines (str.split code "\n")
+             indents (a.map
+                       (fn [line]
+                         (- (string.len line)
+                            (string.len (str.triml line))))
+                       lines)
 
-    (defn add-final-newlines []
+             non-zero-indents (a.filter #(> $1 0) indents)
+
+             min-indent (if (-> non-zero-indents length (= 0))
+                          ;; No indents, probably a single line
+                          0 
+                          ;; Get smallest indent 
+                          (a.reduce 
+                            #(math.min $1 $2) 
+                            (. non-zero-indents 1)
+                            non-zero-indents))
+
+             final-indent (. indents (length indents))]
+
+         {:min-indent min-indent
+          :final-indent final-indent}))
+
+    (defn add-final-newlines [{: min-indent : final-indent}]
       ;; Add final newlines to the end of the code to represent adding hitting enter for each level of indentation to make python interactive eval the code
       )
 
@@ -206,6 +221,7 @@ def bb():
           fmt-code (replace-blank-lines code)
           fmt-code-1 (add-whitespace fmt-code s-col)
           fmt-code-2 (dbg (trim-code-left fmt-code-1 s-col))
+          indents (dbgn (get-indent-info fmt-code-2))
 
           ;; fmt-code (string.gsub code "\n\n+" "\n")
           [first & rest] (str.split fmt-code " ")]
