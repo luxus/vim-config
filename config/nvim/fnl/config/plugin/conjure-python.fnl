@@ -24,9 +24,10 @@
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
   (set vim.g.conjure#debug false)
-  (set vim.g.conjure#debug true)
   (dbgn {:a "aa"})
   )
+
+(set vim.g.conjure#debug true)
 
 (set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
 (set vim.g.conjure#filetypes [:clojure :fennel :janet :hy :racket :scheme :lua :lisp :python])
@@ -117,11 +118,23 @@ def bb():
 (def buf-suffix ".py")
 (def comment-prefix "# ")
 
+(comment 
+  (last-node:sexpr)
+  (last-node:type)
+  )
+
 (do 
   (defn python-node? [node extra-pairs]
+    ;; debugging
     (print "python node: \n" (ts.node->str node))
-    (print "sexpr:" (node:sexpr))
-    true)
+    (global last-node node) 
+    (log.dbg "sexpr:" (node:sexpr))
+    ;; result
+    (match (node:type)
+      :else_clause false 
+      :return_statement false 
+      _ true))
+
   (def form-node? python-node?))
 
 (defn- with-repl-or-warn [f opts]
