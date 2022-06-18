@@ -211,7 +211,9 @@
                                              :RRethy/nvim-base16
                                              :projekt0n/github-nvim-theme
                                              :marko-cerovac/material.nvim
-                                             :EdenEast/nightfox.nvim]
+                                             :EdenEast/nightfox.nvim
+                                             :fenetikm/falcon
+                                             :rktjmp/lush.nvim]
                                   :mod :theme})
 
   ; Search
