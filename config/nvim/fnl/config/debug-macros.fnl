@@ -166,9 +166,16 @@
                 ;; Reconstruct the form 
                 (dbg (list operator bindings (unpack (c.map get-dbg-form body))) view-of-form))
 
-              ;; e.g. fn
+              ;; e.g. function definitions
+              ;; - (fn fn-name [] (...) ...)
+              ;; - (fn [] (...) ...) 
+              ;; - also should handle such as (defn fn-name [] (...) ...)
+              ;;   - It appears that defn does not get included in the syntax tbl, perhaps because it's not part of fennel core; It's part of aniseed
+              ;; - def?
+              ;; - lambda?
               {:define? define?}
               (let [t (-> (c.reduce 
+                            ;; iterate over operands, searching skipping over the (optional) fn name and the bindings (a seq). Each for afterwards can be debugged
                             (fn [{: res : seen-seq &as acc} x]
                               (dbg-prn :acc (view acc))
                               (dbg-prn :x (view x))
