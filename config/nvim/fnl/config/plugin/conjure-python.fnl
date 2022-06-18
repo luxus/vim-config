@@ -19,6 +19,7 @@
 ;; - Handle errors "..." which are a visual feedback for indents 
 ;;   - Maybe this can be disabled as a param to python interactive
 ;; - Try using `opts.range.start[1]` in `eval-str` to reindent the first line of opts.code and then remove extra indentation from ALL lines
+;; - try treesitter playground in a python file
 (comment 
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
@@ -188,16 +189,17 @@ def bb():
                             lines)]
         (str.join "\n" trimmed-lines)))
 
-    (defn get-indent-info [code]
+    (defn get-code-metadata [code]
        (let [lines (str.split code "\n")
+             ;; The indentation of a line is the line length minus the the length of the line with whitespace trimmed from it
              indents (a.map
                        (fn [line]
                          (- (string.len line)
                             (string.len (str.triml line))))
                        lines)
 
+             ;; Exclude lines with no indentation when trying to find the minimum indentation
              non-zero-indents (a.filter #(> $1 0) indents)
-
              min-indent (if (-> non-zero-indents length (= 0))
                           ;; No indents, probably a single line
                           0 
@@ -207,27 +209,46 @@ def bb():
                             (. non-zero-indents 1)
                             non-zero-indents))
 
+             ;; indentation of the final line
              final-indent (. indents (length indents))]
 
-         {:min-indent min-indent
+         ;; Metadata result
+         {:num-lines (length indents)
+          :min-indent min-indent
           :final-indent final-indent}))
 
-    (defn add-final-newlines [{: min-indent : final-indent}]
+    (defn add-final-newlines [code {: min-indent : final-indent}]
       ;; Add final newlines to the end of the code to represent adding hitting enter for each level of indentation to make python interactive eval the code
-      )
+
+      ;; num-newlines to add is the number of levels of indentation + 1
+      (let [level-of-indentation (if (and (~= min-indent 0)
+                                          (~= final-indent 0))
+                                   (/ final-indent min-indent)
+                                   0)
+            num-newlines (+ 1 level-of-indentation)]
+
+        (fn append-newline [code num-newlines]
+          (if (= 0 num-newlines)
+            ;; termination
+            code
+            ;; append
+            (append-newline 
+              (.. code "\n") 
+              (a.dec num-newlines ))))
+
+        (append-newline code num-newlines)))
 
     ;; (log.dbg "msg" "range" (f.view range))
-    (let [s-col (dbg (. range :start 2))
+    (let [s-col (. range :start 2)
           fmt-code (replace-blank-lines code)
           fmt-code-1 (add-whitespace fmt-code s-col)
-          fmt-code-2 (dbg (trim-code-left fmt-code-1 s-col))
-          indents (dbgn (get-indent-info fmt-code-2))
+          fmt-code-2 (trim-code-left fmt-code-1 s-col)
+          code-metadata (dbgn (get-code-metadata fmt-code-2))
 
           ;; fmt-code (string.gsub code "\n\n+" "\n")
           [first & rest] (str.split fmt-code " ")]
-      (if (= first "def")
-        (.. fmt-code-2 "\n\n")
-        (.. fmt-code-2 "\n\n"))))
+
+      (add-final-newlines fmt-code-2 code-metadata)))
   
   
   (prep-code-2 
