@@ -13,7 +13,6 @@
                 :comment_style "italic"})
 
   (nvim.ex.colorscheme :nightfly)
-  (nvim.ex.colorscheme :embark)
   (nvim.ex.colorscheme :nightfox)
 
   ;; Base 16
