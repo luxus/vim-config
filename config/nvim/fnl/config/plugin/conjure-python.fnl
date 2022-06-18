@@ -24,12 +24,12 @@
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
   (set vim.g.conjure#debug false)
+  (set vim.g.conjure#debug true)
   (dbgn {:a "aa"})
   )
 
 (set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
 (set vim.g.conjure#filetypes [:clojure :fennel :janet :hy :racket :scheme :lua :lisp :python])
-(set vim.g.conjure#debug true)
 
 (config.merge
   {:client
@@ -243,13 +243,9 @@ def bb():
           fmt-code (replace-blank-lines code)
           fmt-code-1 (add-whitespace fmt-code s-col)
           fmt-code-2 (trim-code-left fmt-code-1 s-col)
-          code-metadata (dbgn (get-code-metadata fmt-code-2))
-
-          ;; fmt-code (string.gsub code "\n\n+" "\n")
-          [first & rest] (str.split fmt-code " ")]
+          code-metadata (dbgn (get-code-metadata fmt-code-2)) ]
 
       (add-final-newlines fmt-code-2 code-metadata)))
-  
   
   (prep-code-2 
 "def aaa():
