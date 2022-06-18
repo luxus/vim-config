@@ -150,38 +150,108 @@ def bb():
  (replace-blank-lines test-fn-str-1)
  )
 
-(defn prep-code-2 [code range] 
-  ;; Need to handle blank lines in multiline blocks of code, e.g a func definition
-  ;;
-  ;; This is ok:
-  ;; def aa():
-  ;;     print("aa")
-  ;;     print("aa again!")
-  ;;
-  ;; This is not:
-  ;;
-  ;; def aa():
-  ;;     print("aa")
-  ;; 
-  ;;     print("aa again!")
-  ;;
-  ;; Need to make sure the blank line between the two print statements actually has the correct indentation as the line previous to and before it
-  ;; (dbgn range {:print-fn (fn [...] (log.dbg "msg" ...))})
+(do 
+  (defn prep-code-2 [code range] 
+    ;; Need to handle blank lines in multiline blocks of code, e.g a func definition
+    ;;
+    ;; This is ok:
+    ;; def aa():
+    ;;     print("aa")
+    ;;     print("aa again!")
+    ;;
+    ;; This is not:
+    ;;
+    ;; def aa():
+    ;;     print("aa")
+    ;; 
+    ;;     print("aa again!")
+    ;;
+    ;; Need to make sure the blank line between the two print statements actually has the correct indentation as the line previous to and before it
+    ;; (dbgn range {:print-fn (fn [...] (log.dbg "msg" ...))})
 
-  ;; (log.dbg "msg" "range" (f.view range))
-  (let [fmt-code (replace-blank-lines code)
-        ;; fmt-code (string.gsub code "\n\n+" "\n")
-        [first & rest] (str.split fmt-code " ")]
-    (if (= first "def")
-      (.. fmt-code "\n\n")
-      (.. fmt-code "\n"))))
+    (defn add-whitespace [code num-ws]
+       (var ii num-ws)
+       (var code-with-ws code)
+       (while (> ii 0)
+         (set code-with-ws (.. " " code-with-ws))
+         (set ii (a.dec ii)))
+       code-with-ws)
+
+    ;; (string.sub "abcdef" 2 -1)
+
+    (defn trim-code-left [code num-left]
+      (print "code:\n" code)
+      (let [s-col (+ num-left 1)
+            lines (str.split code "\n")
+            trimmed-lines (a.map 
+                            ;; sub string from s-col to end (inclusive)
+                            #(string.sub $1 s-col -1) 
+                            lines)]
+        (str.join "\n" trimmed-lines)))
+
+    ;; (defn get-indent-size [code]
+    ;;   (let [lines (str.split code "\n")
+    ;;         min-indent (a.reduce 
+    ;;                      (fn [line]
+    ;;                        (let [])) 
+    ;;                      lines)])
+    ;;   )
+
+    (defn add-final-newlines []
+      ;; Add final newlines to the end of the code to represent adding hitting enter for each level of indentation to make python interactive eval the code
+      )
+
+    ;; (log.dbg "msg" "range" (f.view range))
+    (let [s-col (dbg (. range :start 2))
+          fmt-code (replace-blank-lines code)
+          fmt-code-1 (add-whitespace fmt-code s-col)
+          fmt-code-2 (dbg (trim-code-left fmt-code-1 s-col))
+
+          ;; fmt-code (string.gsub code "\n\n+" "\n")
+          [first & rest] (str.split fmt-code " ")]
+      (if (= first "def")
+        (.. fmt-code-2 "\n\n")
+        (.. fmt-code-2 "\n\n"))))
+  
+  
+  (prep-code-2 
+"def aaa():
+
+        if true:
+
+            print('testing-indented-func')
+            "
+    {:end [2 42] :start [0 4]})
+  )
 
 
-(do
- 
-  (prep-code-2 "def funcname():")
-  (prep-code-2 "(1 + 2)")
- )
+;; python node: 
+;;  def ee():
+;;         if (True):
+;;             print("in if of ee")
+;;         else 
+;;             print("in else of ee")
+;;         return "ee"
+;; sexpr: (function_definition name: (identifier) parameters: (parameters) body: (block (if_statement condition: (parenthesized_expression (true)) consequence: (block (expression_statement (call function: (identifier) arguments: (argument_list (string)))))) (ERROR) (expression_statement (call function: (identifier) arguments: (argument_list (string)))) (return_statement (string))))
+;; python: evaluating -  {:action "eval"
+;;  :code "def ee():
+;;         if (True):
+;;             print(\"in if of ee\")
+;;         else 
+;;             print(\"in else of ee\")
+;;         return \"ee\""
+;;  :file-path "c:\\Users\\carlk\\repos\\pytorch-experiment\\src\\test.py"
+;;  :on-result #<function: 0x023ec2347310>
+;;  :origin "current-form"
+;;  :preview "# eval (current-form): def ee(): if (True): print(\"in if of ee\") el..."
+;;  :range {:end [22 18] :start [17 4]}}
+(comment 
+
+  (do
+
+    (prep-code-2 "def funcname():")
+    (prep-code-2 "(1 + 2)")
+    ))
 
 (defn- prep-code [s]
   (.. s "\n"))
