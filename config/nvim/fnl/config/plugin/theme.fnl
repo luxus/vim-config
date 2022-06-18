@@ -3,31 +3,31 @@
              theme github-theme
              material material}})
 
-;; For github theme
-;; (set vim.o.background :light)
-;; (theme.setup {:theme_style "light"
-;;               :comment_style "italic"})
-
-;; (nvim.ex.colorscheme :nightfly)
-;; (nvim.ex.colorscheme :embark)
 ;; 
 
 (comment
+
+  ;; For github theme
+  (set vim.o.background :light)
+  (theme.setup {:theme_style "light"
+                :comment_style "italic"})
+
+  (nvim.ex.colorscheme :nightfly)
+  (nvim.ex.colorscheme :embark)
+  (nvim.ex.colorscheme :nightfox)
+
+  ;; Base 16
   (nvim.ex.colorscheme :base16-atelier-sulphurpool) ;; yas
   (nvim.ex.colorscheme :base16-embers) ;; easy on eyes
   (nvim.ex.colorscheme :base16-twilight) ;; easy on eyes
   )
 
 
-
-
-;; (nvim.ex.colorscheme :kanagawa)
-
 (defn set-theme [is-dark]
   (if is-dark
     (do 
       ;; (nvim.ex.colorscheme :falcon)
-      (nvim.ex.colorscheme :nightfox)
+      (nvim.ex.colorscheme :kanagawa)
       (set vim.o.background :dark))
 
     (do 
