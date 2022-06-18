@@ -20,6 +20,8 @@
 ;;   - Maybe this can be disabled as a param to python interactive
 ;; - Try using `opts.range.start[1]` in `eval-str` to reindent the first line of opts.code and then remove extra indentation from ALL lines
 ;; - try treesitter playground in a python file
+;; - Figure out how to query from the current node:
+;;   - https://www.reddit.com/r/neovim/comments/kx1ceh/need_a_little_help_with_tree_sitter_query_matching/
 (comment 
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
@@ -121,6 +123,10 @@ def bb():
 (comment 
   (last-node:sexpr)
   (last-node:type)
+  (last-node:end_)
+  (last-node:has_error)
+  (last-node:child_count)
+  (last-node:child (- (last-node:named_child_count) 1))
   )
 
 (do 
@@ -129,6 +135,7 @@ def bb():
     (print "python node: \n" (ts.node->str node))
     (global last-node node) 
     (log.dbg "sexpr:" (node:sexpr))
+
     ;; result
     (match (node:type)
       :else_clause false 
