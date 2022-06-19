@@ -187,16 +187,19 @@
                 _ 
                 (match (tostring operator)
                   ;; specific operators that don't get included in syntax-tbl
-                  :defn- (do 
-                           (dbg-prn "is aniseed defn-")
-                           (mh.get-dbg-define operator operands get-dbg-form))
+                  :defn- 
+                  (do 
+                    (dbg-prn "is aniseed defn-")
+                    (mh.get-dbg-define operator operands get-dbg-form))
 
-                  :defn (do 
-                          (dbg-prn "is aniseed defn")
-                          (mh.get-dbg-define operator operands get-dbg-form))
+                  :defn 
+                  (do 
+                    (dbg-prn "is aniseed defn")
+                    (mh.get-dbg-define operator operands get-dbg-form))
 
-                  ;; other e.g. (+ a b c)
-                  _ (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form)))
+                  ;; other/default e.g. (+ a b c)
+                  _ 
+                  (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form)))
               )))
 
         (get-dbg-form form)))
