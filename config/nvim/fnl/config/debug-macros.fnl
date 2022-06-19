@@ -56,9 +56,9 @@
 ;; - [ ] Support depth number printing
 ;; - [ ] Support indentation based on depth
 
-;; (do
+(do
  
-  (fn dbgn [form params]
+  (macro dbgn [form params]
     
     ;; Requires so that the macro has its dependecies
     (fn protected-dbgn [] 
@@ -132,6 +132,7 @@
 
                 _ (dbg form)))
 
+            ;; list
             (let [[operator & operands] form
                   view-of-form (view form)
                   syntax-tbl (mh.get-syntax-tbl operator)
@@ -153,7 +154,7 @@
                   ;; (dbg-prn (view syn))
                   ))
 
-
+              (dbg-prn "is defn" (= operator (fennel.sym :defn)))
               (dbg-prn "operands: " (view operands))
               (dbg-prn "is-binding-form: " is-binding-form)
 
@@ -175,19 +176,7 @@
                 ;; - def?
                 ;; - lambda?
                 {:define? define?}
-                (let [t (-> (c.reduce 
-                              ;; iterate over operands, searching skipping over the (optional) fn name and the bindings (a seq). Each for afterwards can be debugged
-                              (fn [{: res : seen-seq &as acc} x]
-                                (dbg-prn :acc (view acc))
-                                (dbg-prn :x (view x))
-                                (table.insert res (if seen-seq (get-dbg-form x) x))
-                                {:res res
-                                 :seen-seq (or seen-seq (sequence? x))})
-                              {:res [] :seen-seq false}
-                              operands)
-                            (. :res))]
-                  ;; Don't debug the fn, wrapping it in `dos` will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
-                  (list operator (unpack t)))
+                (mh.get-dbg-define operator operands get-dbg-form)
 
                 ;; e.g. -> 
                 ;; just dbg the form, do not replace the inner forms as that will interfere with the macro itself
@@ -202,11 +191,10 @@
 
         (get-dbg-form form)))
 
-        ;; (protected-dbgn)
         (let [(ok? val-or-err) (pcall protected-dbgn)]
           (if ok? 
             val-or-err 
-            (do (print "DBGN failed:" val-or-err)
+            (do (print "DBGN error:\n" val-or-err)
               form)))
         )
   
@@ -236,9 +224,9 @@
 
   ;; (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
-  
+  (dbgn (defn- aaa [] (+ 1 2 3)) {:debug? true})
 
-  ;; )
+  )
   
 
 
