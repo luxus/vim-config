@@ -56,9 +56,9 @@
 ;; - [ ] Support depth number printing
 ;; - [ ] Support indentation based on depth
 
-(do
+;; (do
  
-  (macro dbgn [form params]
+  (fn dbgn [form params]
     
     ;; Requires so that the macro has its dependecies
     (fn protected-dbgn [] 
@@ -67,12 +67,17 @@
             fennel (require :fennel)
             ;; Need to create a symbol for `print` so that print isn't evaluated when it's 
             default-params {:print-fn (fennel.sym :print) :debug? false}
-            {:debug? debug? :print-fn print-fn} (c.merge 
-                                                  default-params 
-                                                  params)
-            ] 
+            intermediate-params (c.merge default-params params)
+            ;; Creating merged params that could be passed into macro-helpers
+            merged-params (c.merge 
+                            intermediate-params 
+                            {:dbg-prn 
+                             (fn dbg-prn [...] 
+                               (when intermediate-params.debug? 
+                                 (print "MACRO-DBG " ...)))})
 
-        (fn dbg-prn [...] (when debug? (print "MACRO-DBG " ...)))
+            {:debug? debug? :print-fn print-fn :dbg-prn dbg-prn} merged-params] 
+
 
         (fn dbg [form view-of-form] 
           ;; `view-of-form` can be used to provide a string representation of the original form
@@ -212,7 +217,7 @@
         )
   
   
-  (local c (require :aniseed.core))
+  ;; (local c (require :aniseed.core))
 
 ;; (tostring (fennel.sym :aa))
 ;; (c.merge {:aa "aa"} {:bb "bb"})
@@ -242,10 +247,10 @@
   ;; (dbgn (defn- aaa [] (+ 1 2 3)) {:debug? true})
   ;; (aaa)
 
-  (dbgn (defn bbb [] (+ 2 3 4)) {:debug? true})
-  (bbb)
+  ;; (dbgn (defn bbb [] (+ 2 3 4)) {:debug? true})
+  ;; (bbb)
 
-  )
+  ;; )
   
 
 
