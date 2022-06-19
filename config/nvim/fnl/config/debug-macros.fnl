@@ -56,9 +56,8 @@
 ;; - [ ] Support depth number printing
 ;; - [ ] Support indentation based on depth
 
-;; (do
- 
-  (fn dbgn [form params]
+(do
+  (macro dbgn [form params]
     
     ;; Requires so that the macro has its dependecies
     (fn protected-dbgn [] 
@@ -67,16 +66,13 @@
             fennel (require :fennel)
             ;; Need to create a symbol for `print` so that print isn't evaluated when it's 
             default-params {:print-fn (fennel.sym :print) :debug? false}
-            intermediate-params (c.merge default-params params)
-            ;; Creating merged params that could be passed into macro-helpers
-            merged-params (c.merge 
-                            intermediate-params 
-                            {:dbg-prn 
-                             (fn dbg-prn [...] 
-                               (when intermediate-params.debug? 
-                                 (print "MACRO-DBG " ...)))})
+            merged-params (c.merge default-params params)
 
-            {:debug? debug? :print-fn print-fn :dbg-prn dbg-prn} merged-params] 
+            dbg-prn (fn [...] 
+                      (when merged-params.debug? 
+                        (print "MACRO-DBG " ...)))
+
+            {:debug? debug? :print-fn print-fn} merged-params] 
 
 
         (fn dbg [form view-of-form] 
@@ -114,6 +110,10 @@
                  res#))))
 
         (fn get-dbg-form [form]
+          (local deps {:params merged-params 
+                       :dbg-prn dbg-prn 
+                       :get-dbg-form get-dbg-form})
+
           (dbg-prn "Form: " (view form))
           (dbg-prn "Type: " (type form))
 
@@ -181,7 +181,7 @@
                 ;; - def?
                 ;; - lambda?
                 {:define? define?}
-                (mh.get-dbg-define operator operands get-dbg-form)
+                (mh.get-dbg-define operator operands deps)
 
                 ;; e.g. -> 
                 ;; just dbg the form, do not replace the inner forms as that will interfere with the macro itself
@@ -195,12 +195,12 @@
                   :defn- 
                   (do 
                     (dbg-prn "is aniseed defn-")
-                    (mh.get-dbg-define operator operands get-dbg-form))
+                    (mh.get-dbg-define operator operands deps))
 
                   :defn 
                   (do 
                     (dbg-prn "is aniseed defn")
-                    (mh.get-dbg-define operator operands get-dbg-form))
+                    (mh.get-dbg-define operator operands deps))
 
                   ;; other/default e.g. (+ a b c)
                   _ 
@@ -247,10 +247,10 @@
   ;; (dbgn (defn- aaa [] (+ 1 2 3)) {:debug? true})
   ;; (aaa)
 
-  ;; (dbgn (defn bbb [] (+ 2 3 4)) {:debug? true})
-  ;; (bbb)
+  (dbgn (defn bbb [] (+ 2 3 4)) {:debug? true})
+  (bbb)
 
-  ;; )
+  )
   
 
 

@@ -6,7 +6,7 @@
           operator-str (fennel.view operator)]
         (. syn operator-str)))
 
-(defn get-dbg-define [operator operands get-dbg-form]
+(defn get-dbg-define [operator operands deps]
   ;; Debug the operands, skipping the fn name and bindings
   (let [c (require :aniseed.core)
         f (require :fennel)
@@ -14,9 +14,9 @@
                 (fn [{: res : seen-seq &as acc} x]
                   ;; Only dbg the form if the bindings have been seen
                   ;; these prints don't work because we don't have the print fn defined in here
-                  ;; (dbg-prn :acc (view acc))
-                  ;; (dbg-prn :x (view x))
-                  (table.insert res (if seen-seq (get-dbg-form x) x))
+                  (deps.dbg-prn :acc (f.view acc))
+                  (deps.dbg-prn :x (f.view x))
+                  (table.insert res (if seen-seq (deps.get-dbg-form x) x))
                   {:res res
                    :seen-seq (or seen-seq (f.sequence? x))})
                 {:res [] :seen-seq false}
