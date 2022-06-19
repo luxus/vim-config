@@ -186,7 +186,12 @@
 
                 ;; other e.g. (+ a b c)
                 _ 
-                (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form))
+                (match (tostring operator)
+                  :defn- (do 
+                           (dbg-prn "is aniseed defn-")
+                           (mh.get-dbg-define operator operands get-dbg-form))
+
+                 _ (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form)))
               )))
 
         (get-dbg-form form)))
@@ -201,6 +206,7 @@
   
   (local c (require :aniseed.core))
 
+;; (tostring (fennel.sym :aa))
 ;; (c.merge {:aa "aa"} {:bb "bb"})
 
   ;; (dbgn (let [aa (-> 1 (+ 2))]
@@ -225,6 +231,7 @@
   ;; (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
   (dbgn (defn- aaa [] (+ 1 2 3)) {:debug? true})
+  (aaa)
 
   )
   
