@@ -184,14 +184,19 @@
                 {:macro? macro?}
                 (dbg form)
 
-                ;; other e.g. (+ a b c)
                 _ 
                 (match (tostring operator)
+                  ;; specific operators that don't get included in syntax-tbl
                   :defn- (do 
                            (dbg-prn "is aniseed defn-")
                            (mh.get-dbg-define operator operands get-dbg-form))
 
-                 _ (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form)))
+                  :defn (do 
+                          (dbg-prn "is aniseed defn")
+                          (mh.get-dbg-define operator operands get-dbg-form))
+
+                  ;; other e.g. (+ a b c)
+                  _ (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form)))
               )))
 
         (get-dbg-form form)))
@@ -230,8 +235,12 @@
 
   ;; (dbgn (+ 1 2 (let [a 1 b 4] (+ a (/ b 1)))))
   ;; (dbgn { (.. "aa" "bb") (let [a 5] (+ 3 4 a (- 4 3)))})
-  (dbgn (defn- aaa [] (+ 1 2 3)) {:debug? true})
-  (aaa)
+
+  ;; (dbgn (defn- aaa [] (+ 1 2 3)) {:debug? true})
+  ;; (aaa)
+
+  (dbgn (defn bbb [] (+ 2 3 4)) {:debug? true})
+  (bbb)
 
   )
   
