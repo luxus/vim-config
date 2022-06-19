@@ -15,6 +15,8 @@
   (theme.setup {:theme_style "light"
                 :comment_style "italic"})
 
+  ;; (vim.api.nvim_set_hl 0 "Keyword" { :fg "#ffffff" :bg "#333333" })
+
   (nvim.ex.colorscheme :nightfly)
   (nvim.ex.colorscheme :nightfox)
   (nvim.ex.colorscheme :kanagawa)
