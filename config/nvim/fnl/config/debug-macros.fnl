@@ -132,6 +132,7 @@
 
                    _ (dbg form)))
 
+               ;; Lists
                (let [[operator & operands] form
                      view-of-form (view form)
                      syntax-tbl (mh.get-syntax-tbl operator)
@@ -142,6 +143,12 @@
                  (dbg-prn "is list")
                  (dbg-prn "syntax-tbl" (view syntax-tbl))
 
+                 ;; Where the list was defined - not particularly helpful it seems... (filename "unknown", line is incorrect) maybe it needs metadata enabled. 
+                 ;; (dbg-prn "filename" form.filename)
+                 ;; (dbg-prn "line" form.line)
+                 ;; (dbg-prn "bytestart" form.bytestart)
+                 ;; (dbg-prn "byteend" form.byteend)
+                 ;;
                  (when is-define 
                    (let [first-param-of-define (. operands 1)]
                      (dbg-prn "is-define, " 
@@ -200,10 +207,14 @@
                    (dbg (list operator (unpack (c.map get-dbg-form operands))) view-of-form)))))
            (get-dbg-form form)))
 
+    ;; Protected call
     (let [(status retval) (pcall protected-dbgn)]
       (if status
+        ;;Success
         retval
-        (do (print "RETVAL" retval)
+        ;; Failure
+        (do (print "DBGN error... likely due to not having access to the 'fennel' module\n" retval)
+          ;; Recover by simply returning the input with no changes
           form))))
   
   
