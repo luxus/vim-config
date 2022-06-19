@@ -293,7 +293,7 @@ def bb():
 ;;         else 
 ;;             print(\"in else of ee\")
 ;;         return \"ee\""
-;;  :file-path "c:\\Users\\carlk\\repos\\pytorch-experiment\\src\\test.py"
+;;  :file-path "c:\\Users\\xxx\\repos\\pytorch-experiment\\src\\test.py"
 ;;  :on-result #<function: 0x023ec2347310>
 ;;  :origin "current-form"
 ;;  :preview "# eval (current-form): def ee(): if (True): print(\"in if of ee\") el..."
