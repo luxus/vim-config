@@ -56,8 +56,8 @@
 ;; - [ ] Support depth number printing
 ;; - [ ] Support indentation based on depth
 
-(do
-  (macro dbgn [form params]
+;; (do
+  (fn dbgn [form params]
     
     ;; Requires so that the macro has its dependecies
     (fn protected-dbgn [] 
@@ -110,6 +110,7 @@
                  res#))))
 
         (fn get-dbg-form [form]
+          ;; Create deps with the idea that it can be passed into macro-helpers so it can use the params, print-fn, and this fn
           (local deps {:params merged-params 
                        :dbg-prn dbg-prn 
                        :get-dbg-form get-dbg-form})
@@ -247,10 +248,10 @@
   ;; (dbgn (defn- aaa [] (+ 1 2 3)) {:debug? true})
   ;; (aaa)
 
-  (dbgn (defn bbb [] (+ 2 3 4)) {:debug? true})
-  (bbb)
+  ;; (dbgn (defn bbb [] (+ 2 3 4)) {:debug? true})
+  ;; (bbb)
 
-  )
+  ;; )
   
 
 
