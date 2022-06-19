@@ -26,7 +26,12 @@
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
   (set vim.g.conjure#debug false)
-  (dbgn {:a "aa"})
+  ;; (dbgn (defn aaa [] (print "aa")) {:debug? true})
+  (dbgn {:a "aa"} {:debug? true})
+  (dbgn (+ 1 2 3) {:debug? true})
+
+  (dbgn (defn aaa [] (+ 1 2)) {:debug? false})
+  (aaa)
   )
 
 (set vim.g.conjure#debug true)
@@ -127,6 +132,8 @@ def bb():
   (last-node:has_error)
   (last-node:child_count)
   (last-node:child (- (last-node:named_child_count) 1))
+
+  
   )
 
 (do 
@@ -138,6 +145,26 @@ def bb():
 
     ;; result
     (match (node:type)
+      ;; :block 
+      ;; (do 
+      ;;   (local f (require :fennel))
+      ;;   (local vts vim.treesitter)
+      ;;   (let [bufnr (dbgn (vim.api.nvim_get_current_buf))
+      ;;         parser (vts.get_parser 0 "python")
+      ;;         
+      ;;         root (dbgn (-> (parser:parse) (. 1) (: :root)) {:print-fn log.dbg})
+      ;;         ;; root-range (dbgn (root:range) {:print-fn log.dbg})
+      ;;         ;; [start_row _ end_row _] (root:range)
+      ;;         query "(block (return_statement)) @blockWithReturnStatement"
+      ;;         parsed-query (vts.parse_query "python" query)] 
+      ;;     ;; (log.dbg "root" (f.view root))
+      ;;     (log.dbg "hi")
+      ;;     (dbgn (root:range) {:print-fn log.dbg})
+      ;;     ;; (dbgn [start_row end_row] {:print-fn log.dbg})
+      ;;     (log.dbg "bye")
+      ;;     ;; (parsed-query:iter_captures last-node bufnr)
+      ;;     true))
+
       :elif_clause false 
       :else_clause false 
       :return_statement false 
@@ -264,7 +291,7 @@ def bb():
           fmt-code (replace-blank-lines code)
           fmt-code-1 (add-whitespace fmt-code s-col)
           fmt-code-2 (trim-code-left fmt-code-1 s-col)
-          code-metadata (dbgn (get-code-metadata fmt-code-2)) ]
+          code-metadata (get-code-metadata fmt-code-2) ]
 
       (add-final-newlines fmt-code-2 code-metadata)))
   
