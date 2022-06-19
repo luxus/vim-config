@@ -11,7 +11,8 @@
 
 ; Seems to be using passing in lua functions to keybind.. might not actually work without latest nvim
 (gitsigns.setup 
-  {:on_attach (fn [bufnr]
+  {:current_line_blame_opts {:ignore_whitespace true}
+   :on_attach (fn [bufnr]
         (fn map [mode lhs rhs opts]
           (set-forcibly! opts
                          (vim.tbl_extend :force
