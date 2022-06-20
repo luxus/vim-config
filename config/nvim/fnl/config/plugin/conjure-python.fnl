@@ -128,6 +128,7 @@ def bb():
 (comment 
   (last-node:sexpr)
   (last-node:type)
+  (last-node:start)
   (last-node:end_)
   (last-node:has_error)
   (last-node:child_count)
@@ -136,7 +137,18 @@ def bb():
   
   )
 
+(macro cdbgn [form]
+  (list (sym :dbgn) form {:print-fn (sym :log.dbg)}))
+
+(comment
+
+ (cdbgn {:aa (+ 1 2)})
+ )
+
 (do 
+  (defn parser->root [parser]
+    (-> (parser:parse) (. 1) (: :root)))
+
   (defn python-node? [node extra-pairs]
     ;; debugging
     (print "python node: \n" (ts.node->str node))
@@ -145,25 +157,26 @@ def bb():
 
     ;; result
     (match (node:type)
-      ;; :block 
-      ;; (do 
-      ;;   (local f (require :fennel))
-      ;;   (local vts vim.treesitter)
-      ;;   (let [bufnr (dbgn (vim.api.nvim_get_current_buf))
-      ;;         parser (vts.get_parser 0 "python")
-      ;;         
-      ;;         root (dbgn (-> (parser:parse) (. 1) (: :root)) {:print-fn log.dbg})
-      ;;         ;; root-range (dbgn (root:range) {:print-fn log.dbg})
-      ;;         ;; [start_row _ end_row _] (root:range)
-      ;;         query "(block (return_statement)) @blockWithReturnStatement"
-      ;;         parsed-query (vts.parse_query "python" query)] 
-      ;;     ;; (log.dbg "root" (f.view root))
-      ;;     (log.dbg "hi")
-      ;;     (dbgn (root:range) {:print-fn log.dbg})
-      ;;     ;; (dbgn [start_row end_row] {:print-fn log.dbg})
-      ;;     (log.dbg "bye")
-      ;;     ;; (parsed-query:iter_captures last-node bufnr)
-      ;;     true))
+      :block
+      (do
+        (local f (require :fennel))
+        (local vts vim.treesitter)
+        (local q vim.treesitter.query)
+        (let [bufnr (cdbgn (vim.api.nvim_get_current_buf))
+              parser (vts.get_parser 0 "python")
+              root (parser->root parser)
+              ;; query "(block (return_statement)) @blockWithReturnStatement"
+              query "(return_statement) @blockWithReturnStatement"
+              parsed-query (vts.parse_query "python" query)
+              res (parsed-query:iter_matches root bufnr (root:start) (root:end_))]
+
+          (each [id m metadata res]
+            (cdbgn [id m metadata])
+            ;; Returns a table of 1 element
+            (cdbgn (q.get_node_text (. m 1) bufnr))
+            )
+          (log.dbg "done")
+          true))
 
       :elif_clause false 
       :else_clause false 
