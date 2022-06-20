@@ -133,7 +133,7 @@ def bb():
   (last-node:has_error)
   (last-node:child_count)
   (last-node:child (- (last-node:named_child_count) 1))
-
+  (node->has-return-statement last-node 14)
   
   )
 
@@ -141,7 +141,6 @@ def bb():
   (list (sym :dbgn) form {:print-fn (sym :log.dbg)}))
 
 (comment
-
  (cdbgn {:aa (+ 1 2)})
  )
 
@@ -156,37 +155,37 @@ def bb():
     (local f (require :fennel))
     (local vts vim.treesitter)
     (local q vim.treesitter.query)
-    (let [bufnr (cdbgn bufnr)
-          parser (vts.get_parser 0 "python")
+    (let [parser (vts.get_parser bufnr "python")
           root (parser->root parser)
           ;; query "(block (return_statement)) @blockWithReturnStatement"
-          node root
+          ;; node root ;; overshadow node using root
           query "(return_statement) @blockWithReturnStatement"
           parsed-query (vts.parse_query "python" query)
           res (parsed-query:iter_matches node bufnr (node:start) (node:end_))]
 
       (global iter-matches-res res)
       
-      (var has-return-statement false)
+      (var return-statement-count 0)
       (each [id m metadata res]
-        (cdbgn [id m metadata])
-        (set has-return-statement 
-             (or 
-               has-return-statement
-               (> (length m) 0)))
-        (cdbgn has-return-statement)
+        ;; (cdbgn [id m metadata])
+        (when (> (length m) 0)
+          (set return-statement-count
+               (+ 1 return-statement-count)))
+
+        ;; (cdbgn return-statement-count)
         ;; Returns a table of 1 element
-        (cdbgn (q.get_node_text (. m 1) bufnr))
+        ;; (cdbgn (q.get_node_text (. m 1) bufnr))
         )
-      (log.dbg "done")
-      (not has-return-statement)))
+
+        ;; (cdbgn return-statement-count)
+      ;; We cannot evaluate a block with a return statement
+      (= return-statement-count 0)))
 
   ;; (accumulate [match-found false
   ;;              id m metadata iter-matches-res]
   ;;   (do
   ;;     (or match-found (> (length m) 0))))
 
-  (node->has-return-statement last-node 14)
 
   (defn python-node? [node extra-pairs]
     ;; debugging
