@@ -149,6 +149,31 @@ def bb():
   (defn parser->root [parser]
     (-> (parser:parse) (. 1) (: :root)))
 
+  (defn get-bufnr []
+    (vim.api.nvim_get_current_buf))
+
+  (defn node->has-return-statement [node bufnr]
+    (local f (require :fennel))
+    (local vts vim.treesitter)
+    (local q vim.treesitter.query)
+    (let [bufnr (cdbgn bufnr)
+          parser (vts.get_parser 0 "python")
+          root (parser->root parser)
+          ;; query "(block (return_statement)) @blockWithReturnStatement"
+          query "(return_statement) @blockWithReturnStatement"
+          parsed-query (vts.parse_query "python" query)
+          res (parsed-query:iter_matches node bufnr (node:start) (node:end_))]
+
+      (each [id m metadata res]
+        (cdbgn [id m metadata])
+        ;; Returns a table of 1 element
+        (cdbgn (q.get_node_text (. m 1) bufnr))
+        )
+      (log.dbg "done")
+      true))
+
+  (node->has-return-statement last-node 14)
+
   (defn python-node? [node extra-pairs]
     ;; debugging
     (print "python node: \n" (ts.node->str node))
@@ -159,24 +184,7 @@ def bb():
     (match (node:type)
       :block
       (do
-        (local f (require :fennel))
-        (local vts vim.treesitter)
-        (local q vim.treesitter.query)
-        (let [bufnr (cdbgn (vim.api.nvim_get_current_buf))
-              parser (vts.get_parser 0 "python")
-              root (parser->root parser)
-              ;; query "(block (return_statement)) @blockWithReturnStatement"
-              query "(return_statement) @blockWithReturnStatement"
-              parsed-query (vts.parse_query "python" query)
-              res (parsed-query:iter_matches root bufnr (root:start) (root:end_))]
-
-          (each [id m metadata res]
-            (cdbgn [id m metadata])
-            ;; Returns a table of 1 element
-            (cdbgn (q.get_node_text (. m 1) bufnr))
-            )
-          (log.dbg "done")
-          true))
+       (node->has-return-statement node (get-bufnr)))
 
       :elif_clause false 
       :else_clause false 
