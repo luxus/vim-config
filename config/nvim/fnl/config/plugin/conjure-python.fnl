@@ -152,7 +152,6 @@ def bb():
   (defn get-bufnr []
     (vim.api.nvim_get_current_buf))
 
-
   (defn node->has-return-statement [node bufnr]
     (local f (require :fennel))
     (local vts vim.treesitter)
@@ -167,16 +166,20 @@ def bb():
           res (parsed-query:iter_matches node bufnr (node:start) (node:end_))]
 
       (global iter-matches-res res)
-      ;; (a.reduce (fn [acc x] (print "aaa")) {} res)
       
+      (var has-return-statement false)
       (each [id m metadata res]
         (cdbgn [id m metadata])
-        (cdbgn (> (length m) 0))
+        (set has-return-statement 
+             (or 
+               has-return-statement
+               (> (length m) 0)))
+        (cdbgn has-return-statement)
         ;; Returns a table of 1 element
         (cdbgn (q.get_node_text (. m 1) bufnr))
         )
       (log.dbg "done")
-      true))
+      (not has-return-statement)))
 
   ;; (accumulate [match-found false
   ;;              id m metadata iter-matches-res]
