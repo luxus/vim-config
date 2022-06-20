@@ -152,6 +152,7 @@ def bb():
   (defn get-bufnr []
     (vim.api.nvim_get_current_buf))
 
+
   (defn node->has-return-statement [node bufnr]
     (local f (require :fennel))
     (local vts vim.treesitter)
@@ -160,17 +161,27 @@ def bb():
           parser (vts.get_parser 0 "python")
           root (parser->root parser)
           ;; query "(block (return_statement)) @blockWithReturnStatement"
+          node root
           query "(return_statement) @blockWithReturnStatement"
           parsed-query (vts.parse_query "python" query)
           res (parsed-query:iter_matches node bufnr (node:start) (node:end_))]
 
+      (global iter-matches-res res)
+      ;; (a.reduce (fn [acc x] (print "aaa")) {} res)
+      
       (each [id m metadata res]
         (cdbgn [id m metadata])
+        (cdbgn (> (length m) 0))
         ;; Returns a table of 1 element
         (cdbgn (q.get_node_text (. m 1) bufnr))
         )
       (log.dbg "done")
       true))
+
+  ;; (accumulate [match-found false
+  ;;              id m metadata iter-matches-res]
+  ;;   (do
+  ;;     (or match-found (> (length m) 0))))
 
   (node->has-return-statement last-node 14)
 
