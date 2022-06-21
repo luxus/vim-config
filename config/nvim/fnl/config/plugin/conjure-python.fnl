@@ -22,6 +22,8 @@
 ;; - try treesitter playground in a python file
 ;; - Figure out how to query from the current node:
 ;;   - https://www.reddit.com/r/neovim/comments/kx1ceh/need_a_little_help_with_tree_sitter_query_matching/
+;; - [ ] buffer eval
+;; - [ ] root eval
 (comment 
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
@@ -38,6 +40,14 @@
 
 (set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
 (set vim.g.conjure#filetypes [:clojure :fennel :janet :hy :racket :scheme :lua :lisp :python])
+
+(comment 
+  
+  ;; pattern for finding
+  (string.find "IPython search prompt: In [123]:" "In %[%d+%]:")
+; 24
+; 32
+  )
 
 (config.merge
   {:client
