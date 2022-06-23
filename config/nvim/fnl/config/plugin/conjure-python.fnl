@@ -34,6 +34,7 @@
 
   (dbgn (defn aaa [] (+ 1 2)) {:debug? false})
   (aaa)
+
   )
 
 (set vim.g.conjure#debug true)
@@ -56,10 +57,12 @@
      {:mapping {:start "cs"
                 :stop "cS"
                 :interrupt "ei"}
-      ;; :command "python -m IPython"
+      :command "python -m IPython"
       ;; https://stackoverflow.com/questions/55980470/how-to-print-output-of-an-interactive-child-process-from-parent-process
-      :command "python -u -i -q"
-      :prompt_pattern ">>> "}}}}
+      ;; :command "python -u -i -q"
+      ;; :prompt_pattern ">>> "
+      :prompt_pattern "In %[%d+%]: "
+      }}}}
   {:overwrite? true})
 
 (def- cfg (config.get-in-fn [:client :python :stdio]))
@@ -243,6 +246,15 @@ def bb():
  (replace-blank-lines test-fn-str-1)
  )
 
+
+(defn add-whitespace [code num-ws]
+   (var ii num-ws)
+   (var code-with-ws code)
+   (while (> ii 0)
+     (set code-with-ws (.. " " code-with-ws))
+     (set ii (a.dec ii)))
+   code-with-ws)
+
 (do 
   (defn prep-code-2 [code range] 
     ;; Need to handle blank lines in multiline blocks of code, e.g a func definition
@@ -262,13 +274,6 @@ def bb():
     ;; Need to make sure the blank line between the two print statements actually has the correct indentation as the line previous to and before it
     ;; (dbgn range {:print-fn (fn [...] (log.dbg "msg" ...))})
 
-    (defn add-whitespace [code num-ws]
-       (var ii num-ws)
-       (var code-with-ws code)
-       (while (> ii 0)
-         (set code-with-ws (.. " " code-with-ws))
-         (set ii (a.dec ii)))
-       code-with-ws)
 
     ;; (string.sub "abcdef" 2 -1)
 
@@ -348,6 +353,26 @@ def bb():
             "
     {:end [2 42] :start [0 4]})
   )
+
+(do 
+  (defn prep-code-3 [code range]
+    (let [s-col (. range :start 2)
+          fmt-code (replace-blank-lines code)
+          ]
+
+      (.. "%cpaste\n"
+          fmt-code 
+          "\04"))
+    )
+  
+  (prep-code-3
+"def aaa():
+
+        if true:
+
+            print('testing-indented-func')
+            "
+    {:end [2 42] :start [0 4]}))
 
 
 ;; python node: 
