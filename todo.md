@@ -114,3 +114,6 @@ lua require'telescope.builtin'.live_grep{ vimgrep_arguments = { 'rg',  '--hidden
 
 [ ] Write a plugin that looks up files with similar names to the current file or in the same dir
 
+
+- Profiling
+  - :h :profile
