@@ -27,6 +27,7 @@
 ;;   - https://www.reddit.com/r/neovim/comments/kx1ceh/need_a_little_help_with_tree_sitter_query_matching/
 ;; - [x] buffer eval
 ;; - [ ] root eval
+;; - [ ] how to remove all the "...:" from the inline msg on eval
 (comment 
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
