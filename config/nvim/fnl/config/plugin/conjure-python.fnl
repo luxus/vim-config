@@ -25,7 +25,7 @@
 ;; - try treesitter playground in a python file
 ;; - Figure out how to query from the current node:
 ;;   - https://www.reddit.com/r/neovim/comments/kx1ceh/need_a_little_help_with_tree_sitter_query_matching/
-;; - [ ] buffer eval
+;; - [x] buffer eval
 ;; - [ ] root eval
 (comment 
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
@@ -296,6 +296,7 @@ def bb():
 
 (do 
   (defn prep-code-2 [code range] 
+    ;; Range can be nil, it will assume no extra indentation is necessary
     ;; Need to handle blank lines in multiline blocks of code, e.g a func definition
     ;;
     ;; This is ok:
@@ -374,8 +375,11 @@ def bb():
 
         (append-newline code num-newlines)))
 
-    ;; (log.dbg "msg" "range" (f.view range))
-    (let [s-col (. range :start 2)
+    (let [s-col (or  
+                  ;; get the starting col
+                  (?. range :start 2) 
+                  ;; else assume 0
+                  0) 
           fmt-code (replace-blank-lines code)
           fmt-code-1 (add-whitespace fmt-code s-col)
           fmt-code-2 (trim-code-left fmt-code-1 s-col)
@@ -459,7 +463,7 @@ def bb():
   (with-repl-or-warn
     (fn [repl]
       (repl.send
-        (prep-code-2 opts.code opts.range)
+        (prep-code-2 opts.code (?. opts :range))
         (fn [msg]
           ; (let [msgs (a.filter #(not (= "" $1)) (str.split (or msg.err msg.out) "\n"))])
           (let [msgs (->> (str.split (or msg.err msg.out) "\n")
@@ -475,7 +479,7 @@ def bb():
                 (opts.on-result last-value)))))))))
 
 (defn eval-file [opts]
-  (log.append [(.. comment-prefix "Not implemented")]))
+  (eval-str (a.assoc opts :code (a.slurp opts.file-path))))
 
 ;; (defn doc-str [opts]
 ;;   (let [obj (when (= "." (string.sub opts.code 1 1))
