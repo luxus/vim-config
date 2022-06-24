@@ -15,6 +15,9 @@
    require-macros [conjure.macros
                    config.debug-macros]})
 
+(macro cdbgn [form]
+  (list (sym :dbgn) form {:print-fn (sym :log.dbg)}))
+
 ;; TODO: 
 ;; - Handle errors "..." which are a visual feedback for indents 
 ;;   - Maybe this can be disabled as a param to python interactive
@@ -28,6 +31,7 @@
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
   (set vim.g.conjure#debug false)
+  (set vim.g.conjure#debug true)
   ;; (dbgn (defn aaa [] (print "aa")) {:debug? true})
   (dbgn {:a "aa"} {:debug? true})
   (dbgn (+ 1 2 3) {:debug? true})
@@ -37,7 +41,6 @@
 
   )
 
-(set vim.g.conjure#debug true)
 
 (set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
 (set vim.g.conjure#filetypes [:clojure :fennel :janet :hy :racket :scheme :lua :lisp :python])
@@ -150,9 +153,6 @@ def bb():
   
   )
 
-(macro cdbgn [form]
-  (list (sym :dbgn) form {:print-fn (sym :log.dbg)}))
-
 (comment
  (cdbgn {:aa (+ 1 2)})
  )
@@ -230,12 +230,51 @@ def bb():
                        (config.get-in [:mapping :prefix])
                        (cfg [:mapping :start]))]))))
 
+
+(defn replace-prompt [text] 
+  ;; Keep replacing until there is no change
+  (let [res (string.gsub text "^   ...: " "")]
+    (if (= (length text) (length res))
+      res
+      (replace-prompt res))))
+
 (defn- display-result [msg]
   (let [prefix (.. comment-prefix (if msg.err "(err)" "(out)") " ")]
     (->> (str.split (or msg.err msg.out) "\n")
+         (a.map replace-prompt)
          (a.filter #(~= "" $1))
          (a.map #(.. prefix $1))
          log.append)))
+
+
+(comment
+
+  (do
+
+    
+
+    (replace-prompt
+"   ...:    ...: end\r
+\r"
+      )
+
+    ;; (replace-prompt
+    ;;   "aaa"
+    ;;   )
+
+  
+    )
+
+  (string.gsub 
+"   ...:    ...: end\r
+\r"
+    "^   ...: "
+    "*")
+
+  (string.gsub "aaa" "a+" "*")
+
+ "   ...: "
+ )
 
 (defn replace-blank-lines [str-in]
   (->> (str.split str-in "\n")
@@ -422,7 +461,6 @@ def bb():
       (repl.send
         (prep-code-2 opts.code opts.range)
         (fn [msg]
-          (log.dbg "msg" msg)
           ; (let [msgs (a.filter #(not (= "" $1)) (str.split (or msg.err msg.out) "\n"))])
           (let [msgs (->> (str.split (or msg.err msg.out) "\n")
                           (a.filter #(not (= "" $1))))]
