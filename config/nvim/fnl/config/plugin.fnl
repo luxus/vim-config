@@ -93,7 +93,6 @@
   :mg979/vim-visual-multi {:branch "master"}
   :bkad/CamelCaseMotion {:mod :camelcasemotion}
   :vim-scripts/ReplaceWithRegister {}
-  :terryma/vim-expand-region {}
   :jiangmiao/auto-pairs {}
   :mbbill/undotree {:mod :undotree}
 
@@ -164,11 +163,9 @@
                                     :run ":TSUpdate"
                                     :mod :treesitter}
 
-  :SmiteshP/nvim-gps {:requires [:nvim-treesitter/nvim-treesitter]}
-
   ;; line
   :feline-nvim/feline.nvim {:mod :feline
-                            :requires [:SmiteshP/nvim-gps]}
+                            :requires []}
 
   ;; lsp
   :williamboman/nvim-lsp-installer {:requires [:RRethy/vim-illuminate
