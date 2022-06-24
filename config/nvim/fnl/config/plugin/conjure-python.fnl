@@ -233,7 +233,7 @@ def bb():
 
 (defn replace-prompt [text] 
   ;; Keep replacing until there is no change
-  (let [res (string.gsub text "^   ...: " "")]
+  (let [res (string.gsub text "^[ ]+...: " "")]
     (if (= (length text) (length res))
       res
       (replace-prompt res))))
