@@ -3,6 +3,7 @@
              a aniseed.core
              util config.util
              packer packer
+             ;; should use pcall for this
              vs config.plugin.vs}})
 
 (defn- safe-require-plugin-config [name]
@@ -74,6 +75,7 @@
 
   ;; git
   :tpope/vim-fugitive {:requires [:AndrewRadev/linediff.vim
+                                  :cedarbaum/fugitive-azure-devops.vim
                                   :junegunn/gv.vim]}
 
   :TimUntersberger/neogit {:requires [:nvim-lua/plenary.nvim
@@ -238,5 +240,6 @@
 
 
 ;; TODO: Don't run this config if not on windows with powershell
+;; Should use pcall for this
 (vs.setup {:devenv-path "C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe"
            :nvim-listen-address-base "~"})
