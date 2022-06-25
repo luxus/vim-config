@@ -298,16 +298,16 @@ def bb():
       (~= (length line)
           (length replaced-line))))
 
-(local full-test-str 
+    (local full-test-str 
 "first\r
 \r
-...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...: aa->bb->elif\r
+   ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...: aa->bb->elif\r
 Out[2]: 'aa->return'\r
 \r
-...:    ...: ->if\r
+   ...:    ...: ->if\r
 Out[3]: 6\r
 \r
-...:    ...: \r
+   ...:    ...: \r
 " )
 
 (comment
@@ -315,19 +315,19 @@ Out[3]: 6\r
 
     (defn parse-line [c p]
       (dbgn c)
-      (let [c2 (replace-prompt c)]
-        (if (is-prompt c c2)
-          c2 ;; c is a prompt, so return with prompt removed
-          (if p
-            (let [p2 (replace-prompt p)]
-              (if (and 
-                    (str.blank? c) 
-                    (is-prompt p p2))
-                ;; next line is a prompt and this line is blank, so throw away
-                nil 
-                ;; keep this line
-                c))
-            c))))
+      (if (and (str.blank? c) (a.nil? p))
+        nil ;; last line and blank (split at the end of the original text)
+        (let [c2 (replace-prompt c)]
+          (if (is-prompt c c2)
+            c2 ;; c is a prompt, so return with prompt removed
+            (if p
+              (let [p2 (replace-prompt p)]
+                (if (and (str.blank? c) (is-prompt p p2))
+                  ;; next line is a prompt and this line is blank, so throw away
+                  nil 
+                  ;; keep this line
+                  c))
+              c)))))
 
     (let [lines (str.split full-test-str "\r\n")
           iter (create-iter lines)]
