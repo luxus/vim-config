@@ -267,17 +267,6 @@ def bb():
   (log.dbg ...)
   ...)
 
-(defn format-display [full-msg]
-  )
-
-(defn- display-result [msg]
-  (let [prefix (.. comment-prefix (if msg.err "(err)" "(out)") " ")]
-    (->> (str.split (or msg.err msg.out) "\n")
-         (a.map replace-prompt)
-         (a.filter #(~= "" $1))
-         (a.map #(.. prefix $1))
-         log.append)))
-
 
 (defn create-iter [seq]
   {:curr 0
@@ -297,6 +286,41 @@ def bb():
   (string.find line prompt-pattern-start))
 
 
+(defn line->prompt-removed-or-nil [c p]
+  (if (and (str.blank? c) (a.nil? p))
+    ;; last line and blank (split at the end of the original text)
+    nil 
+    (if (is-prompt c)
+      (replace-prompt c) ;; c is a prompt, so return with prompt removed
+      (if p
+        (if (and (str.blank? c) (is-prompt p))
+          ;; next line is a prompt and this line is blank, so throw away
+          nil 
+          ;; keep this line
+          c)
+        c))))
+
+(defn lines->log [lines]
+  (let [iter (create-iter lines)]
+    (var res [])
+    (while (has-next iter)
+      (table.insert res (line->prompt-removed-or-nil 
+                          (next iter)
+                          (peek iter))))
+    res))
+
+(defn format-display [full-msg]
+  (lines->log (str.split full-msg "\r\n")))
+
+(defn- display-result [msg]
+  (let [prefix (.. comment-prefix (if msg.err "(err)" "(out)") " ")]
+    (->> (format-display (or msg.err msg.out))
+         (a.filter #(~= "" $1))
+         (a.map #(.. prefix $1))
+         log.append)))
+
+
+
     (local full-test-str 
 "first\r
 \r
@@ -312,28 +336,6 @@ Out[3]: 6\r
 (comment
   (do 
 
-    (defn line->prompt-removed-or-nil [c p]
-      (if (and (str.blank? c) (a.nil? p))
-        ;; last line and blank (split at the end of the original text)
-        nil 
-        (if (is-prompt c)
-          (replace-prompt c) ;; c is a prompt, so return with prompt removed
-          (if p
-            (if (and (str.blank? c) (is-prompt p))
-              ;; next line is a prompt and this line is blank, so throw away
-              nil 
-              ;; keep this line
-              c)
-            c))))
-
-    (defn lines->log [lines]
-      (let [iter (create-iter lines)]
-        (var res [])
-        (while (has-next iter)
-          (table.insert res (line->prompt-removed-or-nil 
-                              (next iter)
-                              (peek iter))))
-        res))
 
     (lines->log (str.split full-test-str "\r\n"))
     )
