@@ -600,10 +600,10 @@ Out[3]: 6\r
            (with-repl-or-warn
              (fn [repl]
                (print repl)
-               ;; (repl.send
-               ;;   (prep-code "print('test message')"
-               ;;     ;; "(import sys) (setv sys.ps2 \"\") (del sys)"
-               ;;     ))
+               (repl.send
+                 (prep-code-2 "print('You just connected to the IPython REPL with Conjure!')"
+                   ;; "(import sys) (setv sys.ps2 \"\") (del sys)"
+                   ))
                )
              ))
 
