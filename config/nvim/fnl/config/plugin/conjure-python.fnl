@@ -312,7 +312,7 @@ Out[3]: 6\r
 (comment
   (do 
 
-    (defn parse-line [c p]
+    (defn line->prompt-removed-or-nil [c p]
       (dbgn c)
       (if (and (str.blank? c) (a.nil? p))
         ;; last line and blank (split at the end of the original text)
@@ -327,16 +327,17 @@ Out[3]: 6\r
               c)
             c))))
 
-    (let [lines (str.split full-test-str "\r\n")
-          iter (create-iter lines)]
-      (var res [])
-      (while (has-next iter)
-        (table.insert res (parse-line 
-                            (next iter)
-                            (peek iter)))
-        (dbgn res))
-      res)
+    (defn lines->log [lines]
+      (let [iter (create-iter lines)]
+        (var res [])
+        (while (has-next iter)
+          (table.insert res (line->prompt-removed-or-nil 
+                              (next iter)
+                              (peek iter)))
+          (dbgn res))
+        res))
 
+    (lines->log (str.split full-test-str "\r\n"))
     )
   )
 
