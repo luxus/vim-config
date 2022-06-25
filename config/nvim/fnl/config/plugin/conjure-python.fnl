@@ -278,38 +278,40 @@ def bb():
          (a.map #(.. prefix $1))
          log.append)))
 
-(comment
-  (do 
 
-    (local full-test-str 
+(defn create-iter [seq]
+  {:curr 0
+   :seq seq})
+
+(defn has-next [{: curr : seq &as iter}]
+  (. seq (+ curr 1)))
+
+(defn next [{: curr : seq &as iter}]
+  (tset iter :curr (+ curr 1))
+  (. seq iter.curr))
+
+(defn peek [{: curr : seq &as iter}]
+  (. seq (+ curr 1)))
+
+(defn is-prompt [line replaced-line]
+  (or (a.nil? replaced-line)
+      (~= (length line)
+          (length replaced-line))))
+
+(local full-test-str 
 "first\r
 \r
-   ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...: aa->bb->elif\r
+...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...: aa->bb->elif\r
 Out[2]: 'aa->return'\r
 \r
-   ...:    ...: ->if\r
+...:    ...: ->if\r
 Out[3]: 6\r
 \r
-   ...:    ...: \r
+...:    ...: \r
 " )
-    (defn create-iter [seq]
-      {:curr 0
-       :seq seq})
 
-    (defn has-next [{: curr : seq &as iter}]
-      (. seq (+ curr 1)))
-
-    (defn next [{: curr : seq &as iter}]
-      (tset iter :curr (+ curr 1))
-      (. seq iter.curr))
-
-    (defn peek [{: curr : seq &as iter}]
-      (. seq (+ curr 1)))
-
-    (defn is-prompt [line replaced-line]
-      (or (a.nil? replaced-line)
-          (~= (length line)
-              (length replaced-line))))
+(comment
+  (do 
 
     (defn parse-line [c p]
       (dbgn c)
@@ -317,9 +319,13 @@ Out[3]: 6\r
         (if (is-prompt c c2)
           c2 ;; c is a prompt, so return with prompt removed
           (if p
-            (let [p2 (replace-prompt p) ]
-              (if (is-prompt p p2)
-                nil ;; next line is a prompt and this line is blank, so throw away
+            (let [p2 (replace-prompt p)]
+              (if (and 
+                    (str.blank? c) 
+                    (is-prompt p p2))
+                ;; next line is a prompt and this line is blank, so throw away
+                nil 
+                ;; keep this line
                 c))
             c))))
 
@@ -332,9 +338,7 @@ Out[3]: 6\r
                             (peek iter))))
       res)
 
-    
     )
-
   )
 
 
