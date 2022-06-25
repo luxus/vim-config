@@ -262,6 +262,13 @@ def bb():
     ;;  blank line, prompt
     (.. "\n\r\n" prompt-pattern)))
 
+(defn print-and-return [...]
+  (log.dbg ...)
+  ...)
+
+(defn format-display [full-msg]
+  )
+
 (defn- display-result [msg]
   (let [prefix (.. comment-prefix (if msg.err "(err)" "(out)") " ")]
     (->> (str.split (or msg.err msg.out) "\n")
