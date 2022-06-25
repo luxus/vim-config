@@ -253,7 +253,7 @@ def bb():
   (do
 
     (local prompt-pattern "[ ]+...: ")
-    (local prompt-pattern-start (.. "^" prompt-pattern))
+    (local prompt-pattern-start (.. "^" prompt-pattern "[\r\n]*"))
 
     (local full-test-str 
 "first\r
@@ -267,23 +267,31 @@ Out[3]: 6\r
    ...:    ...: \r
 " )
 
-(defn replace-prompt [text] 
-  ;; Keep replacing until there is no change
-  (let [res (string.gsub text prompt-pattern-start "")]
-    (if (= (length text) (length res))
-      res
-      (replace-prompt res))))
+    (defn replace-prompt [text] 
+      ;; Keep replacing until there is no change
+      (let [res (string.gsub text prompt-pattern-start "")]
+        (if (= (length text) (length res))
+          (if (= (length res) 0)
+            nil ;; after removing all the prompts, the string was empty, so discard
+            res)
+          (replace-prompt res))))
 
-    (let [split-on-newline-prompt (str.split 
-                                    full-test-str 
-                                    (.. "\n\r\n" prompt-pattern))
-          newline-prompts-removed (str.join 
-                                    "\n" 
-                                    split-on-newline-prompt)]
+    (let [split-on-newline-prompt 
+          (str.split 
+            full-test-str 
+            (.. "\n\r\n" prompt-pattern))
+
+          newline-prompts-removed 
+          (str.join 
+            "\n" 
+            split-on-newline-prompt)]
+
       (dbgn split-on-newline-prompt)
       (->> (str.split newline-prompts-removed "\n")
            (a.map #(replace-prompt $1))))
     
+    ;; (string.gsub "   ...: abc" "[ ]+...: [ab]*" "*")
+    ;; (string.gsub "a" "a" "*")
 
 ;;     (replace-prompt
 ;; "   ...:    ...: end\r
