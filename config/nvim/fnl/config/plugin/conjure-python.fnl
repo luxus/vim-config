@@ -239,6 +239,27 @@ def bb():
                        (cfg [:mapping :start]))]))))
 
 
+(local prompt-pattern "[ ]+...: ")
+;; match ONE set of \r\n and no more
+(local prompt-pattern-start (.. "^" prompt-pattern "[\r]-[\n]-"))
+
+(defn replace-prompt [line] 
+  ;; Keep replacing prompts until there is no change,
+  ;; Returns nil 
+  (let [res (string.gsub line prompt-pattern-start "")]
+    ;; Any change?
+    (if (= (length line) (length res))
+      (if (= (length res) 0)
+        nil ;; after removing all the prompts, the string was empty, so discard
+        res)
+      (replace-prompt res))))
+
+(defn split-on-newline-prompt [full-msg]
+  (str.split 
+    full-msg 
+    ;;  blank line, prompt
+    (.. "\n\r\n" prompt-pattern)))
+
 (defn- display-result [msg]
   (let [prefix (.. comment-prefix (if msg.err "(err)" "(out)") " ")]
     (->> (str.split (or msg.err msg.out) "\n")
@@ -252,9 +273,6 @@ def bb():
 
   (do
 
-    (local prompt-pattern "[ ]+...: ")
-    ;; match ONE set of \r\n and no more
-    (local prompt-pattern-start (.. "^" prompt-pattern "[\r]-[\n]-"))
 
     (local full-test-str 
 "first\r
@@ -268,24 +286,16 @@ Out[3]: 6\r
    ...:    ...: \r
 " )
 
-    (defn replace-prompt [text] 
-      ;; Keep replacing until there is no change
-      (let [res (string.gsub text prompt-pattern-start "")]
-        (if (= (length text) (length res))
-          (if (= (length res) 0)
-            nil ;; after removing all the prompts, the string was empty, so discard
-            res)
-          (replace-prompt res))))
+    
 
-    (let [split-on-newline-prompt 
-          (str.split 
-            full-test-str 
-            (.. "\n\r\n" prompt-pattern))
+    (let [;; split on prompt, including previous blank line
+          lines (split-on-newline-prompt full-test-str)
 
+          ;; re-join all the lines
           newline-prompts-removed 
           (str.join 
             "\n" 
-            split-on-newline-prompt)]
+            lines)]
 
       (dbgn split-on-newline-prompt)
       (->> (str.split newline-prompts-removed "\n")
