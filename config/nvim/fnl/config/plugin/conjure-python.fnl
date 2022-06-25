@@ -280,6 +280,7 @@ def bb():
 
 
 (defn line->prompt-removed-or-nil [c p]
+  "Returns nil if a line can be removed, else, return the line without any prompt text removed. Prompt lines are always preceeded by a newline (because the user has pressed enter) so these are discarded."
   (if (and (str.blank? c) (a.nil? p))
     ;; last line and blank (split at the end of the original text)
     nil 
@@ -289,9 +290,9 @@ def bb():
         (if (and (str.blank? c) (is-prompt p))
           ;; next line is a prompt and this line is blank, so throw away
           nil 
-          ;; keep this line
+          ;; keep this line (it's not a prompt, maybe it's output or printing)
           c)
-        c))))
+        c)))) ;; There's not next line (so no next prompt), so just keep this line
 
 (defn lines->log [lines]
   (let [iter (create-iter lines)]
