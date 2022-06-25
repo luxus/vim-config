@@ -317,9 +317,9 @@ Out[3]: 6\r
         (if (is-prompt c c2)
           c2 ;; c is a prompt, so return with prompt removed
           (if p
-            (let [p2 (replace-prompt p)]
+            (let [p2 (replace-prompt p) ]
               (if (is-prompt p p2)
-                nil 
+                nil ;; next line is a prompt and this line is blank, so throw away
                 c))
             c))))
 
