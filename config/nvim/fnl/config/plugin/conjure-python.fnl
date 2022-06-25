@@ -239,13 +239,6 @@ def bb():
                        (cfg [:mapping :start]))]))))
 
 
-(defn replace-prompt [text] 
-  ;; Keep replacing until there is no change
-  (let [res (string.gsub text "^[ ]+...: " "")]
-    (if (= (length text) (length res))
-      res
-      (replace-prompt res))))
-
 (defn- display-result [msg]
   (let [prefix (.. comment-prefix (if msg.err "(err)" "(out)") " ")]
     (->> (str.split (or msg.err msg.out) "\n")
@@ -259,12 +252,43 @@ def bb():
 
   (do
 
+    (local prompt-pattern "[ ]+...: ")
+    (local prompt-pattern-start (.. "^" prompt-pattern))
+
+    (local full-test-str 
+"first\r
+\r
+   ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...: aa->bb->elif\r
+Out[2]: 'aa->return'\r
+\r
+   ...:    ...: ->if\r
+Out[3]: 6\r
+\r
+   ...:    ...: \r
+" )
+
+(defn replace-prompt [text] 
+  ;; Keep replacing until there is no change
+  (let [res (string.gsub text prompt-pattern-start "")]
+    (if (= (length text) (length res))
+      res
+      (replace-prompt res))))
+
+    (let [split-on-newline-prompt (str.split 
+                                    full-test-str 
+                                    (.. "\n\r\n" prompt-pattern))
+          newline-prompts-removed (str.join 
+                                    "\n" 
+                                    split-on-newline-prompt)]
+      (dbgn split-on-newline-prompt)
+      (->> (str.split newline-prompts-removed "\n")
+           (a.map #(replace-prompt $1))))
     
 
-    (replace-prompt
-"   ...:    ...: end\r
-\r"
-      )
+;;     (replace-prompt
+;; "   ...:    ...: end\r
+;; \r"
+;;       )
 
     ;; (replace-prompt
     ;;   "aaa"
@@ -390,14 +414,18 @@ def bb():
                   0) 
           fmt-code (replace-blank-lines code)
           fmt-code-1 (add-whitespace fmt-code s-col)
-          fmt-code-2 (trim-code-left fmt-code-1 s-col)]
+          fmt-code-2 (trim-code-left fmt-code-1 s-col)
+          code-metadata (get-code-metadata fmt-code-2)]
 
       (if is-std-python 
         ;; Needs additional newlines depending on indentation of final line
-        (let [code-metadata (get-code-metadata fmt-code-2)]
-          (add-final-newlines fmt-code-2 code-metadata))
+        (add-final-newlines fmt-code-2 code-metadata)
         ;; Needs just one newline
-        (.. fmt-code-2 "\n\n"))))
+        (.. fmt-code-2 (if 
+                         ;; If final indent is 0, we can use just one newline to trigger eval
+                         (= (. code-metadata :final-indent) 0)
+                         "\n"
+                         "\n\n")))))
   
   (prep-code-2 
 "def aaa():
