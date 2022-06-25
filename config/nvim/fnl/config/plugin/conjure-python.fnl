@@ -257,16 +257,9 @@ def bb():
         res)
       (replace-prompt res true))))
 
-(defn split-on-newline-prompt [full-msg]
-  (str.split 
-    full-msg 
-    ;;  blank line, prompt
-    (.. "\n\r\n" prompt-pattern)))
-
 (defn print-and-return [...]
   (log.dbg ...)
   ...)
-
 
 (defn create-iter [seq]
   {:curr 0
@@ -315,6 +308,7 @@ def bb():
 
 (defn- display-result [msg]
   (let [prefix (.. comment-prefix (if msg.err "(err)" "(out)") " ")]
+    ;; Consider doing something different for errors
     (->> (format-display (or msg.err msg.out))
          (a.filter #(~= "" $1))
          (a.map #(.. prefix $1))
@@ -470,27 +464,6 @@ Out[3]: 6\r
             "
     {:end [2 42] :start [0 4]})
   )
-
-(do 
-  (defn prep-code-3 [code range]
-    (let [s-col (. range :start 2)
-          fmt-code (replace-blank-lines code)
-          ]
-
-      (.. "%cpaste\n"
-          fmt-code 
-          "\04"))
-    )
-  
-  (prep-code-3
-"def aaa():
-
-        if true:
-
-            print('testing-indented-func')
-            "
-    {:end [2 42] :start [0 4]}))
-
 
 ;; python node: 
 ;;  def ee():
