@@ -337,70 +337,10 @@ Out[3]: 6\r
 (comment
   (do 
 
-
     (lines->log (str.split full-test-str "\r\n"))
     )
   )
 
-
-
-(comment
-
-  (do
-
-
-    (local full-test-str 
-"first\r
-\r
-   ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...: aa->bb->elif\r
-Out[2]: 'aa->return'\r
-\r
-   ...:    ...: ->if\r
-Out[3]: 6\r
-\r
-   ...:    ...: \r
-" )
-
-    
-
-    (let [;; split on prompt, including previous blank line
-          lines (split-on-newline-prompt full-test-str)
-
-          ;; re-join all the lines
-          newline-prompts-removed 
-          (str.join 
-            "\n" 
-            lines)]
-
-      (dbgn split-on-newline-prompt)
-      (->> (str.split newline-prompts-removed "\n")
-           (a.map #(replace-prompt $1))))
-    
-    ;; (string.gsub "   ...: abc" "[ ]+...: [ab]*" "*")
-    ;; (string.gsub "a" "a" "*")
-
-;;     (replace-prompt
-;; "   ...:    ...: end\r
-;; \r"
-;;       )
-
-    ;; (replace-prompt
-    ;;   "aaa"
-    ;;   )
-
-  
-    )
-
-  (string.gsub 
-"   ...:    ...: end\r
-\r"
-    "^   ...: "
-    "*")
-
-  (string.gsub "aaa" "a+" "*")
-
- "   ...: "
- )
 
 (defn replace-blank-lines [str-in]
   (->> (str.split str-in "\n")
