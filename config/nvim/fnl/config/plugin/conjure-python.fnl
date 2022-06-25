@@ -11,6 +11,7 @@
              log conjure.log
              ts conjure.tree-sitter
              ts_util nvim-treesitter.ts_utils
+             ll conjure.linked-list
              f fennel}
    require-macros [conjure.macros
                    config.debug-macros]})
@@ -278,35 +279,65 @@ def bb():
          log.append)))
 
 (comment
-  
   (do 
-    (defn get-iter [seq]
-      (var curr 0)
-      {:has-next 
-       (fn [] 
-         (. seq (+ curr 1)))
-       :next 
-       (fn [] 
-         (set curr (+ curr 1))
-         (. seq curr))
-       :peek 
-       (fn [] (. seq (+ curr 1)))})
-    
-    (dbgn 
-      (let [seq [:a :b :c]
-            iter (get-iter seq)]
-        (iter.has-next)
-        (iter.has-next)
-        (iter.next)
-        (iter.peek)
-        (iter.next)
-        (iter.next)
-        (iter.has-next)))
 
+    (local full-test-str 
+"first\r
+\r
+   ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...:    ...: aa->bb->elif\r
+Out[2]: 'aa->return'\r
+\r
+   ...:    ...: ->if\r
+Out[3]: 6\r
+\r
+   ...:    ...: \r
+" )
+    (defn create-iter [seq]
+      {:curr 0
+       :seq seq})
+
+    (defn has-next [{: curr : seq &as iter}]
+      (. seq (+ curr 1)))
+
+    (defn next [{: curr : seq &as iter}]
+      (tset iter :curr (+ curr 1))
+      (. seq iter.curr))
+
+    (defn peek [{: curr : seq &as iter}]
+      (. seq (+ curr 1)))
+
+    (defn is-prompt [line replaced-line]
+      (or (a.nil? replaced-line)
+          (~= (length line)
+              (length replaced-line))))
+
+    (defn parse-line [c p]
+      (dbgn c)
+      (let [c2 (replace-prompt c)]
+        (if (is-prompt c c2)
+          c2 ;; c is a prompt, so return with prompt removed
+          (if p
+            (let [p2 (replace-prompt p)]
+              (if (is-prompt p p2)
+                nil 
+                c))
+            c))))
+
+    (let [lines (str.split full-test-str "\r\n")
+          iter (create-iter lines)]
+      (var res [])
+      (while (has-next iter)
+        (table.insert res (parse-line 
+                            (next iter)
+                            (peek iter))))
+      res)
+
+    
     )
 
-  
   )
+
+
 
 (comment
 
