@@ -253,7 +253,8 @@ def bb():
   (do
 
     (local prompt-pattern "[ ]+...: ")
-    (local prompt-pattern-start (.. "^" prompt-pattern "[\r\n]*"))
+    ;; match ONE set of \r\n and no more
+    (local prompt-pattern-start (.. "^" prompt-pattern "[\r]-[\n]-"))
 
     (local full-test-str 
 "first\r
