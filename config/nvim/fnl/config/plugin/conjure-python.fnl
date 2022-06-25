@@ -313,11 +313,10 @@ Out[3]: 6\r
   (do 
 
     (defn line->prompt-removed-or-nil [c p]
-      (dbgn c)
       (if (and (str.blank? c) (a.nil? p))
         ;; last line and blank (split at the end of the original text)
         nil 
-        (if (dbgn (is-prompt c))
+        (if (is-prompt c)
           (replace-prompt c) ;; c is a prompt, so return with prompt removed
           (if p
             (if (and (str.blank? c) (is-prompt p))
@@ -333,8 +332,7 @@ Out[3]: 6\r
         (while (has-next iter)
           (table.insert res (line->prompt-removed-or-nil 
                               (next iter)
-                              (peek iter)))
-          (dbgn res))
+                              (peek iter))))
         res))
 
     (lines->log (str.split full-test-str "\r\n"))
