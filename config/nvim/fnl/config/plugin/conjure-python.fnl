@@ -241,18 +241,20 @@ def bb():
 
 (local prompt-pattern "[ ]+...: ")
 ;; match ONE set of \r\n and no more
-(local prompt-pattern-start (.. "^" prompt-pattern "[\r]-[\n]-"))
+(local prompt-pattern-start (.. "^" prompt-pattern "[\r]*[\n]*"))
 
-(defn replace-prompt [line] 
+(defn replace-prompt [line has-replaced-once?] 
   ;; Keep replacing prompts until there is no change,
   ;; Returns nil 
   (let [res (string.gsub line prompt-pattern-start "")]
     ;; Any change?
     (if (= (length line) (length res))
-      (if (= (length res) 0)
+      (if (and 
+            has-replaced-once? 
+            (= (length res) 0))
         nil ;; after removing all the prompts, the string was empty, so discard
         res)
-      (replace-prompt res))))
+      (replace-prompt res true))))
 
 (defn split-on-newline-prompt [full-msg]
   (str.split 
