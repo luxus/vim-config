@@ -277,6 +277,36 @@ def bb():
          (a.map #(.. prefix $1))
          log.append)))
 
+(comment
+  
+  (do 
+    (defn get-iter [seq]
+      (var curr 0)
+      {:has-next 
+       (fn [] 
+         (. seq (+ curr 1)))
+       :next 
+       (fn [] 
+         (set curr (+ curr 1))
+         (. seq curr))
+       :peek 
+       (fn [] (. seq (+ curr 1)))})
+    
+    (dbgn 
+      (let [seq [:a :b :c]
+            iter (get-iter seq)]
+        (iter.has-next)
+        (iter.has-next)
+        (iter.next)
+        (iter.peek)
+        (iter.next)
+        (iter.next)
+        (iter.has-next)))
+
+    )
+
+  
+  )
 
 (comment
 
