@@ -293,10 +293,9 @@ def bb():
 (defn peek [{: curr : seq &as iter}]
   (. seq (+ curr 1)))
 
-(defn is-prompt [line replaced-line]
-  (or (a.nil? replaced-line)
-      (~= (length line)
-          (length replaced-line))))
+(defn is-prompt [line]
+  (string.find line prompt-pattern-start))
+
 
     (local full-test-str 
 "first\r
@@ -316,18 +315,17 @@ Out[3]: 6\r
     (defn parse-line [c p]
       (dbgn c)
       (if (and (str.blank? c) (a.nil? p))
-        nil ;; last line and blank (split at the end of the original text)
-        (let [c2 (replace-prompt c)]
-          (if (is-prompt c c2)
-            c2 ;; c is a prompt, so return with prompt removed
-            (if p
-              (let [p2 (replace-prompt p)]
-                (if (and (str.blank? c) (is-prompt p p2))
-                  ;; next line is a prompt and this line is blank, so throw away
-                  nil 
-                  ;; keep this line
-                  c))
-              c)))))
+        ;; last line and blank (split at the end of the original text)
+        nil 
+        (if (dbgn (is-prompt c))
+          (replace-prompt c) ;; c is a prompt, so return with prompt removed
+          (if p
+            (if (and (str.blank? c) (is-prompt p))
+              ;; next line is a prompt and this line is blank, so throw away
+              nil 
+              ;; keep this line
+              c)
+            c))))
 
     (let [lines (str.split full-test-str "\r\n")
           iter (create-iter lines)]
@@ -335,7 +333,8 @@ Out[3]: 6\r
       (while (has-next iter)
         (table.insert res (parse-line 
                             (next iter)
-                            (peek iter))))
+                            (peek iter)))
+        (dbgn res))
       res)
 
     )
