@@ -28,6 +28,13 @@
 ;; - [x] buffer eval
 ;; - [ ] root eval
 ;; - [ ] how to remove all the "...:" from the inline msg on eval
+
+;; - final newline can be removed
+;; - Only need to add two newlines if in a definition
+;; - Other lines, such as "print()" and multiline list comprehensions only need a single newline
+;;  - Just print two for now, later can check if treesitter
+;; - If last line is part of definition, remove one newline
+;; - else, remove two newlines
 (comment 
   vim.g.conjure#filetype#clojure ; "conjure.client.clojure.nrepl"
   vim.g.conjure#filetypes ; ["clojure" "fennel" "janet" "hy" "racket" "scheme" "lua" "lisp"]
@@ -296,7 +303,7 @@ def bb():
    code-with-ws)
 
 (do 
-  (defn prep-code-2 [code range] 
+  (defn prep-code-2 [code range is-std-python] 
     ;; Range can be nil, it will assume no extra indentation is necessary
     ;; Need to handle blank lines in multiline blocks of code, e.g a func definition
     ;;
@@ -383,10 +390,14 @@ def bb():
                   0) 
           fmt-code (replace-blank-lines code)
           fmt-code-1 (add-whitespace fmt-code s-col)
-          fmt-code-2 (trim-code-left fmt-code-1 s-col)
-          code-metadata (get-code-metadata fmt-code-2) ]
+          fmt-code-2 (trim-code-left fmt-code-1 s-col)]
 
-      (add-final-newlines fmt-code-2 code-metadata)))
+      (if is-std-python 
+        ;; Needs additional newlines depending on indentation of final line
+        (let [code-metadata (get-code-metadata fmt-code-2)]
+          (add-final-newlines fmt-code-2 code-metadata))
+        ;; Needs just one newline
+        (.. fmt-code-2 "\n\n"))))
   
   (prep-code-2 
 "def aaa():
@@ -450,6 +461,23 @@ def bb():
 (defn- prep-code [s]
   (.. s "\n"))
 
+(defn insert-history [code sent msg]
+  ;; Init
+  (when (not g-msg)
+    (global g-msg []))
+  (table.insert g-msg {:code code :sent sent :msg msg}))
+
+(defn clear-history []
+  (global g-msg []))
+
+(defn last-history []
+  (a.last g-msg))
+
+(comment 
+  (clear-history)
+  (last-history)
+  g-msg)
+
 (defn eval-str [opts]
 ;; {:action "eval"
 ;;  :code "if (True):
@@ -463,9 +491,12 @@ def bb():
   (var last-value nil)
   (with-repl-or-warn
     (fn [repl]
+      (local sent (prep-code-2 opts.code (?. opts :range)))
       (repl.send
-        (prep-code-2 opts.code (?. opts :range))
+        sent  
         (fn [msg]
+          (insert-history opts.code sent msg)        
+          (log.dbg "MSG" msg)
           ; (let [msgs (a.filter #(not (= "" $1)) (str.split (or msg.err msg.out) "\n"))])
           (let [msgs (->> (str.split (or msg.err msg.out) "\n")
                           (a.filter #(not (= "" $1))))]
@@ -477,7 +508,9 @@ def bb():
               ; (log.append [(.. comment-prefix "Finished")])
               (log.append [""])
               (when opts.on-result
-                (opts.on-result last-value)))))))))
+                (opts.on-result last-value))))
+          ;; Needs to be batch when sending an entire file with multiple returns
+          {:batch? true})))))
 
 (defn eval-file [opts]
   (eval-str (a.assoc opts :code (a.slurp opts.file-path))))
