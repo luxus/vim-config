@@ -310,6 +310,7 @@ def bb():
     res))
 
 (defn format-display [full-msg]
+  ;; TODO: don't hardcode line endings
   (lines->log (str.split full-msg "\r\n")))
 
 (defn- display-result [msg]
