@@ -305,13 +305,13 @@ def bb():
 
 (defn format-display [full-msg]
   ;; TODO: don't hardcode line endings
-  (lines->log (str.split full-msg "\r\n")))
+  (->> (lines->log (str.split full-msg "\r\n"))
+       (a.filter #(~= "" $1))))
 
 (defn- display-result [msg]
   (let [prefix (.. comment-prefix (if msg.err "(err)" "(out)") " ")]
     ;; Consider doing something different for errors
     (->> (format-display (or msg.err msg.out))
-         (a.filter #(~= "" $1))
          (a.map #(.. prefix $1))
          log.append)))
 
@@ -499,7 +499,7 @@ Out[3]: 6\r
 
 (defn insert-history [code sent msg]
   ;; Init
-  (when (not g-msg)
+  (when (not _G.g-msg)
     (global g-msg []))
   (table.insert g-msg {:code code :sent sent :msg msg}))
 
@@ -533,12 +533,9 @@ Out[3]: 6\r
         (fn [msg]
           (insert-history opts.code sent msg)        
           (log.dbg "MSG" msg)
-          ; (let [msgs (a.filter #(not (= "" $1)) (str.split (or msg.err msg.out) "\n"))])
-          (let [msgs (->> (str.split (or msg.err msg.out) "\n")
-                          (a.filter #(not (= "" $1))))]
-                ; prefix (.. comment-prefix (if msg.err "(err)" "(out)") " ")]
+          (let [msgs (format-display (or msg.err msg.out))]
+            (cdbgn msgs)
             (set last-value (or (a.last msgs) last-value))
-            ; (log.append (a.map #(.. prefix $1) msgs))
             (display-result msg)
             (when msg.done?
               ; (log.append [(.. comment-prefix "Finished")])
