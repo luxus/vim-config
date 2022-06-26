@@ -585,7 +585,7 @@ Out[3]: 6\r
 ;;     (with-repl-or-warn
 ;;       (fn [repl]
 ;;         (repl.send
-;;           (prep-code code)
+;;           (prep-code-2 code)
 ;;           (fn [msg]
 ;;             (log.append (text.prefixed-lines
 ;;                           (or msg.err msg.out)
