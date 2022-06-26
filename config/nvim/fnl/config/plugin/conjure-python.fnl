@@ -328,6 +328,7 @@ def bb():
 (defn format-display [full-msg]
   ;; TODO: don't hardcode line endings
   (->> (lines->log (str.split full-msg "\r\n"))
+       ;; No longer seem to need this
        ;; (a.filter #(~= "" $1))
        ))
 
