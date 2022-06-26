@@ -272,6 +272,9 @@ def bb():
   (tset iter :curr (+ curr 1))
   (. seq iter.curr))
 
+(defn peek-prev [{: curr : seq &as iter}]
+  (. seq (- curr 1)))
+
 (defn peek [{: curr : seq &as iter}]
   (. seq (+ curr 1)))
 
@@ -279,10 +282,12 @@ def bb():
   (string.find line prompt-pattern-start))
 
 
-(defn line->prompt-removed-or-nil [c n]
+(defn line->prompt-removed-or-nil [c p n] 
   "Returns nil if a line can be removed, else, return the line without any prompt text removed. Prompt lines are always preceeded by a newline (because the user has pressed enter) so these are discarded."
   (local new-meta 
-    (if (and (. c :is-blank) (a.nil? n))
+    (if (and (. c :is-blank) 
+             (or (a.nil? n) ;; no next line
+                 (not (. p :can-drop)))) ;; prev line won't be dropped
       ;; last line and blank (split at the end of the original text)
       {:can-drop true}
       (if (. c :is-prompt)
@@ -294,8 +299,7 @@ def bb():
             ;; keep this line (it's not a prompt, maybe it's output or printing)
             {:result (. c :line)})
           {:result (. c :line)})))) ;; There's not next line (so no next prompt), so just keep this line
-  (cdbgn new-meta)
-  (a.merge c new-meta))
+  (a.merge! c new-meta))
 
   (fn set-is-prompt [{: line &as t}] 
     (let [is-prompt (is-prompt line)]
@@ -316,6 +320,7 @@ def bb():
     (while (has-next iter)
       (table.insert res (line->prompt-removed-or-nil 
                           (next iter)
+                          (peek-prev iter)
                           (peek iter))))
     (a.map #(. $1 :result) res)))
 
