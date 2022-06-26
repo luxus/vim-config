@@ -279,37 +279,51 @@ def bb():
   (string.find line prompt-pattern-start))
 
 
-(defn line->prompt-removed-or-nil [c p]
+(defn line->prompt-removed-or-nil [c n]
   "Returns nil if a line can be removed, else, return the line without any prompt text removed. Prompt lines are always preceeded by a newline (because the user has pressed enter) so these are discarded."
-  (if (and (str.blank? c) (a.nil? p))
-    ;; last line and blank (split at the end of the original text)
-    nil 
-    (if (is-prompt c)
-      (replace-prompt c) ;; c is a prompt, so return with prompt removed
-      (if p
-        (if (and (str.blank? c) (is-prompt p))
-          ;; next line is a prompt and this line is blank, so throw away
-          nil 
-          ;; keep this line (it's not a prompt, maybe it's output or printing)
-          c)
-        c)))) ;; There's not next line (so no next prompt), so just keep this line
+  (local new-meta 
+    (if (and (. c :is-blank) (a.nil? n))
+      ;; last line and blank (split at the end of the original text)
+      {:can-drop true}
+      (if (. c :is-prompt)
+        {:result (replace-prompt (. c :line))} ;; c is a prompt, so return with prompt removed
+        (if n
+          (if (and (. c :is-blank) (. n :is-prompt))
+            ;; next line is a prompt and this line is blank, so throw away
+            {:can-drop true} 
+            ;; keep this line (it's not a prompt, maybe it's output or printing)
+            {:result (. c :line)})
+          {:result (. c :line)})))) ;; There's not next line (so no next prompt), so just keep this line
+  (cdbgn new-meta)
+  (a.merge c new-meta))
 
+  (fn set-is-prompt [{: line &as t}] 
+    (let [is-prompt (is-prompt line)]
+      (a.assoc t :is-prompt is-prompt)))
 
+  (fn set-is-blank [{: line &as t}] 
+    (let [is-blank (str.blank? line)]
+      (a.assoc t :is-blank is-blank)))
 ;; Drop lines blank lines that don't proceed a dropped line
 
 (defn lines->log [lines]
-  (let [iter (create-iter lines)]
+  (let [meta (->> lines 
+                  (a.map #(a.assoc {} :line $1))
+                  (a.map set-is-prompt)
+                  (a.map set-is-blank))
+        iter (create-iter meta)]
     (var res [])
     (while (has-next iter)
       (table.insert res (line->prompt-removed-or-nil 
                           (next iter)
                           (peek iter))))
-    res))
+    (a.map #(. $1 :result) res)))
 
 (defn format-display [full-msg]
   ;; TODO: don't hardcode line endings
   (->> (lines->log (str.split full-msg "\r\n"))
-       (a.filter #(~= "" $1))))
+       ;; (a.filter #(~= "" $1))
+       ))
 
 (defn- display-result [msg]
   (let [prefix (.. comment-prefix (if msg.err "(err)" "(out)") " ")]
@@ -336,21 +350,14 @@ Out[3]: 6\r
 
   (lines->log (str.split full-test-str "\r\n"))
 
-  (fn set-is-prompt [{: line &as t}] 
-    (let [is-prompt (is-prompt line)]
-      (a.assoc t :is-prompt is-prompt)))
-
-  (fn set-is-prompt [{: line &as t}] 
-    (let [is-blank (str.blank? line)]
-      (a.assoc t :is-blank is-blank)))
 
   (set-is-prompt {:line "   ...: "})
-  (set-is-blank {:line "   ...: "})
+  (set-is-blank {:line "aa"})
 
   (->> (str.split full-test-str "\r\n")
        (a.map #(a.assoc {} :line $1))
        (a.map set-is-prompt)
-       )
+       (a.map set-is-blank))
   )
 
 (comment
