@@ -58,20 +58,13 @@
 
 ;; (do
   (fn dbgn [form params]
-    (local af (require :aniseed.fennel))
     ;; (af.impl)
-
-    (fn protected-require-fennel []
-      (let [(ok? val-or-err) (pcall #(require :fennel))]
-        (if ok?
-          val-or-err
-          (af.impl))))
 
     ;; Requires so that the macro has its dependecies
     (fn protected-dbgn [] 
       (let [c (require :aniseed.core)
             mh (require :config.macro-helpers)
-            fennel (protected-require-fennel)
+            fennel (mh.protected-require-fennel)
             ;; Need to create a symbol for `print` so that print isn't evaluated when it's 
             default-params {:print-fn (fennel.sym :print) :debug? false}
             merged-params (c.merge default-params params)
@@ -110,7 +103,8 @@
                ;; "(+ 1 2) ..."
                (,print-fn ,form-as-str# ,first-line-suffix#) 
                (let [res# (do ,form)
-                     fennel# (: (require :aniseed.fennel) :impl)]
+                     mh# (require :config.macro-helpers)
+                     fennel# (mh#.protected-require-fennel)]
                  ;; Printing view of result in all cases, but I think it only really needs to be done for tables
                  ;; "(+ 1 2) => 3"
                  (,print-fn ,res-prefix# (fennel#.view res#))

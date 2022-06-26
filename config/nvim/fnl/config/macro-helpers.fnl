@@ -25,3 +25,11 @@
 
     ;; Don't debug the fn, wrapping it in `dos` will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
     (f.list operator (unpack t))))
+
+(defn protected-require-fennel []
+  (local af (require :aniseed.fennel))
+  (let [(ok? val-or-err) (pcall #(require :fennel))]
+    (if ok?
+      val-or-err
+      (af.impl))))
+
