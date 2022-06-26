@@ -281,33 +281,38 @@ def bb():
 (defn is-prompt [line]
   (string.find line prompt-pattern-start))
 
+(comment
+ (do 
+   (local t {:a "AAAA"})
+   (and t (. t :a)))
+ )
 
-(defn line->prompt-removed-or-nil [c p n] 
+(defn set-result-and-can-drop [c p n] 
   "Returns nil if a line can be removed, else, return the line without any prompt text removed. Prompt lines are always preceeded by a newline (because the user has pressed enter) so these are discarded."
   (local new-meta 
-    (if (and (. c :is-blank) 
+    (if (and c.is-blank 
              (or (a.nil? n) ;; no next line
-                 (not (. p :can-drop)))) ;; prev line won't be dropped
+                 (not (?. p :can-drop)))) ;; prev line won't be dropped
       ;; last line and blank (split at the end of the original text)
       {:can-drop true}
-      (if (. c :is-prompt)
-        {:result (replace-prompt (. c :line))} ;; c is a prompt, so return with prompt removed
+      (if c.is-prompt
+        {:result (replace-prompt c.line)} ;; c is a prompt, so return with prompt removed
         (if n
-          (if (and (. c :is-blank) (. n :is-prompt))
+          (if (and c.is-blank n.is-prompt)
             ;; next line is a prompt and this line is blank, so throw away
             {:can-drop true} 
             ;; keep this line (it's not a prompt, maybe it's output or printing)
-            {:result (. c :line)})
-          {:result (. c :line)})))) ;; There's not next line (so no next prompt), so just keep this line
+            {:result c.line})
+          {:result c.line})))) ;; There's not next line (so no next prompt), so just keep this line
   (a.merge! c new-meta))
 
-  (fn set-is-prompt [{: line &as t}] 
-    (let [is-prompt (is-prompt line)]
-      (a.assoc t :is-prompt is-prompt)))
+(fn set-is-prompt [{: line &as t}] 
+  (let [is-prompt (is-prompt line)]
+    (a.assoc t :is-prompt is-prompt)))
 
-  (fn set-is-blank [{: line &as t}] 
-    (let [is-blank (str.blank? line)]
-      (a.assoc t :is-blank is-blank)))
+(fn set-is-blank [{: line &as t}] 
+  (let [is-blank (str.blank? line)]
+    (a.assoc t :is-blank is-blank)))
 ;; Drop lines blank lines that don't proceed a dropped line
 
 (defn lines->log [lines]
@@ -318,10 +323,11 @@ def bb():
         iter (create-iter meta)]
     (var res [])
     (while (has-next iter)
-      (table.insert res (line->prompt-removed-or-nil 
+      (table.insert res (set-result-and-can-drop 
                           (next iter)
                           (peek-prev iter)
                           (peek iter))))
+    (cdbgn res)
     (a.map #(. $1 :result) res)))
 
 (defn format-display [full-msg]
