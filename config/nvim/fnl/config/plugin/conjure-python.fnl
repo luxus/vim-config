@@ -54,10 +54,11 @@
 (set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
 (set vim.g.conjure#filetypes [:clojure :fennel :janet :hy :racket :scheme :lua :lisp :python])
 
+
+(local input-prompt-pattern "In %[%d+%]: ")
 (comment 
-  
   ;; pattern for finding
-  (string.find "IPython search prompt: In [123]:" "In %[%d+%]:")
+  (string.find "IPython search prompt: In [123]: " input-prompt-pattern)
 ; 24
 ; 32
   )
@@ -73,7 +74,7 @@
       ;; https://stackoverflow.com/questions/55980470/how-to-print-output-of-an-interactive-child-process-from-parent-process
       ;; :command "python -u -i -q"
       ;; :prompt_pattern ">>> "
-      :prompt_pattern "In %[%d+%]: "
+      :prompt_pattern input-prompt-pattern
       }}}}
   {:overwrite? true})
 
