@@ -294,6 +294,9 @@ def bb():
           c)
         c)))) ;; There's not next line (so no next prompt), so just keep this line
 
+
+;; Drop lines blank lines that don't proceed a dropped line
+
 (defn lines->log [lines]
   (let [iter (create-iter lines)]
     (var res [])
@@ -316,7 +319,6 @@ def bb():
          log.append)))
 
 
-
     (local full-test-str 
 "first\r
 \r
@@ -329,12 +331,33 @@ Out[3]: 6\r
    ...:    ...: \r
 " )
 
+
+(do 
+
+  (lines->log (str.split full-test-str "\r\n"))
+
+  (fn set-is-prompt [{: line &as t}] 
+    (let [is-prompt (is-prompt line)]
+      (a.assoc t :is-prompt is-prompt)))
+
+  (fn set-is-prompt [{: line &as t}] 
+    (let [is-blank (str.blank? line)]
+      (a.assoc t :is-blank is-blank)))
+
+  (set-is-prompt {:line "   ...: "})
+  (set-is-blank {:line "   ...: "})
+
+  (->> (str.split full-test-str "\r\n")
+       (a.map #(a.assoc {} :line $1))
+       (a.map set-is-prompt)
+       )
+  )
+
 (comment
   (do 
 
     (lines->log (str.split full-test-str "\r\n"))
-    )
-  )
+  ))
 
 
 (defn replace-blank-lines [str-in]
