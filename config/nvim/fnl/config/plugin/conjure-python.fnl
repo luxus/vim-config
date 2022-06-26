@@ -311,7 +311,7 @@ def bb():
     (a.assoc t :is-prompt is-prompt)))
 
 (fn set-is-blank [{: line &as t}] 
-  (let [is-blank (str.blank? line)]
+  (let [is-blank (= (length line) 0)]
     (a.assoc t :is-blank is-blank)))
 ;; Drop lines blank lines that don't proceed a dropped line
 
