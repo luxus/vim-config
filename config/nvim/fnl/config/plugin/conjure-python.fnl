@@ -394,26 +394,12 @@ Out[3]: 6\r
 
 (do 
   (defn prep-code-2 [code range is-std-python] 
-    ;; Range can be nil, it will assume no extra indentation is necessary
-    ;; Need to handle blank lines in multiline blocks of code, e.g a func definition
-    ;;
-    ;; This is ok:
-    ;; def aa():
-    ;;     print("aa")
-    ;;     print("aa again!")
-    ;;
-    ;; This is not:
-    ;;
-    ;; def aa():
-    ;;     print("aa")
-    ;; 
-    ;;     print("aa again!")
-    ;;
-    ;; Need to make sure the blank line between the two print statements actually has the correct indentation as the line previous to and before it
-    ;; (dbgn range {:print-fn (fn [...] (log.dbg "msg" ...))})
-
-
-    ;; (string.sub "abcdef" 2 -1)
+    ;; Objectives:
+    ;; - [x] Remove blank lines to prevent early eval inside func definitions
+    ;;   - Alternatively, add SOME indentation to each line
+    ;; - [x] Trim extra indentation from each line where there is inconsistent indentation
+    ;;   - Example: Evalutating code from within a func definition
+    ;;   - NOT necessary for IPython, but standard Python REPL requires this
 
     (defn trim-code-left [code num-left]
       (let [s-col (+ num-left 1)
@@ -425,6 +411,10 @@ Out[3]: 6\r
         (str.join "\n" trimmed-lines)))
 
     (defn get-code-metadata [code]
+      "Returns a table with the following keys
+      :num-lines - number of lines in `code`
+      :min-indent - smallest indent detected
+      :final-indent - indent of the last line"
        (let [lines (str.split code "\n")
              ;; The indentation of a line is the line length minus the the length of the line with whitespace trimmed from it
              indents (a.map
