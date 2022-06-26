@@ -321,7 +321,6 @@ def bb():
                           (next iter)
                           (peek-prev iter)
                           (peek iter))))
-    (cdbgn res)
     (a.map #(. $1 :result) res)))
 
 (defn format-display [full-msg]
@@ -396,110 +395,94 @@ Out[3]: 6\r
      (set ii (a.dec ii)))
    code-with-ws)
 
-(do 
-  (defn prep-code-2 [code range is-std-python] 
-    ;; Objectives:
-    ;; - [x] Remove blank lines to prevent early eval inside func definitions
-    ;;   - Alternatively, add SOME indentation to each line
-    ;; - [x] Trim extra indentation from each line where there is inconsistent indentation
-    ;;   - Example: Evalutating code from within a func definition
-    ;;   - NOT necessary for IPython, but standard Python REPL requires this
+(defn prep-code-2 [code range is-std-python] 
+  ;; Objectives:
+  ;; - [x] Remove blank lines to prevent early eval inside func definitions
+  ;;   - Alternatively, add SOME indentation to each line
+  ;; - [x] Trim extra indentation from each line where there is inconsistent indentation
+  ;;   - Example: Evalutating code from within a func definition
+  ;;   - NOT necessary for IPython, but standard Python REPL requires this
 
-    (defn trim-code-left [code num-left]
-      (let [s-col (+ num-left 1)
-            lines (str.split code "\n")
-            trimmed-lines (a.map 
-                            ;; sub string from s-col to end (inclusive)
-                            #(string.sub $1 s-col -1) 
-                            lines)]
-        (str.join "\n" trimmed-lines)))
+  (defn trim-code-left [code num-left]
+    (let [s-col (+ num-left 1)
+          lines (str.split code "\n")
+          trimmed-lines (a.map 
+                          ;; sub string from s-col to end (inclusive)
+                          #(string.sub $1 s-col -1) 
+                          lines)]
+      (str.join "\n" trimmed-lines)))
 
-    (defn get-code-metadata [code]
-      "Returns a table with the following keys
-      :num-lines - number of lines in `code`
-      :min-indent - smallest indent detected
-      :final-indent - indent of the last line"
-       (let [lines (str.split code "\n")
-             ;; The indentation of a line is the line length minus the the length of the line with whitespace trimmed from it
-             indents (a.map
-                       (fn [line]
-                         (- (string.len line)
-                            (string.len (str.triml line))))
-                       lines)
+  (defn get-code-metadata [code]
+    "Returns a table with the following keys
+    :num-lines - number of lines in `code`
+    :min-indent - smallest indent detected
+    :final-indent - indent of the last line"
+    (let [lines (str.split code "\n")
+          ;; The indentation of a line is the line length minus the the length of the line with whitespace trimmed from it
+          indents (a.map
+                    (fn [line]
+                      (- (string.len line)
+                         (string.len (str.triml line))))
+                    lines)
 
-             ;; Exclude lines with no indentation when trying to find the minimum indentation
-             non-zero-indents (a.filter #(> $1 0) indents)
-             min-indent (if (-> non-zero-indents length (= 0))
-                          ;; No indents, probably a single line
-                          0 
-                          ;; Get smallest indent 
-                          (a.reduce 
-                            #(math.min $1 $2) 
-                            (. non-zero-indents 1)
-                            non-zero-indents))
+          ;; Exclude lines with no indentation when trying to find the minimum indentation
+          non-zero-indents (a.filter #(> $1 0) indents)
+          min-indent (if (-> non-zero-indents length (= 0))
+                       ;; No indents, probably a single line
+                       0 
+                       ;; Get smallest indent 
+                       (a.reduce 
+                         #(math.min $1 $2) 
+                         (. non-zero-indents 1)
+                         non-zero-indents))
 
-             ;; indentation of the final line
-             final-indent (. indents (length indents))]
+          ;; indentation of the final line
+          final-indent (. indents (length indents))]
 
-         ;; Metadata result
-         {:num-lines (length indents)
-          :min-indent min-indent
-          :final-indent final-indent}))
+      ;; Metadata result
+      {:num-lines (length indents)
+       :min-indent min-indent
+       :final-indent final-indent}))
 
-    (defn add-final-newlines [code {: min-indent : final-indent}]
-      "Returns `code` with the appropriate number of newlines appended to cause the REPL to evaluate the code"
-      ;; num-newlines to add is the number of levels of indentation + 1
-      (let [level-of-indentation (if (and (~= min-indent 0)
-                                          (~= final-indent 0))
-                                   (/ final-indent min-indent)
-                                   0)
-            num-newlines (+ 1 level-of-indentation)]
+  (defn add-final-newlines [code {: min-indent : final-indent}]
+    "Returns `code` with the appropriate number of newlines appended to cause the REPL to evaluate the code"
+    ;; num-newlines to add is the number of levels of indentation + 1
+    (let [level-of-indentation (if (and (~= min-indent 0)
+                                        (~= final-indent 0))
+                                 (/ final-indent min-indent)
+                                 0)
+          num-newlines (+ 1 level-of-indentation)]
 
-        (fn append-newline [code num-newlines]
-          (if (= 0 num-newlines)
-            ;; termination
-            code
-            ;; append
-            (append-newline 
-              (.. code "\n") 
-              (a.dec num-newlines ))))
+      (fn append-newline [code num-newlines]
+        (if (= 0 num-newlines)
+          ;; termination
+          code
+          ;; append
+          (append-newline 
+            (.. code "\n") 
+            (a.dec num-newlines ))))
 
-        (append-newline code num-newlines)))
+      (append-newline code num-newlines)))
 
-    (let [s-col (or  
-                  ;; get the starting col
-                  (?. range :start 2) 
-                  ;; else assume 0
-                  0) 
-          fmt-code (replace-blank-lines code)
-          fmt-code-1 (add-whitespace fmt-code s-col)
-          fmt-code-2 (trim-code-left fmt-code-1 s-col)
-          code-metadata (get-code-metadata fmt-code-2)]
+  (let [s-col (or  
+                ;; get the starting col
+                (?. range :start 2) 
+                ;; else assume 0
+                0) 
+        fmt-code (replace-blank-lines code)
+        fmt-code-1 (add-whitespace fmt-code s-col)
+        fmt-code-2 (trim-code-left fmt-code-1 s-col)
+        code-metadata (get-code-metadata fmt-code-2)]
 
-      (if is-std-python 
-        ;; Needs additional newlines depending on indentation of final line
-        (add-final-newlines fmt-code-2 code-metadata)
-        ;; Needs just one newline
-        (.. fmt-code-2 (if 
-                         ;; If final indent is 0, we can use just one newline to trigger eval
-                         (= (. code-metadata :final-indent) 0)
-                         "\n"
-                         "\n\n")))))
-  
-(comment
-
- (prep-code-2 
-   "def aaa():
-
-   if true:
-
-   print('testing-indented-func')
-   "
-   {:end [2 42] :start [0 4]})
- )
-
-  (prep-code-2 test-fn-str-1)
-)
+    (if is-std-python 
+      ;; Needs additional newlines depending on indentation of final line
+      (add-final-newlines fmt-code-2 code-metadata)
+      ;; Needs just one newline
+      (.. fmt-code-2 (if 
+                       ;; If final indent is 0, we can use just one newline to trigger eval
+                       (= (. code-metadata :final-indent) 0)
+                       "\n"
+                       "\n\n")))))
 
 ;; python node: 
 ;;  def ee():
@@ -549,7 +532,7 @@ Out[3]: 6\r
 ;;  :origin "current-form"
 ;;  :preview "# eval (current-form): if (True): print(\"in if of ee\")"
 ;;  :range {:end [19 31] :start [18 8]}}
-  (print "python: evaluating - " (f.view opts))
+  (cdbgn opts)
   (var last-value nil)
   (with-repl-or-warn
     (fn [repl]
@@ -560,7 +543,6 @@ Out[3]: 6\r
           (insert-history opts.code sent msg)        
           (log.dbg "MSG" msg)
           (let [msgs (format-display (or msg.err msg.out))]
-            (cdbgn msgs)
             (set last-value (or (a.last msgs) last-value))
             (display-result msg)
             (when msg.done?
