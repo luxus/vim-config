@@ -115,7 +115,6 @@ def bb():
 
 (comment 
 
-  (prep-code-2 test-fn-str-1)
 
   (do
    (stop)
@@ -369,7 +368,6 @@ Out[3]: 6\r
 
 (comment
   (do 
-
     (lines->log (str.split full-test-str "\r\n"))
   ))
 
@@ -443,8 +441,7 @@ Out[3]: 6\r
           :final-indent final-indent}))
 
     (defn add-final-newlines [code {: min-indent : final-indent}]
-      ;; Add final newlines to the end of the code to represent adding hitting enter for each level of indentation to make python interactive eval the code
-
+      "Returns `code` with the appropriate number of newlines appended to cause the REPL to evaluate the code"
       ;; num-newlines to add is the number of levels of indentation + 1
       (let [level-of-indentation (if (and (~= min-indent 0)
                                           (~= final-indent 0))
@@ -483,15 +480,20 @@ Out[3]: 6\r
                          "\n"
                          "\n\n")))))
   
-  (prep-code-2 
-"def aaa():
+(comment
 
-        if true:
+ (prep-code-2 
+   "def aaa():
 
-            print('testing-indented-func')
-            "
-    {:end [2 42] :start [0 4]})
-  )
+   if true:
+
+   print('testing-indented-func')
+   "
+   {:end [2 42] :start [0 4]})
+ )
+
+  (prep-code-2 test-fn-str-1)
+)
 
 ;; python node: 
 ;;  def ee():
@@ -532,6 +534,7 @@ Out[3]: 6\r
   g-msg)
 
 (defn eval-str [opts]
+;; Example input
 ;; {:action "eval"
 ;;  :code "if (True):
 ;;             print(\"in if of ee\")"
@@ -617,10 +620,9 @@ Out[3]: 6\r
                (print repl)
                (repl.send
                  (prep-code-2 "print('You just connected to the IPython REPL with Conjure!')"
+                   ;; TODO: from hy, not sure if relevant/useful?
                    ;; "(import sys) (setv sys.ps2 \"\") (del sys)"
-                   ))
-               )
-             ))
+                   )))))
 
          :on-error
          (fn [err]
