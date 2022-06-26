@@ -287,7 +287,8 @@ def bb():
     (if (and c.is-blank 
              (or (a.nil? n) ;; no next line
                  (not (?. p :can-drop)))) ;; prev line won't be dropped
-      ;; last line and blank (split at the end of the original text)
+      ;; - Drop the final line if it's blank - it's only there because there was a line ending at the end of the msg which was then split on
+      ;; - Drop the blank line if the previous line was not dropped. It appears that output (whether printed or evaluated) is always followed by a newline
       {:can-drop true}
       (if c.is-prompt
         {:result (replace-prompt c.line)} ;; c is a prompt, so return with prompt removed
@@ -307,7 +308,6 @@ def bb():
 (fn set-is-blank [{: line &as t}] 
   (let [is-blank (= (length line) 0)]
     (a.assoc t :is-blank is-blank)))
-;; Drop lines blank lines that don't proceed a dropped line
 
 (defn lines->log [lines]
   (let [meta (->> lines 
