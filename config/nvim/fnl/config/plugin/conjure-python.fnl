@@ -523,16 +523,6 @@ Out[3]: 6\r
 ;;  :origin "current-form"
 ;;  :preview "# eval (current-form): def ee(): if (True): print(\"in if of ee\") el..."
 ;;  :range {:end [22 18] :start [17 4]}}
-(comment 
-
-  (do
-
-    (prep-code-2 "def funcname():")
-    (prep-code-2 "(1 + 2)")
-    ))
-
-(defn- prep-code [s]
-  (.. s "\n"))
 
 (defn insert-history [code sent msg]
   ;; Init
