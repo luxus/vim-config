@@ -82,7 +82,6 @@
 
 (defonce- state (client.new-state #(do {:repl nil})))
 
-
 (defn send-to-repl [code] 
   (with-repl-or-warn 
     (fn [repl] 
@@ -282,11 +281,6 @@ def bb():
 (defn is-prompt [line]
   (string.find line prompt-pattern-start))
 
-(comment
- (do 
-   (local t {:a "AAAA"})
-   (and t (. t :a)))
- )
 
 (defn set-result-and-can-drop [c p n] 
   "Returns nil if a line can be removed, else, return the line without any prompt text removed. Prompt lines are always preceeded by a newline (because the user has pressed enter) so these are discarded."
