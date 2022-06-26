@@ -31,5 +31,6 @@
   (let [(ok? val-or-err) (pcall #(require :fennel))]
     (if ok?
       val-or-err
-      (af.impl))))
+      (do (print "config.macro-helpers.protected-require-fennel: Forcing fennel require with aniseed.fennel.impl")
+        (af.impl)))))
 

@@ -213,7 +213,7 @@
         (let [(ok? val-or-err) (pcall protected-dbgn)]
           (if ok? 
             val-or-err 
-            (do (print "DBGN error:\n" val-or-err)
+            (do (print "config.debug-macros.dbgn error:\n" val-or-err)
               form)))
         )
   
