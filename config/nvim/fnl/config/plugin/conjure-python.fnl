@@ -354,7 +354,13 @@ Out[3]: 6\r
 
 (do 
 
-  (lines->log (str.split full-test-str "\r\n"))
+  ;; (deftest basics
+  ;;   (let [l (ll.create [1 2 3])]
+  ;;     (t.pr= ["firsts" "aa->bb->elif" "Out[2]: 'aa->return'" "->if" "Out[3]: 6"] 
+  ;;          (lines->log (str.split full-test-str "\r\n")) 
+  ;;          "get first value")))
+
+  (lines->log (str.split full-test-str "\r\n")) ; 
 
 
   (set-is-prompt {:line "   ...: "})
