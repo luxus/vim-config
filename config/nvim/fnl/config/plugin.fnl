@@ -205,6 +205,11 @@
   :geg2102/nvim-python-repl {:mod :nvim-python-repl}
   ;; :jpalardy/vim-slime {:mod :vim-slime}
 
+  ; hydra
+  :anuvyklack/hydra.nvim {:mod :hydra
+                          :requires [:jlanzarotta/bufexplorer 
+                                     :sindrets/winshift.nvim]}
+
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim
                                              :RRethy/nvim-base16
