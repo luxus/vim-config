@@ -207,7 +207,7 @@
 
   ; hydra
   :anuvyklack/hydra.nvim {:mod :hydra
-                          :requires [:jlanzarotta/bufexplorer 
+                          :requires [:jlanzarotta/bufexplorer
                                      :sindrets/winshift.nvim]}
 
   ; theme
