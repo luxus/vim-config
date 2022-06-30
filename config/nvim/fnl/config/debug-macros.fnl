@@ -64,7 +64,11 @@
     (fn protected-dbgn [] 
       (let [c (require :aniseed.core)
             mh (require :config.macro-helpers)
-            fennel (mh.protected-require-fennel)
+            form-meta {:filename (. form :filename)
+                       :line (. form :line)
+                       :bytestart (. form :bytestart)
+                       :byteend (. form :byteend)}
+            fennel (mh.protected-require-fennel form-meta)
             ;; Need to create a symbol for `print` so that print isn't evaluated when it's 
             default-params {:print-fn (fennel.sym :print) :debug? false}
             merged-params (c.merge default-params params)
