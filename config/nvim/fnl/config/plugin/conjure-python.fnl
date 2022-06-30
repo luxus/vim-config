@@ -54,6 +54,8 @@
 (set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
 (set vim.g.conjure#filetypes [:clojure :fennel :janet :hy :racket :scheme :lua :lisp :python])
 
+;; (when (not (a.some #(= $1 "python") vim.g.conjure#filetypes))
+;;   (table.insert vim.g.conjure#filetypes "python"))
 
 (local input-prompt-pattern "In %[%d+%]: ")
 (comment 
