@@ -222,9 +222,20 @@ def bb():
       (do
        (node->has-return-statement node (get-bufnr)))
 
+      ;; Prevent partial `if` statement evals
       :elif_clause false 
       :else_clause false 
       :return_statement false 
+
+      ;; Prevent eval of attribute instead of attribute call
+      :attribute false 
+      :call true
+
+      ;; Don't eval PART of an import, we want to eval the ENTIRE import statement
+      :aliased_import false 
+      :dotted_name false 
+      :import_statement true
+
       _ true))
 
   (def form-node? python-node?))
