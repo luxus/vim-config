@@ -58,7 +58,6 @@
 
 ;; (do
   (fn dbgn [form params]
-    ;; (af.impl)
 
     ;; Requires so that the macro has its dependecies
     (fn protected-dbgn [] 
