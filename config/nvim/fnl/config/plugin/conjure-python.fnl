@@ -545,7 +545,7 @@ Out[3]: 6\r
 ;;  :origin "current-form"
 ;;  :preview "# eval (current-form): if (True): print(\"in if of ee\")"
 ;;  :range {:end [19 31] :start [18 8]}}
-  (cdbgn opts)
+  ;; (cdbgn opts)
   (var last-value nil)
   (with-repl-or-warn
     (fn [repl]
