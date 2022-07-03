@@ -41,6 +41,7 @@
                    :branch :develop}
   ; clojure
   :Olical/conjure {:branch :master :mod :conjure}
+  ;; :Kamholtz/conjure {:branch :ck/feat/2022/07/03/python-client :mod :conjure}
   ; https://github.com/Olical/conjure/wiki/Quick-start:-Clojure
   ;; :clojure-vim/vim-jack-in {:require [:tpope/vim-dispatch :radenling/vim-dispatch-neovim]}
 
