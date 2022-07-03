@@ -208,8 +208,10 @@
 
   ; hydra
   :anuvyklack/hydra.nvim {:mod :hydra
-                          :requires [:jlanzarotta/bufexplorer
-                                     :sindrets/winshift.nvim]}
+                          ;; These are for window navigation hydra
+                          ;; :requires [:jlanzarotta/bufexplorer
+                          ;;            :sindrets/winshift.nvim]
+                          }
 
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim
