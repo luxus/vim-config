@@ -189,6 +189,11 @@
                 {:define? define?}
                 (mh.get-dbg-define operator operands deps)
 
+                (where {:special? true} (= (tostring operator) "set"))
+                (do 
+                  (dbg-prn "special - set")
+                  (mh.get-dbg-define operator operands deps))
+
                 ;; e.g. -> 
                 ;; just dbg the form, do not replace the inner forms as that will interfere with the macro itself
                 ;; Consider inserting `dbg` between all inner forms??
