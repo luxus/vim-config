@@ -4,6 +4,8 @@
 
 (set nvim.o.termguicolors true)
 
+;; Config taken from https://github.com/EdenEast/nightfox.nvim/blob/main/misc/feline.lua
+
 (local fmt string.format)
 (fn hex [n]
   (when n
