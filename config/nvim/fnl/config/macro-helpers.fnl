@@ -29,10 +29,20 @@
     ;; Don't debug the fn, wrapping it in `dos` will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
     (f.list operator (unpack t))))
 
+(defn is-set [operator]
+  "Returns true if operator is a 'set'"
+  (let [operator-str (tostring operator)] 
+    (or 
+      (= operator-str "set")
+      (= operator-str "var")
+      (= operator-str "local")
+      (= operator-str "global"))))
+
 (defn get-dbg-set [operator [symbol & operands] {: dbg-prn : get-dbg-form}]
   ;; Debug the operands, skipping the fn name and bindings
   (let [c (require :aniseed.core)
         f (require :fennel)
+        ;; This is what should be done for fns, not def, local, global, set
         t (c.map get-dbg-form operands)]
 
     ;; Don't debug the fn, wrapping it in `dos` will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
