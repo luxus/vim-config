@@ -30,7 +30,7 @@
     (f.list operator (unpack t))))
 
 (defn is-set [operator]
-  "Returns true if operator is a 'set'"
+  "Returns true if operator is a 'set' e.g. set, var, local, global"
   (let [operator-str (tostring operator)] 
     (or 
       (= operator-str "set")
