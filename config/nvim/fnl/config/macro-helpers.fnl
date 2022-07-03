@@ -6,10 +6,13 @@
           operator-str (fennel.view operator)]
         (. syn operator-str)))
 
+;; TODO 
+;; Split into function for handling function definitions and one for variable definitions
 (defn get-dbg-define [operator operands {: dbg-prn : get-dbg-form}]
   ;; Debug the operands, skipping the fn name and bindings
   (let [c (require :aniseed.core)
         f (require :fennel)
+        ;; This is what should be done for fns, not def, local, global, set
         t (-> (c.reduce 
                 (fn [{: res : seen-seq &as acc} x]
                   ;; Only dbg the form if the bindings have been seen
