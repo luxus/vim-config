@@ -6,10 +6,13 @@
           operator-str (fennel.view operator)]
         (. syn operator-str)))
 
+;; TODO 
+;; Split into function for handling function definitions and one for variable definitions
 (defn get-dbg-define [operator operands {: dbg-prn : get-dbg-form}]
   ;; Debug the operands, skipping the fn name and bindings
   (let [c (require :aniseed.core)
         f (require :fennel)
+        ;; This is what should be done for fns, not def, local, global, set
         t (-> (c.reduce 
                 (fn [{: res : seen-seq &as acc} x]
                   ;; Only dbg the form if the bindings have been seen
@@ -26,11 +29,44 @@
     ;; Don't debug the fn, wrapping it in `dos` will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
     (f.list operator (unpack t))))
 
-(defn protected-require-fennel []
+(defn is-set [operator]
+  "Returns true if operator is a 'set' e.g. set, var, local, global"
+  (let [operator-str (tostring operator)] 
+    (or 
+      (= operator-str "set")
+      (= operator-str "var")
+      (= operator-str "local")
+      (= operator-str "global"))))
+
+(defn get-dbg-set [operator [symbol & operands] {: dbg-prn : get-dbg-form}]
+  ;; Debug the operands, skipping the fn name and bindings
+  (let [c (require :aniseed.core)
+        f (require :fennel)
+        ;; This is what should be done for fns, not def, local, global, set
+        t (c.map get-dbg-form operands)]
+
+    ;; Don't debug the fn, wrapping it in `dos` will result in it not actually being evaluated and thus not existing and thus not possible to call... I don't really understand exactly why yet
+    (f.list operator symbol (unpack t))))
+
+(defn protected-require-fennel [form-meta]
   (local af (require :aniseed.fennel))
   (let [(ok? val-or-err) (pcall #(require :fennel))]
     (if ok?
       val-or-err
-      (do (print "config.macro-helpers.protected-require-fennel: Forcing fennel require with aniseed.fennel.impl")
+      (let [{: filename : line : bytestart} (or form-meta {})]
+       (print "config.macro-helpers.protected-require-fennel: Forcing fennel require with aniseed.fennel.impl" 
+                 (when (and filename line)
+                   (.. " @ " filename " " line)))
         (af.impl)))))
 
+(comment
+
+ (let [{: a} nil]
+   (print a)) ; attempt to index local '_let_6_' (a nil value)
+
+ (let [all nil]
+   (print (?. all :a))) ; nil
+
+ (let [{: a} (or nil {})]
+   (print a)) ; nil
+ )

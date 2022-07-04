@@ -41,6 +41,7 @@
                    :branch :develop}
   ; clojure
   :Olical/conjure {:branch :master :mod :conjure}
+  ;; :Kamholtz/conjure {:branch :ck/feat/2022/07/03/python-client :mod :conjure}
   ; https://github.com/Olical/conjure/wiki/Quick-start:-Clojure
   ;; :clojure-vim/vim-jack-in {:require [:tpope/vim-dispatch :radenling/vim-dispatch-neovim]}
 
@@ -62,7 +63,7 @@
   :D4KU/vim-textobj-chainmember {}
   :kana/vim-textobj-entire {}
   :Julian/vim-textobj-variable-segment {}
-  :AckslD/nvim-revJ.lua {:mode :revj}
+  :AckslD/nvim-trevJ.lua {:mode :revj}
 
   ; Harpoon
   :ThePrimeagen/harpoon {:requires :nvim-lua/plenary.nvim
@@ -204,6 +205,13 @@
   ; REPL
   :geg2102/nvim-python-repl {:mod :nvim-python-repl}
   ;; :jpalardy/vim-slime {:mod :vim-slime}
+
+  ; hydra
+  :anuvyklack/hydra.nvim {:mod :hydra
+                          ;; These are for window navigation hydra
+                          ;; :requires [:jlanzarotta/bufexplorer
+                          ;;            :sindrets/winshift.nvim]
+                          }
 
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim

@@ -39,6 +39,8 @@
 (nvim.set_keymap :n "<leader>tc" "<cmd>tabclose<CR>" {:nowait true :silent true :noremap true})
 (nvim.set_keymap :n "<leader>tn" "<cmd>tabnew<CR>" {:nowait true :silent true :noremap true})
 
+(nvim.set_keymap :n "<leader>ql" "<cmd>call setloclist(0, [], ' ', {'items': get(getqflist({'items': 1}), 'items')}) | lopen<CR>" {:nowait true :silent true :noremap true})
+
 
 ;; cursor highlighting
 (set vim.o.cursorline true)

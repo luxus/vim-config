@@ -74,7 +74,8 @@
     (match theme
       :material (do
                   (set vim.g.material_style :lighter)
-                  (material.setup {:high_visibility {:lighter true}})))
+                  (material.setup {:high_visibility {:lighter true}}))
+      :nightfox (vim.cmd "hi MatchParen cterm=bold gui=bold guifg=#dbc074 guibg=blue"))
 
     (nvim.ex.colorscheme theme)
     (set vim.o.background background)))

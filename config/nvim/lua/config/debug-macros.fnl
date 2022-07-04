@@ -58,11 +58,17 @@
 
 ;; (do
   (fn dbgn [form params]
+    ;; (af.impl)
+
     ;; Requires so that the macro has its dependecies
     (fn protected-dbgn [] 
       (let [c (require :aniseed.core)
             mh (require :config.macro-helpers)
-            fennel (mh.protected-require-fennel)
+            form-meta {:filename (. form :filename)
+                       :line (. form :line)
+                       :bytestart (. form :bytestart)
+                       :byteend (. form :byteend)}
+            fennel (mh.protected-require-fennel form-meta)
             ;; Need to create a symbol for `print` so that print isn't evaluated when it's 
             default-params {:print-fn (fennel.sym :print) :debug? false}
             merged-params (c.merge default-params params)
@@ -213,7 +219,7 @@
         (let [(ok? val-or-err) (pcall protected-dbgn)]
           (if ok? 
             val-or-err 
-            (do (print "config.debug-macros.dbgn error:\n" val-or-err)
+            (do (print "DBGN error:\n" val-or-err)
               form)))
         )
   

@@ -58,13 +58,16 @@
 
 ;; (do
   (fn dbgn [form params]
-    ;; (af.impl)
 
     ;; Requires so that the macro has its dependecies
     (fn protected-dbgn [] 
       (let [c (require :aniseed.core)
             mh (require :config.macro-helpers)
-            fennel (mh.protected-require-fennel)
+            form-meta {:filename (. form :filename)
+                       :line (. form :line)
+                       :bytestart (. form :bytestart)
+                       :byteend (. form :byteend)}
+            fennel (mh.protected-require-fennel form-meta)
             ;; Need to create a symbol for `print` so that print isn't evaluated when it's 
             default-params {:print-fn (fennel.sym :print) :debug? false}
             merged-params (c.merge default-params params)
@@ -176,6 +179,12 @@
                   ;; Reconstruct the form 
                   (dbg (list operator bindings (unpack (c.map get-dbg-form body))) view-of-form))
 
+                ;; setting globals/variables/locals
+                (where {:special? true} (mh.is-set operator))
+                (do 
+                  (dbg-prn "special - set")
+                  (mh.get-dbg-set operator operands deps))
+
                 ;; e.g. function definitions
                 ;; - (fn fn-name [] (...) ...)
                 ;; - (fn [] (...) ...) 
@@ -219,19 +228,53 @@
               form)))
         )
   
+   
+   ;; (dbgn
+   ;;   (let [new-val (+ aa 1)]
+   ;;     (global aa 1)
+   ;;     (set aa new-val)) {:debug? true})
+
+   ;; (dbgn (do 
+   ;;         (global dd (- 3 1))
+   ;;         (var cc 1)
+   ;;         (set cc (+ cc 2))
+   ;;         dd) {:debug? true})
   
+  ;; (dbgn (set _G.bb {:bb (+ 1 2)}) {:debug? true})
+
+  ;; )
+
+(comment 
+
+  ;; Example of multiple matches
+  (match {:define? true :special? false}
+    (where (or {:special? true} {:define? true}) false ) :YES
+    _ :NO)
+
+  (match {:special? true}
+    (where {:special? true} true) :YES
+    _ :NO) ; "YES"
+
+  (match {:special? true}
+    (where {:special? true} false) :YES
+    _ :NO) ; "NO"
+
+  ;; Moved some tests here so that less code is eval'd
+
   ;; (local c (require :aniseed.core))
 
 ;; (tostring (fennel.sym :aa))
 ;; (c.merge {:aa "aa"} {:bb "bb"})
 
-  ;; (dbgn (let [aa (-> 1 (+ 2))]
-  ;;         (local bb {:bb-field 4})
-  ;;         (+ bb.bb-field
-  ;;            (-> aa (+ 3)))) 
-  ;;       {:debug? false 
-  ;;        ;; :print-fn (fn [...] (print "DBG: " ...))
-  ;;        })
+  (dbgn (let [aa (-> 1 (+ 2))]
+          (local bb {:bb-field 4})
+          (+ bb.bb-field
+             (-> aa (+ 3))))
+        {:debug? true
+         ;; :print-fn (fn [...] (print "DBG: " ...))
+         })
+
+  ;;---
 
   ;; (dbgn [1 2 3 (+ 2 2)])
 
@@ -252,8 +295,8 @@
 
   ;; (dbgn (defn bbb [] (+ 2 3 4)) {:debug? true})
   ;; (bbb)
-
-  ;; )
+  
+  )
   
 
 

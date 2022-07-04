@@ -54,6 +54,8 @@
 (set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
 (set vim.g.conjure#filetypes [:clojure :fennel :janet :hy :racket :scheme :lua :lisp :python])
 
+;; (when (not (a.some #(= $1 "python") vim.g.conjure#filetypes))
+;;   (table.insert vim.g.conjure#filetypes "python"))
 
 (local input-prompt-pattern "In %[%d+%]: ")
 (comment 
@@ -220,9 +222,20 @@ def bb():
       (do
        (node->has-return-statement node (get-bufnr)))
 
+      ;; Prevent partial `if` statement evals
       :elif_clause false 
       :else_clause false 
       :return_statement false 
+
+      ;; Prevent eval of attribute instead of attribute call
+      :attribute false 
+      :call true
+
+      ;; Don't eval PART of an import, we want to eval the ENTIRE import statement
+      :aliased_import false 
+      :dotted_name false 
+      :import_statement true
+
       _ true))
 
   (def form-node? python-node?))
@@ -532,7 +545,7 @@ Out[3]: 6\r
 ;;  :origin "current-form"
 ;;  :preview "# eval (current-form): if (True): print(\"in if of ee\")"
 ;;  :range {:end [19 31] :start [18 8]}}
-  (cdbgn opts)
+  ;; (cdbgn opts)
   (var last-value nil)
   (with-repl-or-warn
     (fn [repl]
