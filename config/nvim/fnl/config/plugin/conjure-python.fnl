@@ -51,6 +51,18 @@
   )
 
 
+(defn insert-history [item]
+  ;; Init
+  (when (not _G.g-msg)
+    (global g-msg []))
+  (table.insert g-msg item))
+
+(defn clear-history []
+  (global g-msg []))
+
+(defn last-history []
+  (a.last g-msg))
+
 (set vim.g.conjure#filetype#python :config.plugin.conjure-python) 
 (set vim.g.conjure#filetypes [:clojure :fennel :janet :hy :racket :scheme :lua :lisp :python])
 
@@ -155,26 +167,40 @@ def bb():
   (last-node:sexpr)
   (last-node:type)
   (last-node:start)
+
+  (let [(row col byte-count) (last-node:start)]
+    (cdbgn [row col byte-count]))
+
   (last-node:end_)
   (last-node:has_error)
   (last-node:child_count)
   (last-node:child (- (last-node:named_child_count) 1))
-  (node->has-return-statement last-node 14)
+  (node->has-return-statement last-node 5)
   
   )
 
 (comment
  (cdbgn {:aa (+ 1 2)})
+
+ g-msg
+ (clear-history)
+ (last-history)
+
+ (: g-msg 2 :node :sexpr)
+ (: (. g-msg 2 :node) :sexpr)
+ (global last-node (. g-msg 2 :node))
  )
 
-(do 
-  (defn parser->root [parser]
-    (-> (parser:parse) (. 1) (: :root)))
+(defn parser->root [parser]
+  (-> (parser:parse) (. 1) (: :root)))
 
-  (defn get-bufnr []
-    (vim.api.nvim_get_current_buf))
+(defn get-bufnr []
+  (vim.api.nvim_get_current_buf))
+
+(do 
 
   (defn node->has-return-statement [node bufnr]
+    ;; TODO: This require is currently problematic... consider calling impl
     (local f (require :fennel))
     (local vts vim.treesitter)
     (local q vim.treesitter.query)
@@ -184,7 +210,14 @@ def bb():
           ;; node root ;; overshadow node using root
           query "(return_statement) @blockWithReturnStatement"
           parsed-query (vts.parse_query "python" query)
-          res (parsed-query:iter_matches node bufnr (node:start) (node:end_))]
+          (start-row _ _) (node:start)
+          (end-row _ _) (node:end_)
+          res (parsed-query:iter_matches 
+                node 
+                bufnr 
+                start-row 
+                (+ end-row 1) ;; end is exclusive, so add 1
+                )]
 
       (global iter-matches-res res)
       
@@ -202,12 +235,15 @@ def bb():
 
         ;; (cdbgn return-statement-count)
       ;; We cannot evaluate a block with a return statement
-      (= return-statement-count 0)))
+      (insert-history {:node node :iter-matches res :return-statement-count return-statement-count})
+      (~= return-statement-count 0)))
 
   ;; (accumulate [match-found false
   ;;              id m metadata iter-matches-res]
   ;;   (do
   ;;     (or match-found (> (length m) 0))))
+
+  ;; (node->has-return-statement last-node 5)
 
 
   (defn python-node? [node extra-pairs]
@@ -215,12 +251,13 @@ def bb():
     (print "python node: \n" (ts.node->str node))
     (global last-node node) 
     (log.dbg "sexpr:" (node:sexpr))
+    (log.dbg "buffer #: " (get-bufnr))
 
     ;; result
     (match (node:type)
       :block
       (do
-       (node->has-return-statement node (get-bufnr)))
+       (not (node->has-return-statement node (get-bufnr))))
 
       ;; Prevent partial `if` statement evals
       :elif_clause false 
@@ -518,17 +555,6 @@ Out[3]: 6\r
 ;;  :preview "# eval (current-form): def ee(): if (True): print(\"in if of ee\") el..."
 ;;  :range {:end [22 18] :start [17 4]}}
 
-(defn insert-history [code sent msg]
-  ;; Init
-  (when (not _G.g-msg)
-    (global g-msg []))
-  (table.insert g-msg {:code code :sent sent :msg msg}))
-
-(defn clear-history []
-  (global g-msg []))
-
-(defn last-history []
-  (a.last g-msg))
 
 (comment 
   (clear-history)
@@ -553,7 +579,7 @@ Out[3]: 6\r
       (repl.send
         sent  
         (fn [msg]
-          (insert-history opts.code sent msg)        
+          ;; (insert-history {:code opts.code :sent sent :msg msg})        
           (log.dbg "MSG" msg)
           (let [msgs (format-display (or msg.err msg.out))]
             (set last-value (or (a.last msgs) last-value))
