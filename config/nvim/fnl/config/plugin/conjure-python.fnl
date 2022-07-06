@@ -200,6 +200,7 @@ def bb():
 (do 
 
   (defn node->has-return-statement [node bufnr]
+    ;; TODO: Figure out how to check for return statements that are direct children of the current node ONLY
     ;; TODO: This require is currently problematic... consider calling impl
     (local f (require :fennel))
     (local vts vim.treesitter)
