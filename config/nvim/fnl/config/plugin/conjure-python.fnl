@@ -84,7 +84,7 @@
      {:mapping {:start "cs"
                 :stop "cS"
                 :interrupt "ei"}
-      :command "python -m IPython"
+      :command "python3 -m IPython"
       ;; https://stackoverflow.com/questions/55980470/how-to-print-output-of-an-interactive-child-process-from-parent-process
       ;; :command "python -u -i -q"
       ;; :prompt_pattern ">>> "
