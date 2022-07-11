@@ -246,5 +246,6 @@
 
 ;; TODO: Don't run this config if not on windows with powershell
 ;; Should use pcall for this
-(vs.setup {:devenv-path "C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe"
-           :nvim-listen-address-base "~"})
+(when (= (vim.fn.has :win32) 1)
+  (vs.setup {:devenv-path "C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe"
+             :nvim-listen-address-base "~"}))
