@@ -2,4 +2,7 @@
 rm -rf $HOME/.config/nvim
 
 # Makes a symbolic link to the files in this repo
-ln -sf $PWD/.config/*/ $HOME/.config/
+# ln -sf $PWD/.config/*/ $HOME/.config/
+# mkdir $HOME/.config
+# mkdir $HOME/.config/nvim
+ln -sf $PWD/config/nvim $HOME/.config
