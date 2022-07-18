@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\NeoZoom.lua",
     url = "https://github.com/nyngwang/NeoZoom.lua"
   },
+  NrrwRgn = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\NrrwRgn",
+    url = "https://github.com/chrisbra/NrrwRgn"
+  },
   ReplaceWithRegister = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\ReplaceWithRegister",
@@ -189,6 +194,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\fidget.nvim",
     url = "https://github.com/j-hui/fidget.nvim"
   },
+  ["fugitive-azure-devops.vim"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\fugitive-azure-devops.vim",
+    url = "https://github.com/cedarbaum/fugitive-azure-devops.vim"
+  },
   fzf = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\fzf",
@@ -219,10 +229,10 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
   },
-  ["hop.nvim"] = {
+  ["hydra.nvim"] = {
     loaded = true,
-    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\hop.nvim",
-    url = "https://github.com/phaazon/hop.nvim"
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\hydra.nvim",
+    url = "https://github.com/anuvyklack/hydra.nvim"
   },
   ["impatient.nvim"] = {
     loaded = true,
@@ -239,10 +249,25 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\kanagawa.nvim",
     url = "https://github.com/rebelot/kanagawa.nvim"
   },
+  ["lightspeed.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\lightspeed.nvim",
+    url = "https://github.com/ggandor/lightspeed.nvim"
+  },
+  ["linediff.vim"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\linediff.vim",
+    url = "https://github.com/AndrewRadev/linediff.vim"
+  },
   ["logsitter.nvim"] = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\logsitter.nvim",
     url = "https://github.com/gaelph/logsitter.nvim"
+  },
+  ["lush.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\lush.nvim",
+    url = "https://github.com/rktjmp/lush.nvim"
   },
   ["material.nvim"] = {
     loaded = true,
@@ -254,11 +279,6 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\modes.nvim",
     url = "https://github.com/mvllow/modes.nvim"
   },
-  molokai = {
-    loaded = true,
-    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\molokai",
-    url = "https://github.com/tomasr/molokai"
-  },
   neogit = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\neogit",
@@ -268,6 +288,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nightfox.nvim",
     url = "https://github.com/EdenEast/nightfox.nvim"
+  },
+  ["nvim-base16"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-base16",
+    url = "https://github.com/RRethy/nvim-base16"
   },
   ["nvim-bqf"] = {
     loaded = false,
@@ -291,10 +316,10 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
-  ["nvim-neoclip.lua"] = {
+  ["nvim-python-repl"] = {
     loaded = true,
-    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-neoclip.lua",
-    url = "https://github.com/AckslD/nvim-neoclip.lua"
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-python-repl",
+    url = "https://github.com/geg2102/nvim-python-repl"
   },
   ["nvim-revJ.lua"] = {
     loaded = true,
@@ -315,6 +340,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-treesitter-textobjects",
     url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+  },
+  ["nvim-ts-autotag"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-ts-autotag",
+    url = "https://github.com/windwp/nvim-ts-autotag"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -346,6 +376,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\project.nvim",
     url = "https://github.com/ahmedkhalf/project.nvim"
   },
+  ["scratch.vim"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\scratch.vim",
+    url = "https://github.com/mtth/scratch.vim"
+  },
   ["session-lens"] = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\session-lens",
@@ -360,16 +395,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\targets.vim",
     url = "https://github.com/wellle/targets.vim"
-  },
-  ["telescope-coc.nvim"] = {
-    loaded = true,
-    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\telescope-coc.nvim",
-    url = "https://github.com/fannheyward/telescope-coc.nvim"
-  },
-  ["telescope-dap.nvim"] = {
-    loaded = true,
-    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\telescope-dap.nvim",
-    url = "https://github.com/nvim-telescope/telescope-dap.nvim"
   },
   ["telescope-env.nvim"] = {
     loaded = true,
@@ -401,11 +426,6 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\undotree",
     url = "https://github.com/mbbill/undotree"
   },
-  vim = {
-    loaded = true,
-    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim",
-    url = "https://github.com/embark-theme/vim"
-  },
   ["vim-abolish"] = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-abolish",
@@ -421,20 +441,20 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-dispatch",
     url = "https://github.com/tpope/vim-dispatch"
   },
-  ["vim-expand-region"] = {
-    loaded = true,
-    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-expand-region",
-    url = "https://github.com/terryma/vim-expand-region"
-  },
-  ["vim-flog"] = {
-    loaded = true,
-    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-flog",
-    url = "https://github.com/rbong/vim-flog"
-  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
+  },
+  ["vim-highlighter"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-highlighter",
+    url = "https://github.com/azabiong/vim-highlighter"
+  },
+  ["vim-hy"] = {
+    loaded = true,
+    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-hy",
+    url = "https://github.com/hylang/vim-hy"
   },
   ["vim-illuminate"] = {
     loaded = true,
@@ -476,11 +496,6 @@ _G.packer_plugins = {
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-surround",
     url = "https://github.com/tpope/vim-surround"
   },
-  ["vim-swoop"] = {
-    loaded = true,
-    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-swoop",
-    url = "https://github.com/pelodelfuego/vim-swoop"
-  },
   ["vim-textobj-chainmember"] = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-textobj-chainmember",
@@ -520,11 +535,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\which-key.nvim",
     url = "https://github.com/folke/which-key.nvim"
-  },
-  ["workspaces.nvim"] = {
-    loaded = true,
-    path = "C:\\Users\\carlk\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\workspaces.nvim",
-    url = "https://github.com/natecraddock/workspaces.nvim"
   }
 }
 
