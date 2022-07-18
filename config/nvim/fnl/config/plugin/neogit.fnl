@@ -3,11 +3,13 @@
              diffview diffview 
              nvim aniseed.nvim
              gitsigns gitsigns 
+             neogit neogit
              which-key which-key}})
 
-	
-
 (diffview.setup)
+
+(neogit.setup 
+  {:integrations {:diffview true}})
 
 ; Seems to be using passing in lua functions to keybind.. might not actually work without latest nvim
 (gitsigns.setup 
