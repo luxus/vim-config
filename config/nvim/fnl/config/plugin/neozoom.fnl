@@ -5,4 +5,4 @@
 (neo-zoom.setup {})
 
 (local NOREF_NOERR_TRUNC { :noremap true :silent true :nowait true })
-(vim.keymap.set :n :<CR> (fn [] (vim.cmd "NeoZoomToggle")) NOREF_NOERR_TRUNC)
+(vim.keymap.set :n :<C-W><CR> (fn [] (vim.cmd "NeoZoomToggle")) NOREF_NOERR_TRUNC)
