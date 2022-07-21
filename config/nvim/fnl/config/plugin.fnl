@@ -220,6 +220,9 @@
                           ;;            :sindrets/winshift.nvim]
                           }
 
+  ; Chrome devtools
+  ;; :carlosrocha/vim-chrome-devtools {}
+
   ; theme
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim
                                              :RRethy/nvim-base16
