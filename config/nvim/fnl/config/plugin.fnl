@@ -227,6 +227,7 @@
                                              :marko-cerovac/material.nvim
                                              :EdenEast/nightfox.nvim
                                              :fenetikm/falcon
+                                             :rose-pine/neovim
                                              :rktjmp/lush.nvim]
                                   :mod :theme})
 
