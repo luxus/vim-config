@@ -60,20 +60,20 @@
           "spinner" ["fg" "Label"]
           "header"  ["fg" "Comment"]}
 
-         :rose-pine 
-         {"fg"      ["fg" "Normal"]
-          "bg"      ["bg" "Normal"]
-          "hl"      ["fg" "Comment"]
-          "fg+"     ["fg" "RedrawDebugComposed" "CursorLine" "CursorColumn" "Normal"]
-          "bg+"     ["bg" "RedrawDebugComposed" "CursorLine" "CursorColumn"]
-          "hl+"     ["fg" "Statement"]
-          "info"    ["fg" "PreProc"]
-          "border"  ["fg" "Ignore"]
-          "prompt"  ["fg" "Conditional"]
-          "pointer" ["fg" "Exception"]
-          "marker"  ["fg" "Keyword"]
-          "spinner" ["fg" "Label"]
-          "header"  ["fg" "Comment"]}
+         ;; :rose-pine 
+         ;; {"fg"      ["fg" "Normal"]
+         ;;  "bg"      ["bg" "Normal"]
+         ;;  "hl"      ["fg" "Comment"]
+         ;;  "fg+"     ["fg" "RedrawDebugComposed" "CursorLine" "CursorColumn" "Normal"]
+         ;;  "bg+"     ["bg" "RedrawDebugComposed" "CursorLine" "CursorColumn"]
+         ;;  "hl+"     ["fg" "Statement"]
+         ;;  "info"    ["fg" "PreProc"]
+         ;;  "border"  ["fg" "Ignore"]
+         ;;  "prompt"  ["fg" "Conditional"]
+         ;;  "pointer" ["fg" "Exception"]
+         ;;  "marker"  ["fg" "Keyword"]
+         ;;  "spinner" ["fg" "Label"]
+         ;;  "header"  ["fg" "Comment"]}
 
          _ ;; default
          {"fg"      ["fg" "Normal"]
