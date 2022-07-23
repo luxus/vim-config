@@ -27,6 +27,8 @@
   (nvim.ex.colorscheme :kanagawa)
 
   (nvim.ex.colorscheme :rose-pine)
+  (nvim.ex.colorscheme :base16-rose-pine)
+  (nvim.ex.colorscheme :base16-rose-pine)
 
   ;; {'options': '^"--color=info:81,bg+:242,border:0,hl:14,header:14,hl+:11^"  --expect=ctrl-v,ctrl-x,ctrl-t', 'sink*': function('302', {...@0}), 'sinklist': function('302'), 'down': '40%', '_action': {'ctrl-v': 'vsplit', 'ctrl-x': 'split', 'ctrl-t': 'tab split'}}
 
@@ -128,3 +130,7 @@
 
 ; Toggle theme
 (vim.keymap.set :n :<leader>tt #(set-theme (-> vim.o.background (= "dark") not)) {:noremap true})
+
+
+;; https://github.com/junegunn/fzf.vim/issues/1152
+;; I'm another windows user experiencing strange and sometimes unusable fzf.vim colours (depending on the active theme) due to fzf.vim using 256 ANSI colors rather than 24-bit true colours on windows. My read of the issue is that the fix proposed by @blayz3r hasn't been merged in due to limitations of the old cmd.exe. Can I propose adding a global var like `g:fzf_force_24_bit_colors` so that users who are happy to  
