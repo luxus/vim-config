@@ -151,10 +151,14 @@
 
                                   :mod :telescope}
 
-  :junegunn/fzf { :run (lambda [] (vim.cmd "fzf#install()"))}
-  :junegunn/fzf.vim {:mod :fzf}
+  ;; :junegunn/fzf {:run (lambda [] (vim.cmd "call fzf#install()"))
+  ;;                :commit "3b7a962dc6db227d18faecb25c793431ce7e8640" 
+  ;;                }
 
-  ; quickfix
+  :Kamholtz/fzf {:commit "3b7a962dc6db227d18faecb25c793431ce7e8640"}
+  :junegunn/fzf.vim {:mod :fzf :requires [:junegunn/fzf]}
+
+  ; quic:junegunn/fzfkfix
   :kevinhwang91/nvim-bqf {:mod :bqf
                           :ft [:qf]}
 
@@ -260,3 +264,40 @@
 (when (= (vim.fn.has :win32) 1)
   (vs.setup {:devenv-path "C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe"
              :nvim-listen-address-base "~"}))
+
+
+(comment 
+  (vim.cmd "call executable('fzf')")
+  (vim.api.nvim_exec "echo executable('fzf')" true) ; "1"
+  (vim.api.nvim_exec "echo exepath('fzf')" true) ; "C:\\bin\\fzf.EXE"
+  (vim.api.nvim_exec "echo fzf#shellescape('fzf') . ' --version'" true) 
+  (vim.api.nvim_exec "echo fzf#shellescape('fzf')" true) ; "^\"fzf^\""
+
+  (vim.api.nvim_exec "echo systemlist(fzf#shellescape('fzf') . ' --version')" true) 
+; "['^fzf^ : The term ''^fzf^'' is not recognized as the name of a cmdlet, function, script file, or operable program. Check \r', 'the spelling of the name, or if a path was included, verify that the path is correct and try again.\r', 'At line:1 char:82\r', '+ ... onsole]::OutputEncoding=[System.Text.Encoding]::UTF8; ^\"fzf^\" --versi ...\r', '+                                                           ~~~~~~~\r', '    + CategoryInfo          : ObjectNotFound: (^fzf^:String) [], CommandNotFoundException\r', '    + FullyQualifiedErrorId : CommandNotFoundException\r', ' \r']"
+
+
+  ;; 3b7a962dc6db227d18faecb25c793431ce7e8640
+  (vim.api.nvim_exec "execute('fzf --version')" true) ; "1"
+  (vim.api.nvim_exec "call executable('fzf')" true) ; ""
+  )
+
+(comment 
+  
+  
+;; " let g:fzf_force_24_bit_colors=1
+;;
+;; function! s:get_color(attr, ...)
+;;   let gui = ((!s:is_win && !has('win32unix')) || (exists('g:fzf_force_24_bit_colors') && g:fzf_force_24_bit_colors)) && has('termguicolors') && &termguicolors
+;;   let fam = gui ? 'gui' : 'cterm'
+;;   let pat = gui ? '^#[a-f0-9]\+' : '^[0-9]\+$'
+;;   for group in a:000
+;;     let code = synIDattr(synIDtrans(hlID(group)), a:attr, fam)
+;;     if code =~? pat
+;;       return code
+;;     endif
+;;   endfor
+;;   return ''
+;; endfunction
+  (vim.g.fzf_force_24_bit_colors)
+  )
