@@ -1,14 +1,19 @@
 (module config.plugin.theme
   {autoload {nvim aniseed.nvim
              theme github-theme
+             rose-pine rose-pine
              material material}
 
    require-macros [config.debug-macros]})
 
+(rose-pine.setup {:dark_variant "moon"
+                  :disable_italics true})
 
 (comment
 
   (dbgn {:aa "aa"})
+
+  (set vim.o.background :dark)
 
   ;; For github theme
   (set vim.o.background :light)
@@ -20,6 +25,10 @@
   (nvim.ex.colorscheme :nightfly)
   (nvim.ex.colorscheme :nightfox)
   (nvim.ex.colorscheme :kanagawa)
+
+  (nvim.ex.colorscheme :rose-pine)
+
+  ;; {'options': '^"--color=info:81,bg+:242,border:0,hl:14,header:14,hl+:11^"  --expect=ctrl-v,ctrl-x,ctrl-t', 'sink*': function('302', {...@0}), 'sinklist': function('302'), 'down': '40%', '_action': {'ctrl-v': 'vsplit', 'ctrl-x': 'split', 'ctrl-t': 'tab split'}}
 
   ;; Base 16
   (nvim.ex.colorscheme :base16-atelier-sulphurpool) ;; yas
@@ -49,6 +58,21 @@
           "spinner" ["fg" "Label"]
           "header"  ["fg" "Comment"]}
 
+         :rose-pine 
+         {"fg"      ["fg" "Normal"]
+          "bg"      ["bg" "Normal"]
+          "hl"      ["fg" "Comment"]
+          "fg+"     ["fg" "RedrawDebugComposed" "CursorLine" "CursorColumn" "Normal"]
+          "bg+"     ["bg" "RedrawDebugComposed" "CursorLine" "CursorColumn"]
+          "hl+"     ["fg" "Statement"]
+          "info"    ["fg" "PreProc"]
+          "border"  ["fg" "Ignore"]
+          "prompt"  ["fg" "Conditional"]
+          "pointer" ["fg" "Exception"]
+          "marker"  ["fg" "Keyword"]
+          "spinner" ["fg" "Label"]
+          "header"  ["fg" "Comment"]}
+
          _ ;; default
          {"fg"      ["fg" "Normal"]
           "bg"      ["bg" "Normal"]
@@ -65,7 +89,7 @@
           "header"  ["fg" "Comment"]})))
 
 (defn set-theme [is-dark]
-  (let [theme (if is-dark :nightfox :material)
+  (let [theme (if is-dark :kanagawa :material)
         background (if is-dark :dark :light)]
     (print "Setting theme:" theme "-" background)
     (set-fzf-colors theme)
