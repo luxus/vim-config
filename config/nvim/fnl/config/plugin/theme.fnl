@@ -91,7 +91,7 @@
           "header"  ["fg" "Comment"]})))
 
 (defn set-theme [is-dark]
-  (let [theme (if is-dark :kanagawa :material)
+  (let [theme (if is-dark :rose-pine :material)
         background (if is-dark :dark :light)]
     (print "Setting theme:" theme "-" background)
     (set-fzf-colors theme)
