@@ -12,6 +12,10 @@
              
    require-macros [config.debug-macros]})
 
+
+;; let g:fzf_force_24_bit_colors=1
+(set vim.g.fzf_force_24_bit_colors 1)
+
 ;;(vim.fn.fzf#install)
 
 ; FZF layout set to bottom of screen
