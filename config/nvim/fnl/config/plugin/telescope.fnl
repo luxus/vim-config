@@ -107,7 +107,8 @@
   (set-proj-root)
   (builtin.find_files))
 
-(vim.keymap.set :n :<leader>ff find-files-in-current-proj {:noremap true :desc "files"})
+;; (vim.keymap.set :n :<leader>ff find-files-in-current-proj {:noremap true :desc "files"})
+(vim.keymap.set :n :<leader>ff builtin.find_files {:noremap true :desc "files"})
 (nvim.set_keymap :n :<leader>fa ":Telescope<CR>" {:noremap true :desc "all"})
 (nvim.set_keymap :x :<leader>fv ":lua require('telescope.builtin').grep_string()<CR>" {:desc "grep string"})
 (nvim.set_keymap :n :<leader>fv ":lua require('telescope.builtin').grep_string()<CR>" {:noremap true :desc "grep string"})
