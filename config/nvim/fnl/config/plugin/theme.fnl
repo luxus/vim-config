@@ -2,12 +2,17 @@
   {autoload {nvim aniseed.nvim
              theme github-theme
              rose-pine rose-pine
+             kanagawa kanagawa
              material material}
 
    require-macros [config.debug-macros]})
 
 (rose-pine.setup {:dark_variant "moon"
                   :disable_italics true})
+
+(kanagawa.setup {:commentStyle {:italic false}
+                 :keywordStyle {:italic false}
+                 :variablebuiltinStyle {:italic false}})
 
 (comment
 
