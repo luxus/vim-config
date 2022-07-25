@@ -7,12 +7,6 @@
 
    require-macros [config.debug-macros]})
 
-(rose-pine.setup {:dark_variant "moon"
-                  :disable_italics true})
-
-(kanagawa.setup {:commentStyle {:italic false}
-                 :keywordStyle {:italic false}
-                 :variablebuiltinStyle {:italic false}})
 
 (comment
 
@@ -35,7 +29,6 @@
   (nvim.ex.colorscheme :base16-rose-pine)
   (nvim.ex.colorscheme :base16-rose-pine)
 
-  ;; {'options': '^"--color=info:81,bg+:242,border:0,hl:14,header:14,hl+:11^"  --expect=ctrl-v,ctrl-x,ctrl-t', 'sink*': function('302', {...@0}), 'sinklist': function('302'), 'down': '40%', '_action': {'ctrl-v': 'vsplit', 'ctrl-x': 'split', 'ctrl-t': 'tab split'}}
 
   ;; Base 16
   (nvim.ex.colorscheme :base16-atelier-sulphurpool) ;; yas
@@ -96,7 +89,7 @@
           "header"  ["fg" "Comment"]})))
 
 (defn set-theme [is-dark]
-  (let [theme (if is-dark :kanagawa :material)
+  (let [theme (if is-dark :github_dark :material)
         background (if is-dark :dark :light)]
     (print "Setting theme:" theme "-" background)
     (set-fzf-colors theme)
@@ -106,7 +99,15 @@
       :material (do
                   (set vim.g.material_style :lighter)
                   (material.setup {:high_visibility {:lighter true}}))
+      :kanagawa (kanagawa.setup {:commentStyle {:italic false}
+                                 :keywordStyle {:italic false}
+                                 :variablebuiltinStyle {:italic false}})
+
+      :rose-pine (rose-pine.setup {:dark_variant "moon"
+                                   :disable_italics true})
+
       :nightfox (vim.cmd "hi MatchParen cterm=bold gui=bold guifg=#dbc074 guibg=blue"))
+
 
     (nvim.ex.colorscheme theme)
     (set vim.o.background background)))
