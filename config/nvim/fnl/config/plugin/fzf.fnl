@@ -173,6 +173,7 @@ command! -bang -nargs=* GGrep
    {:suffix "ViewComponent"} 
    {:suffix "ViewModel"} 
    {:suffix "Model"} 
+   {:suffix "Page"} 
    {:match "Default"
     :callback-fn (lambda [filename full-filename] 
                    (get-parent full-filename))}])

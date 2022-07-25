@@ -31,7 +31,7 @@
 ;; (vim.cmd "set cmdheight=1")
 
 ; font 
-(set vim.o.guifont "FiraCode NF:h12")
+(set vim.o.guifont "FiraCode NF:h11")
 
 ;; next and previous tab keymaps
 (nvim.set_keymap :n "]t" "<cmd>tabnext<CR>" {:nowait true :silent true :noremap true})
@@ -46,9 +46,9 @@
 (set vim.o.cursorline true)
 ; Wrap lines on word
 (vim.cmd ":set wrap lbr")
-(set vim.o.breakindent true)
+(set vim.go.breakindent true)
 (vim.cmd "let &showbreak= ' '")
-(set vim.o.wrap true)
+(set vim.go.wrap true)
 (vim.cmd ":windo set wrap")
 
 ; Set filetype to HTML for CSHTML files
