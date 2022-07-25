@@ -25,6 +25,14 @@
 (vim.keymap.set :n :n :nzz {:noremap true})
 (vim.keymap.set :n :N :Nzz {:noremap true})
 
+;; No whitespace in diff
+(vim.cmd " set diffopt+=iwhiteall")
+
+(comment
+ (vim.opt.diffexpr)
+ (vim.opt.diffopt)
+ )
+
 ;; cmdline height
 ;; After updating to nvim 0.7 cmdheight was set to 24 for unknown reasons
 (set vim.opt_global.cmdheight 1)
