@@ -31,7 +31,7 @@
 ;; (vim.cmd "set cmdheight=1")
 
 ; font 
-(set vim.o.guifont "FiraCode NF:h12")
+(set vim.o.guifont "FiraCode NF:h11")
 
 ;; next and previous tab keymaps
 (nvim.set_keymap :n "]t" "<cmd>tabnext<CR>" {:nowait true :silent true :noremap true})
