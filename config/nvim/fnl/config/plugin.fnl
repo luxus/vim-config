@@ -114,7 +114,7 @@
   :rmagatti/auto-session {:mod :auto-session}
 
   ; Show indents
-  :lukas-reineke/indent-blankline.nvim {:mod :indent-blankline}
+  ;; :lukas-reineke/indent-blankline.nvim {:mod :indent-blankline}
 
   ; autoread
   ; :djoshea/vim-autoread {}

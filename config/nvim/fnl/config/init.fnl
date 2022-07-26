@@ -3,7 +3,8 @@
              nvim aniseed.nvim
              util config.util
              autil aniseed.nvim.util
-             str aniseed.string}})
+             str aniseed.string
+             indent-blankline config.plugin.indent-blankline}})
 
 (defn- noremap [mode from to]
   "Sets a mapping with {:noremap true}."
@@ -32,6 +33,10 @@
  (vim.opt.diffexpr)
  (vim.opt.diffopt)
  )
+
+;; whitespace characters
+(indent-blankline.setup-whitespace-opts)
+
 
 ;; cmdline height
 ;; After updating to nvim 0.7 cmdheight was set to 24 for unknown reasons
