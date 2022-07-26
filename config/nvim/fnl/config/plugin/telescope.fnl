@@ -26,7 +26,7 @@
   
   (vim.inspect (is-minified-file "C:/repos/file.min.js")) ;; Returns true
   (vim.inspect (is-minified-file "C:/repos/other.js"))) ;; Returns false
-  
+
 
 
 (defn show-is-minified-preview-msg [filename bufnr opts]
@@ -40,8 +40,14 @@
                                             "<C-Up>" (. telescope-actions :cycle_history_prev)}}
                              :preview {:treesitter false
                                        :filetype_hook (fn [filepath bufnr opts] 
-                                                        (not (is-minified-file filepath)))}}
-                             
+                                                        (not (is-minified-file filepath)))}
+                             :layout_strategy :horizontal
+                             :wrap_results :true
+                             ;; Note - you can set path_display to a function
+                             :path_display {:truncate 1 
+                                            :shorten 1 
+                                            :tail 2
+                                            }}
 
                   :pickers {:grep_string {:theme :ivy}
                             :current_buffer_fuzzy_find {:theme :ivy}
@@ -49,7 +55,10 @@
                                          :find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}
 
                             ; Ivy theme for everything lsp
-                            :lsp_references {:theme :ivy}
+                            :lsp_references {:theme :ivy 
+                                             :trim_text :true 
+                                             ;; There is an `fname_width` setting for setting the width of the filename section
+                                             }
                             :lsp_document_symbols {:theme :ivy}
                             :lsp_workspace_symbols {:theme :ivy}
                             :lsp_workspace_symbols {:theme :ivy}
