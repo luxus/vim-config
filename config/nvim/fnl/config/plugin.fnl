@@ -144,6 +144,7 @@
                                              :nvim-lua/plenary.nvim
                                              :ahmedkhalf/project.nvim
                                              :nvim-telescope/telescope-file-browser.nvim
+                                             :nvim-telescope/telescope-ui-select.nvim
                                              :LinArcX/telescope-env.nvim]
 
                                              ;; :nvim-telescope/telescope-dap.nvim

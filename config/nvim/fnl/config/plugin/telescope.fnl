@@ -82,6 +82,7 @@
 (telescope.load_extension "projects")
 (telescope.load_extension "file_browser")
 (telescope.load_extension "env")
+(telescope.load_extension "ui-select")
 ;; (telescope.load_extension "coc")
 ;; (telescope.load_extension "dap")
 
