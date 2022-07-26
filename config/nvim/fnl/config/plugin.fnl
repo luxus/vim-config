@@ -63,6 +63,7 @@
   :D4KU/vim-textobj-chainmember {}
   :kana/vim-textobj-entire {}
   :Julian/vim-textobj-variable-segment {}
+  :whatyouhide/vim-textobj-xmlattr {}
   :AckslD/nvim-trevJ.lua {:mode :revj}
 
   ; Harpoon
