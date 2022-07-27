@@ -45,8 +45,8 @@
                              :wrap_results :true
                              ;; Note - you can set path_display to a function
                              :path_display {:truncate 1 
-                                            :shorten 1 
-                                            :tail 2
+                                            ;; :shorten 1 
+                                            ;; :tail 2
                                             }}
 
                   :pickers {:grep_string {:theme :ivy}
@@ -56,7 +56,8 @@
 
                             ; Ivy theme for everything lsp
                             :lsp_references {:theme :ivy 
-                                             :trim_text :true 
+                                             :trim_text :true
+                                              :path_display [:shorten :truncate :tail] 
                                              ;; There is an `fname_width` setting for setting the width of the filename section
                                              }
                             :lsp_document_symbols {:theme :ivy}
