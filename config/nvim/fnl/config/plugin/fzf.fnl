@@ -217,7 +217,9 @@ command! -bang -nargs=* GGrep
   (get-common-name "xxx"))
 
 (defn fzf-file-query [query]
-  (vim.fn.fzf#vim#files "." (vim.fn.fzf#vim#with_preview {:options ["--query" query "--layout=reverse" "--info=inline"]})))
+  (vim.fn.fzf#vim#gitfiles "." (vim.fn.fzf#vim#with_preview {:options ["--query" query 
+                                                                       ;; "--layout=reverse" 
+                                                                       "--info=inline"]})))
 
 (defn fzf-this-file []
   (let [this-file (get-this-filename)
@@ -225,7 +227,7 @@ command! -bang -nargs=* GGrep
         common-name (get-common-name this-file this-full-filename)]
     (fzf-file-query common-name)))
 
-(nvim.set_keymap :n :<leader>fF ":lua require'config.plugin.fzf'['fzf-this-file']()<cr>" {:noremap true :silent false})
+(vim.keymap.set :n :<leader>fF fzf-this-file {:noremap true :silent false})
 
 (comment
    (nvim.set_keymap :n :<leader>fF ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})<cr>" {:noremap true :silent false})
