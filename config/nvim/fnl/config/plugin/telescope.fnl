@@ -5,7 +5,8 @@
              putils telescope.previewers.utils
              telescope-actions telescope.actions
              project project_nvim
-             nvim-web-devicons nvim-web-devicons}})
+             nvim-web-devicons nvim-web-devicons
+             themes telescope.themes}})
 
 
 (nvim-web-devicons.setup {:default true})
@@ -72,7 +73,8 @@
                                      :override-generic-sorter true
                                      :override-file-sorter true
                                      :case-mode "smart_case"}
-                               :tele_tabby {:use_highlighter true}}})
+                               :tele_tabby {:use_highlighter true}
+                               :ui-select [(themes.get_cursor)]}})
 
                                ; :project {
                                ;    :base_dirs  ["~/repos" "~/source/repos"  "C:/repos"]
