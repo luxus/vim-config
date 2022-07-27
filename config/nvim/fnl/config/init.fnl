@@ -64,6 +64,10 @@
 (set vim.go.wrap true)
 (vim.cmd ":windo set wrap")
 
+
+; Copy filename to clipboard
+;; lua vim.fn.setreg('"', vim.fn.expand("%:t"))
+
 ; Set filetype to HTML for CSHTML files
 (vim.cmd "autocmd BufNewFile,BufRead *.cshtml set filetype=html")
 
