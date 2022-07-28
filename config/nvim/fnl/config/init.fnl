@@ -66,6 +66,8 @@
 
 
 ; Copy filename to clipboard
+(vim.api.nvim_create_user_command "FilenameToClipboard" (fn [] (vim.fn.setreg "+" (vim.fn.expand "%:t"))) {}))
+
 ;; lua vim.fn.setreg('"', vim.fn.expand("%:t"))
 
 ; Set filetype to HTML for CSHTML files
