@@ -99,6 +99,7 @@
       :material (do
                   (set vim.g.material_style :lighter)
                   (material.setup {:high_visibility {:lighter true}}))
+
       :kanagawa (kanagawa.setup {:commentStyle {:italic false}
                                  :keywordStyle {:italic false}
                                  :variablebuiltinStyle {:italic false}})
@@ -111,6 +112,10 @@
 
     (nvim.ex.colorscheme theme)
     (set vim.o.background background)))
+
+(comment 
+  (set-fzf-colors :falcon)
+  )
 
 (set-theme true)
 
