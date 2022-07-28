@@ -3,7 +3,8 @@
              nvim aniseed.nvim
              util config.util
              autil aniseed.nvim.util
-             str aniseed.string}})
+             str aniseed.string
+             indent-blankline config.plugin.indent-blankline}})
 
 (defn- noremap [mode from to]
   "Sets a mapping with {:noremap true}."
@@ -33,6 +34,10 @@
  (vim.opt.diffopt)
  )
 
+;; whitespace characters
+(indent-blankline.setup-whitespace-opts)
+
+
 ;; cmdline height
 ;; After updating to nvim 0.7 cmdheight was set to 24 for unknown reasons
 (set vim.opt_global.cmdheight 1)
@@ -58,6 +63,10 @@
 (vim.cmd "let &showbreak= ' '")
 (set vim.go.wrap true)
 (vim.cmd ":windo set wrap")
+
+
+; Copy filename to clipboard
+;; lua vim.fn.setreg('"', vim.fn.expand("%:t"))
 
 ; Set filetype to HTML for CSHTML files
 (vim.cmd "autocmd BufNewFile,BufRead *.cshtml set filetype=html")

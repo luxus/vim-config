@@ -63,6 +63,7 @@
   :D4KU/vim-textobj-chainmember {}
   :kana/vim-textobj-entire {}
   :Julian/vim-textobj-variable-segment {}
+  :whatyouhide/vim-textobj-xmlattr {}
   :AckslD/nvim-trevJ.lua {:mode :revj}
 
   ; Harpoon
@@ -113,7 +114,7 @@
   :rmagatti/auto-session {:mod :auto-session}
 
   ; Show indents
-  :lukas-reineke/indent-blankline.nvim {:mod :indent-blankline}
+  ;; :lukas-reineke/indent-blankline.nvim {:mod :indent-blankline}
 
   ; autoread
   ; :djoshea/vim-autoread {}
@@ -143,6 +144,7 @@
                                              :nvim-lua/plenary.nvim
                                              :ahmedkhalf/project.nvim
                                              :nvim-telescope/telescope-file-browser.nvim
+                                             :nvim-telescope/telescope-ui-select.nvim
                                              :LinArcX/telescope-env.nvim]
 
                                              ;; :nvim-telescope/telescope-dap.nvim
@@ -267,23 +269,6 @@
 (when (= (vim.fn.has :win32) 1)
   (vs.setup {:devenv-path "C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/devenv.exe"
              :nvim-listen-address-base "~"}))
-
-
-(comment 
-  (vim.cmd "call executable('fzf')")
-  (vim.api.nvim_exec "echo executable('fzf')" true) ; "1"
-  (vim.api.nvim_exec "echo exepath('fzf')" true) ; "C:\\bin\\fzf.EXE"
-  (vim.api.nvim_exec "echo fzf#shellescape('fzf') . ' --version'" true) 
-  (vim.api.nvim_exec "echo fzf#shellescape('fzf')" true) ; "^\"fzf^\""
-
-  (vim.api.nvim_exec "echo systemlist(fzf#shellescape('fzf') . ' --version')" true) 
-; "['^fzf^ : The term ''^fzf^'' is not recognized as the name of a cmdlet, function, script file, or operable program. Check \r', 'the spelling of the name, or if a path was included, verify that the path is correct and try again.\r', 'At line:1 char:82\r', '+ ... onsole]::OutputEncoding=[System.Text.Encoding]::UTF8; ^\"fzf^\" --versi ...\r', '+                                                           ~~~~~~~\r', '    + CategoryInfo          : ObjectNotFound: (^fzf^:String) [], CommandNotFoundException\r', '    + FullyQualifiedErrorId : CommandNotFoundException\r', ' \r']"
-
-
-  ;; 3b7a962dc6db227d18faecb25c793431ce7e8640
-  (vim.api.nvim_exec "execute('fzf --version')" true) ; "1"
-  (vim.api.nvim_exec "call executable('fzf')" true) ; ""
-  )
 
 (comment 
   

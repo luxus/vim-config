@@ -37,14 +37,15 @@
 [] whichkey configure names for mappings
 [] learn to use cfdo cdo
 [] Configure multicursor to recognise the camelcase words
-[] number of lines before and after cursor
+[x] number of lines before and after cursor
 [] set correct indentation for filetype=cs (csharp)
 [] treesitter using telescope
 [] get project to recognise top level apps directory and ignore others
 [x] sources used for cmp on cmdline
-[ ] vim impatient
+[x] vim impatient
 [ ] Harpoon
-[ ] go through history of fzf input
+[x] go through history of fzf input
+[ ] make filepaths shorter in telescope prompts, or change layout to make it easier to read?
 
 
 h 27.58

@@ -75,9 +75,6 @@ command! -bang -nargs=* GGrep
 (vim.keymap.set :n :<leader>fu (fn [] 
                                  (vim.cmd (.. ":Files " (fzf-root)))) {:noremap true})
 
-
-
-
 (defn get-lua-cmd [func-name params]
   (.. ":lua require('" *module-name* "')['" func-name "']('" (astring.join ", " params) "')<CR>"))
 
@@ -220,7 +217,9 @@ command! -bang -nargs=* GGrep
   (get-common-name "xxx"))
 
 (defn fzf-file-query [query]
-  (vim.fn.fzf#vim#files "." (vim.fn.fzf#vim#with_preview {:options ["--query" query "--layout=reverse" "--info=inline"]})))
+  (vim.fn.fzf#vim#gitfiles "." (vim.fn.fzf#vim#with_preview {:options ["--query" query 
+                                                                       ;; "--layout=reverse" 
+                                                                       "--info=inline"]})))
 
 (defn fzf-this-file []
   (let [this-file (get-this-filename)
@@ -228,7 +227,7 @@ command! -bang -nargs=* GGrep
         common-name (get-common-name this-file this-full-filename)]
     (fzf-file-query common-name)))
 
-(nvim.set_keymap :n :<leader>fF ":lua require'config.plugin.fzf'['fzf-this-file']()<cr>" {:noremap true :silent false})
+(vim.keymap.set :n :<leader>fF fzf-this-file {:noremap true :silent false})
 
 (comment
    (nvim.set_keymap :n :<leader>fF ":lua vim.fn['fzf#vim#files']('.', {options={'--query=aaa', '--layout=reverse', '--info=inline'}})<cr>" {:noremap true :silent false})
@@ -242,3 +241,21 @@ command! -bang -nargs=* GGrep
 
 ;; Disable preview window as it interferes with input on work machine
 (set vim.g.fzf_preview_window "")
+
+
+;; Debugging fzf plugin
+(comment 
+  (vim.cmd "call executable('fzf')")
+  (vim.api.nvim_exec "echo executable('fzf')" true) ; "1"
+  (vim.api.nvim_exec "echo exepath('fzf')" true) ; "C:\\bin\\fzf.EXE"
+  (vim.api.nvim_exec "echo fzf#shellescape('fzf') . ' --version'" true) 
+  (vim.api.nvim_exec "echo fzf#shellescape('fzf')" true) ; "^\"fzf^\""
+
+  (vim.api.nvim_exec "echo systemlist(fzf#shellescape('fzf') . ' --version')" true) 
+; "['^fzf^ : The term ''^fzf^'' is not recognized as the name of a cmdlet, function, script file, or operable program. Check \r', 'the spelling of the name, or if a path was included, verify that the path is correct and try again.\r', 'At line:1 char:82\r', '+ ... onsole]::OutputEncoding=[System.Text.Encoding]::UTF8; ^\"fzf^\" --versi ...\r', '+                                                           ~~~~~~~\r', '    + CategoryInfo          : ObjectNotFound: (^fzf^:String) [], CommandNotFoundException\r', '    + FullyQualifiedErrorId : CommandNotFoundException\r', ' \r']"
+
+
+  ;; 3b7a962dc6db227d18faecb25c793431ce7e8640
+  (vim.api.nvim_exec "execute('fzf --version')" true) ; "1"
+  (vim.api.nvim_exec "call executable('fzf')" true) ; ""
+  )
