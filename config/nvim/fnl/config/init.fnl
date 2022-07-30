@@ -66,7 +66,10 @@
 
 
 ; Copy filename to clipboard
-(vim.api.nvim_create_user_command "FilenameToClipboard" (fn [] (vim.fn.setreg "+" (vim.fn.expand "%:t"))) {}))
+(vim.api.nvim_create_user_command 
+  "FilenameToClipboard" 
+  #(vim.fn.setreg "+" (vim.fn.expand "%:t")) 
+  {})
 
 ;; lua vim.fn.setreg('"', vim.fn.expand("%:t"))
 
