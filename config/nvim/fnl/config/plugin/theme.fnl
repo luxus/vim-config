@@ -3,6 +3,7 @@
              theme github-theme
              rose-pine rose-pine
              kanagawa kanagawa
+             catppuccin catppuccin
              material material}
 
    require-macros [config.debug-macros]})
@@ -89,7 +90,7 @@
           "header"  ["fg" "Comment"]})))
 
 (defn set-theme [is-dark]
-  (let [theme (if is-dark :rose-pine :material)
+  (let [theme (if is-dark :catppuccin :catppuccin)
         background (if is-dark :dark :light)]
     (print "Setting theme:" theme "-" background)
     (set-fzf-colors theme)
@@ -107,6 +108,11 @@
       :rose-pine (rose-pine.setup {:dark_variant "moon"
                                    :disable_italics true})
 
+      :catppuccin (do 
+                    (catppuccin.setup {})
+                    (vim.cmd (.. "Catppuccin " 
+                                 (if is-dark :macchiato :latte))))
+
       :nightfox (vim.cmd "hi MatchParen cterm=bold gui=bold guifg=#dbc074 guibg=blue"))
 
 
@@ -117,7 +123,7 @@
   (set-fzf-colors :falcon)
   )
 
-(set-theme true)
+(vim.schedule #(set-theme true))
 
 ;; (defn set-theme [is-dark]
 ;;   (if is-dark

@@ -233,6 +233,7 @@
   :carlosrocha/vim-chrome-devtools {}
 
   ; theme
+  :catppuccin/nvim {:as :catppuccin}
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim
                                              :RRethy/nvim-base16
                                              :projekt0n/github-nvim-theme
@@ -240,6 +241,7 @@
                                              :EdenEast/nightfox.nvim
                                              :fenetikm/falcon
                                              :rose-pine/neovim
+                                             :catppuccin/nvim
                                              :rktjmp/lush.nvim]
                                   :mod :theme})
 
