@@ -153,14 +153,14 @@
 
                                   :mod :telescope}
 
-  ;; :junegunn/fzf {:run (lambda [] (vim.cmd "call fzf#install()"))
-  ;;                :commit "3b7a962dc6db227d18faecb25c793431ce7e8640" 
-  ;;                }
-
-  :Kamholtz/fzf {
-                 ;; :commit "3b7a962dc6db227d18faecb25c793431ce7e8640"
-                 :branch "ck/feat/2022/07/23/force-24-bit-colours-options"
+  :junegunn/fzf {:run (lambda [] (vim.cmd "call fzf#install()"))
+                 ;; :commit "3b7a962dc6db227d18faecb25c793431ce7e8640" 
                  }
+
+  ;; :Kamholtz/fzf {
+  ;;                ;; :commit "3b7a962dc6db227d18faecb25c793431ce7e8640"
+  ;;                :branch "ck/feat/2022/07/23/force-24-bit-colours-options"
+  ;;                }
   :junegunn/fzf.vim {:mod :fzf :requires [:junegunn/fzf]}
 
   ; quic:junegunn/fzfkfix
