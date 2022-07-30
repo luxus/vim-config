@@ -14,7 +14,7 @@
 
 
 ;; let g:fzf_force_24_bit_colors=1
-(set vim.g.fzf_force_24_bit_colors 1)
+(set vim.g.fzf_force_termguicolors 1)
 
 ;;(vim.fn.fzf#install)
 
