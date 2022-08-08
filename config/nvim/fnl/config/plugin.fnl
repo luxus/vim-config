@@ -233,7 +233,11 @@
   :carlosrocha/vim-chrome-devtools {}
 
   ; theme
-  :catppuccin/nvim {:as :catppuccin}
+  ;; Don't use `as` option as shown in the docs due to the following issue on packer
+  ;; https://github.com/wbthomason/packer.nvim/issues/768
+  :catppuccin/nvim {
+                    ;; :as :catppuccin
+                    }
   :bluz71/vim-nightfly-guicolors {:requires [:rebelot/kanagawa.nvim
                                              :RRethy/nvim-base16
                                              :projekt0n/github-nvim-theme
