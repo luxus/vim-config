@@ -123,7 +123,7 @@
   (set-fzf-colors :falcon)
   )
 
-(vim.schedule #(set-theme true))
+(set-theme true)
 
 ;; (defn set-theme [is-dark]
 ;;   (if is-dark
