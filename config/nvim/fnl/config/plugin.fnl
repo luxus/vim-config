@@ -232,6 +232,10 @@
   ; Chrome devtools
   :carlosrocha/vim-chrome-devtools {}
 
+
+  :akinsho/toggleterm.nvim {:mod :toggleterm
+                            :tag "v2.*"}
+
   ; theme
   :catppuccin/nvim {
                     ;; :as :catppuccin
