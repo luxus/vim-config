@@ -232,6 +232,10 @@
   ; Chrome devtools
   :carlosrocha/vim-chrome-devtools {}
 
+
+  :akinsho/toggleterm.nvim {:mod :toggleterm
+                            :tag "v2.*"}
+
   ; theme
   ;; Don't use `as` option as shown in the docs due to the following issue on packer
   ;; https://github.com/wbthomason/packer.nvim/issues/768
