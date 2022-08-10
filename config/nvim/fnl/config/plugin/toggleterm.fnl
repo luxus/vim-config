@@ -26,6 +26,9 @@
 
 (defn send-cri-inspect-cmd [expr count]
   ;; NOTE: You can view the API for evaluate by executing "Runtime.evaluate" in `chome-remote-interface inspect`
+  ;; - includeCommandLineAPI refers to https://developer.chrome.com/docs/devtools/console/utilities/
+  ;; - returnByValue means objects get printed out
+  ;; - generatePreview is similar to returnByValue but is still structured as JSON (would be easier to parse and do things to)
   (toggleterm.exec (.. "Runtime.evaluate({expression: '" expr "', generatePreview: true, returnByValue: true, includeCommandLineAPI: true})") count 12))
 
 (comment
@@ -40,8 +43,7 @@
         (let [end-str (string.sub 
                         (. lines len) ;; last lines
                         1 ;; beginning of line
-                        (- (+ column-end 1) (if is-inclusive 1 2)) ;; end of line
-                        )
+                        (- (+ column-end 1) (if is-inclusive 1 2))) ;; end of line
 
               _ (tset lines len end-str) ;; replace end line
 
@@ -54,6 +56,7 @@
             (tset lines 1 start-str) ;; replace end line
             lines)))))
 
+  ;; Examples with result shown in proceeding comment
    (trim-lines [" (string.sub \"abcd\" 1 -2) ; \"abc\""] 3 12 true) ; "string.sub"
 
    (trim-lines ["(comment" " (string.sub \"abcd\" 1 -2) ; \"abc\""] 2 12 true)
