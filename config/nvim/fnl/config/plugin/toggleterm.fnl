@@ -1,6 +1,7 @@
 (module config.plugin.toggleterm 
     {autoload {toggleterm toggleterm
-               log conjure.log}
+               log conjure.log
+               a aniseed.core}
      require-macros [config.debug-macros]})
 
 (macro cdbgn [form]
@@ -48,7 +49,7 @@
             (tset lines 1 start-str) ;; replace end line
             
             (dbgn (vim.inspect lines))
-            (vim.fn.join lines "\n"))))))
+            lines)))))
 
    (trim-lines [" (string.sub \"abcd\" 1 -2) ; \"abc\""] 3 12 true) ; "string.sub"
 
@@ -59,7 +60,7 @@
   )
 
 
-(defn get-visual-selection []
+(defn get-visual-selection-lines []
   (let [[_ line-start column-start _] (vim.fn.getpos "'<")
         [_ line-end column-end _] (vim.fn.getpos "'>")
         lines (vim.fn.getline line-start line-end)
@@ -68,6 +69,9 @@
     (print column-start column-end)
     (dbgn (vim.inspect lines))
     (trim-lines lines column-start column-end (= vim.o.selection "inclusive"))))
+
+(defn get-visual-selection []
+ (vim.fn.join (get-visual-selection) "\n") )
 
 (comment
  (string.sub "abcd" 1 -2) ; "abc"
@@ -82,8 +86,14 @@
 
 (vim.api.nvim_create_user_command 
   "TermCRI"
-  (fn [opts] (send-cri-inspect-cmd "1 + 300" opts.count))
+  (fn [opts] 
+    (a.map #(send-cri-inspect-cmd $1 opts.count) (get-visual-selection-lines)))
   {})
+
+;; console.log("START");
+;; console.log([1, 2, 3].map(x => x * 5));
+;; console.log("END");
+
 
 (comment
  (send-cri-inspect-cmd "1 + 2")
