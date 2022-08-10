@@ -1,5 +1,6 @@
 (module config.plugin.toggleterm 
-    {autoload {toggleterm toggleterm }
+    {autoload {toggleterm toggleterm
+               log conjure.log}
      require-macros [config.debug-macros]})
 
 (macro cdbgn [form]
@@ -18,44 +19,61 @@
 
 
 ;; if you only want these mappings for toggle term use term://*toggleterm#* instead
-(vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()")
+(vim.cmd "autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()")
 
 (vim.cmd "command! -count=1 TermWestTest  lua require'toggleterm'.exec(\"west build -b native_posix -t run\",    <count>, 12)")
 
 (defn send-cri-inspect-cmd [expr count]
   (toggleterm.exec (.. "Runtime.evaluate({expression: '" expr "'})") count 12))
 
+(do 
+  (defn trim-lines [lines column-start column-end]
+    (let [len (length lines)] 
+      (if (= len 0) 
+        ""
+        (let [is-inclusive (= vim.o.selection "inclusive")
+              end-str (string.sub 
+                        (. lines len) ;; last lines
+                        1 ;; beginning of line
+                        (- (+ column-end 1) (if is-inclusive 1 2)) ;; end of line
+                        )
+
+              _ (tset lines len end-str) ;; replace end line
+
+              start-str (string.sub 
+                          (. lines 1) ;; first line
+                          column-start ;; start
+                          -1) ;; end
+              ] 
+          (do 
+            (tset lines 1 start-str) ;; replace end line
+            
+            (dbgn (vim.inspect lines))
+            (vim.fn.join lines "\n"))))))
+
+   (trim-lines [" (string.sub \"abcd\" 1 -2) ; \"abc\""] 3 12) ; "string.sub"
+
+   (trim-lines ["(comment" " (string.sub \"abcd\" 1 -2) ; \"abc\""] 2 12)
+; "comment
+;  (string.sub"
+  )
+
+
 (defn get-visual-selection []
-  (let [[_ line_start column_start _] (vim.fn.getpos "'<")
-        [_ line_end column_end _] (vim.fn.getpos "'>")
-        lines (vim.fn.getline line_start line_end)
+  (let [[_ line-start column-start _] (vim.fn.getpos "'<")
+        [_ line-end column-end _] (vim.fn.getpos "'>")
+        lines (vim.fn.getline line-start line-end)
         len (length lines)]
-    (print line_start line_end)
-    (print column_start column_end)
-    (print (vim.inspect lines))
-    (if (= len 0) 
-      ""
-      (let [is-inclusive (= vim.o.selection "inclusive")
-            end-str (string.sub 
-                      (. lines len) ;; last lines
-                      1 ;; beginning of line
-                      (- (+ column_end 1) (if is-inclusive 1 2)) ;; end of line
-                      )
-            start-str (string.sub 
-                        (. lines 1) ;; first line
-                        column_start ;; start
-                        -1) ;; end
-            ] 
-        (do 
-          (print (vim.inspect lines))
-          (tset lines 1 start-str)
-          (tset lines len end-str)
-          (print (vim.inspect lines))
-          (vim.fn.join lines "\n"))))))
+    (print line-start line-end)
+    (print column-start column-end)
+    (dbgn (vim.inspect lines))
+    (trim-lines lines column-start column-end)))
 
 (comment
  (string.sub "abcd" 1 -2) ; "abc"
  )
+
+;; (print ((. (require :fennel) :view) ["aa" "bb"]))
 
 (vim.api.nvim_create_user_command 
   "GetVisualSelection"
