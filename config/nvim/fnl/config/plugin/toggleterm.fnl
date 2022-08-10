@@ -25,7 +25,12 @@
 (vim.cmd "command! -count=1 TermWestTest  lua require'toggleterm'.exec(\"west build -b native_posix -t run\",    <count>, 12)")
 
 (defn send-cri-inspect-cmd [expr count]
-  (toggleterm.exec (.. "Runtime.evaluate({expression: '" expr "'})") count 12))
+  ;; NOTE: You can view the API for evaluate by executing "Runtime.evaluate" in `chome-remote-interface inspect`
+  (toggleterm.exec (.. "Runtime.evaluate({expression: '" expr "', generatePreview: true, returnByValue: true, includeCommandLineAPI: true})") count 12))
+
+(comment
+ (send-cri-inspect-cmd "[1, 4]" 1)
+ )
 
 (do 
   (defn trim-lines [lines column-start column-end is-inclusive]
@@ -47,8 +52,6 @@
               ] 
           (do 
             (tset lines 1 start-str) ;; replace end line
-            
-            (dbgn (vim.inspect lines))
             lines)))))
 
    (trim-lines [" (string.sub \"abcd\" 1 -2) ; \"abc\""] 3 12 true) ; "string.sub"
@@ -65,9 +68,6 @@
         [_ line-end column-end _] (vim.fn.getpos "'>")
         lines (vim.fn.getline line-start line-end)
         len (length lines)]
-    (print line-start line-end)
-    (print column-start column-end)
-    (dbgn (vim.inspect lines))
     (trim-lines lines column-start column-end (= vim.o.selection "inclusive"))))
 
 (defn get-visual-selection []
@@ -90,11 +90,22 @@
     (a.map #(send-cri-inspect-cmd $1 opts.count) (get-visual-selection-lines)))
   {})
 
-;; console.log("START");
-;; console.log([1, 2, 3].map(x => x * 5));
-;; console.log("END");
+(comment 
+  ;; Test selections to send
 
+ ;; console.log("START");
+ ;; console.log([1, 2, 3].map(x => x * 5));
+ ;; [1, 2, 3].map(x => x * 5)
+ ;; console.log("END");
+ ;;
+ ;; 1 + 3
+ ;; var x = [1, 2, 3].map(x => x * 100);
+ ;; console.log(x);
+ ;;
+ ;; function aaa(x) { return ["aaa", "bbb"]; }
+ ;; aaa()
+ ;; console.log([1, 5, 6])
 
-(comment
- (send-cri-inspect-cmd "1 + 2")
  )
+
+
