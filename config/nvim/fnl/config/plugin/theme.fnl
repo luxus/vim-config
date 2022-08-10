@@ -35,6 +35,7 @@
   (nvim.ex.colorscheme :base16-atelier-sulphurpool) ;; yas
   (nvim.ex.colorscheme :base16-embers) ;; easy on eyes
   (nvim.ex.colorscheme :base16-twilight) ;; easy on eyes
+  (nvim.ex.colorscheme :base16-phd) ;; easy on eyes
   )
 
 (comment 
@@ -109,7 +110,7 @@
                                    :disable_italics true})
 
       :catppuccin (do 
-                    (catppuccin.setup {})
+                    (catppuccin.setup {:styles {:comments []}})
                     (vim.cmd (.. "Catppuccin " 
                                  (if is-dark :macchiato :latte))))
 
