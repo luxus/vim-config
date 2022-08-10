@@ -27,12 +27,11 @@
   (toggleterm.exec (.. "Runtime.evaluate({expression: '" expr "'})") count 12))
 
 (do 
-  (defn trim-lines [lines column-start column-end]
+  (defn trim-lines [lines column-start column-end is-inclusive]
     (let [len (length lines)] 
       (if (= len 0) 
         ""
-        (let [is-inclusive (= vim.o.selection "inclusive")
-              end-str (string.sub 
+        (let [end-str (string.sub 
                         (. lines len) ;; last lines
                         1 ;; beginning of line
                         (- (+ column-end 1) (if is-inclusive 1 2)) ;; end of line
@@ -51,11 +50,12 @@
             (dbgn (vim.inspect lines))
             (vim.fn.join lines "\n"))))))
 
-   (trim-lines [" (string.sub \"abcd\" 1 -2) ; \"abc\""] 3 12) ; "string.sub"
+   (trim-lines [" (string.sub \"abcd\" 1 -2) ; \"abc\""] 3 12 true) ; "string.sub"
 
-   (trim-lines ["(comment" " (string.sub \"abcd\" 1 -2) ; \"abc\""] 2 12)
+   (trim-lines ["(comment" " (string.sub \"abcd\" 1 -2) ; \"abc\""] 2 12 true)
 ; "comment
 ;  (string.sub"
+
   )
 
 
@@ -67,7 +67,7 @@
     (print line-start line-end)
     (print column-start column-end)
     (dbgn (vim.inspect lines))
-    (trim-lines lines column-start column-end)))
+    (trim-lines lines column-start column-end (= vim.o.selection "inclusive"))))
 
 (comment
  (string.sub "abcd" 1 -2) ; "abc"
