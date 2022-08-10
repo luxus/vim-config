@@ -110,7 +110,8 @@
                                    :disable_italics true})
 
       :catppuccin (do 
-                    (catppuccin.setup {:styles {:comments []}})
+                    (catppuccin.setup {:styles {:comments []
+                                                :conditionals []}})
                     (vim.cmd (.. "Catppuccin " 
                                  (if is-dark :macchiato :latte))))
 
