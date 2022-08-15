@@ -14,6 +14,6 @@
 
 
 ;; if you only want these mappings for toggle term use term://*toggleterm#* instead
-(vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()")
+(vim.cmd "autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()")
 
 (vim.cmd "command! -count=1 TermWestTest  lua require'toggleterm'.exec(\"west build -b native_posix -t run\",    <count>, 12)")
