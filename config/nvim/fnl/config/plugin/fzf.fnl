@@ -259,3 +259,25 @@ command! -bang -nargs=* GGrep
   (vim.api.nvim_exec "execute('fzf --version')" true) ; "1"
   (vim.api.nvim_exec "call executable('fzf')" true) ; ""
   )
+
+
+(defn set-rg-match-color [color] 
+ "Sets the rg foreground color for matches 
+ color: red, blue, green, cyan, magenta, yellow, white and black OR r,g,b string"
+  (vim.cmd
+    (.. 
+      "command! -bang -nargs=* Rg "
+      "call fzf#vim#grep("
+      "'rg "
+      "--colors match:fg:" color " "
+      "--column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,"
+      "fzf#vim#with_preview(), <bang>0)")))
+
+(defn set-rg-match-color-rbg [r g b]
+  (set-rg-match-color (.. r "," g "," b)))
+
+(set-rg-match-color-rbg 0 255 128)
+
+(comment 
+ (set-rg-match-color "blue")
+ )
