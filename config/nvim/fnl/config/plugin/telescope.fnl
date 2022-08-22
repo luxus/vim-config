@@ -79,6 +79,17 @@
                                ; :project {
                                ;    :base_dirs  ["~/repos" "~/source/repos"  "C:/repos"]
                                ;    :hidden_files true }
+
+(comment 
+  
+;; actions.send_selected_to_loclist({prompt_bufnr}) *telescope.actions.send_selected_to_loclist()*
+;;     Sends the selected entries to the location list, replacing the previous
+;;     entries.
+;;
+;;
+;;     Parameters: ~
+;;         {prompt_bufnr} (number)  The prompt bufnr
+  )
                                
 
 (telescope.load_extension "fzf")
