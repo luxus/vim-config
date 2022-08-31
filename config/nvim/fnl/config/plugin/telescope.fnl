@@ -38,7 +38,9 @@
 (telescope.setup {:defaults {:file_ignore_patterns ["node_modules" "wwwroot/lib/*"] 
                              ;;:vimgrep_arguments ["rg" "--color=never" "--no-heading" "--with-filename" "--line-number" "--column" "--smart-case" "--hidden"]
                              :mappings {:i {"<C-Down>" (. telescope-actions :cycle_history_next) 
-                                            "<C-Up>" (. telescope-actions :cycle_history_prev)}}
+                                            "<C-Up>" (. telescope-actions :cycle_history_prev)
+                                            "<C-l>" (. telescope-actions :send_to_loclist)
+                                            "<M-l>" (. telescope-actions :send_selected_to_loclist)}}
                              :preview {:treesitter false
                                        :filetype_hook (fn [filepath bufnr opts] 
                                                         (not (is-minified-file filepath)))}
@@ -79,6 +81,17 @@
                                ; :project {
                                ;    :base_dirs  ["~/repos" "~/source/repos"  "C:/repos"]
                                ;    :hidden_files true }
+
+(comment 
+  
+;; actions.send_selected_to_loclist({prompt_bufnr}) *telescope.actions.send_selected_to_loclist()*
+;;     Sends the selected entries to the location list, replacing the previous
+;;     entries.
+;;
+;;
+;;     Parameters: ~
+;;         {prompt_bufnr} (number)  The prompt bufnr
+  )
                                
 
 (telescope.load_extension "fzf")

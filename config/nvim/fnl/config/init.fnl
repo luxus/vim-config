@@ -75,6 +75,13 @@
   #(vim.fn.setreg "+" (vim.fn.expand "%:t")) 
   {})
 
+
+; Copy quick fix list to loc list
+(vim.api.nvim_create_user_command 
+  "QfToLocList"
+  "call setloclist(0, [], ' ', {'items': get(getqflist({'items': 1}), 'items')}) | cclose | lopen"
+  {})
+
 ;; lua vim.fn.setreg('"', vim.fn.expand("%:t"))
 
 ; Set filetype to HTML for CSHTML files
