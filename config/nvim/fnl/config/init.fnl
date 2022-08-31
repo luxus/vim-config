@@ -47,6 +47,8 @@
 
 ; font 
 (set vim.o.guifont "FiraCode NF:h11")
+;; (set vim.o.guifont "Fira Code Regular Nerd Font Complete Mono Windows Compatible:h11")
+;; (set vim.o.guifont "Iosevka NF:h12")
 
 ;; next and previous tab keymaps
 (nvim.set_keymap :n "]t" "<cmd>tabnext<CR>" {:nowait true :silent true :noremap true})
