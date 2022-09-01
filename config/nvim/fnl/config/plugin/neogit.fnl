@@ -77,3 +77,23 @@
  "
  )
 
+; Copy filename to clipboard
+(vim.api.nvim_create_user_command 
+  "Git pull" 
+  #(vim.cmd "Git pull") 
+  {})
+
+(vim.api.nvim_create_user_command 
+  "Git push" 
+  #(vim.cmd "Git push") 
+  {})
+
+(vim.api.nvim_create_user_command 
+  "Git checkout master" 
+  #(vim.cmd "Git checkout master") 
+  {})
+
+(vim.api.nvim_create_user_command 
+  "Git checkout -" 
+  #(vim.cmd "Git checkout -") 
+  {})
