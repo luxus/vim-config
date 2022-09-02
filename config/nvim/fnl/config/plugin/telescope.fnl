@@ -53,6 +53,8 @@
                                             }}
 
                   :pickers {:grep_string {:theme :ivy}
+                            :live_grep {:theme :ivy}
+                            :git_branches {:theme :ivy}
                             :current_buffer_fuzzy_find {:theme :ivy}
                             :find_files {:theme :ivy
                                          :find_command ["rg" "--files" "--iglob" "!.git" "--hidden"]}
@@ -69,7 +71,8 @@
                             :diagnostics {:theme :ivy}
                             :lsp_implementations {:theme :ivy}
                             :lsp_definitions {:theme :ivy}
-                            :lsp_type_definitions {:theme :ivy}}
+                            :lsp_type_definitions {:theme :ivy}
+                            :help_tags {:theme :ivy}}
 
                   :extensions {:fzf {:fuzzy true
                                      :override-generic-sorter true
