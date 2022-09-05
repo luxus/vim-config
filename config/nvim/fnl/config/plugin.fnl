@@ -185,15 +185,13 @@
                             :requires []}
 
   ;; lsp
-  :williamboman/nvim-lsp-installer {:requires [:RRethy/vim-illuminate
-                                               :chen244/csharpls-extended-lsp.nvim
-                                               :j-hui/fidget.nvim
-                                               :Hoffs/omnisharp-extended-lsp.nvim
-                                               :neovim/nvim-lspconfig]
+  :williamboman/mason.nvim {:requires [:RRethy/vim-illuminate
+                                       :williamboman/mason-lspconfig.nvim
+                                       :chen244/csharpls-extended-lsp.nvim
+                                       :j-hui/fidget.nvim
+                                       :Hoffs/omnisharp-extended-lsp.nvim
+                                       :neovim/nvim-lspconfig]
                                     :mod :lspconfig}
-
-
-
 
   ; buffer history
   :ton/vim-bufsurf {:mod :vim-bufsurf}
