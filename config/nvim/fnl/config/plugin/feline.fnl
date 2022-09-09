@@ -208,7 +208,7 @@
           :file_type {:provider (fn []
                                   (fmt " %s " (vim.bo.filetype:upper)))
                       :hl :UserSLAlt}
-          :fileinfo {:provider {:name :file_info :opts {:type :relative}}
+          :fileinfo {:provider {:name :file_info :opts {:type :relative-short}}
                      :hl :UserSLAlt
                      :left_sep {:str " " :hl :UserSLAltSep}
                      :right_sep {:str " " :hl :UserSLAltSep}}
