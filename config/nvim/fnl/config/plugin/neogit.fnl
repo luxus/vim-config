@@ -97,3 +97,8 @@
   "Git checkout -" 
   #(vim.cmd "Git checkout -") 
   {})
+
+(vim.api.nvim_create_user_command 
+  "Git merge -" 
+  #(vim.cmd "Git merge -") 
+  {})

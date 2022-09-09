@@ -93,10 +93,7 @@
                     (nvim.buf_set_keymap bufnr :v :<leader>la ":lua vim.lsp.buf.range_code_action<cr>" {:noremap true})
                     (nvim.buf_set_keymap bufnr :n :<leader>lw ":lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>" {:noremap true})
                     (nvim.buf_set_keymap bufnr :n :<leader>lr ":lua require('telescope.builtin').lsp_references()<cr>" {:noremap true})
-                    (nvim.buf_set_keymap bufnr :n :<leader>li ":lua require('telescope.builtin').lsp_implementations()<cr>" {:noremap true})
-
-                    ;; Highlight word under cursor
-                    (illuminate.on_attach client)))]
+                    (nvim.buf_set_keymap bufnr :n :<leader>li ":lua require('telescope.builtin').lsp_implementations()<cr>" {:noremap true})))]
 
 
   (do 

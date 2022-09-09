@@ -72,6 +72,8 @@
                             :lsp_implementations {:theme :ivy}
                             :lsp_definitions {:theme :ivy}
                             :lsp_type_definitions {:theme :ivy}
+                            :command_history {:theme :ivy}
+                            :commands {:theme :ivy}
                             :help_tags {:theme :ivy}}
 
                   :extensions {:fzf {:fuzzy true
