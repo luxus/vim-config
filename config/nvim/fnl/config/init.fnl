@@ -22,8 +22,9 @@
 (set vim.o.shiftwidth 4)
 (set vim.o.softtabstop 4)
 (set vim.o.expandtab true)
-(set vim.o.splitbelow true)
-(set vim.o.splitright true)
+
+;; (set vim.o.splitbelow true)
+;; (set vim.o.splitright true)
 
 (vim.keymap.set :n :n :nzz {:noremap true})
 (vim.keymap.set :n :N :Nzz {:noremap true})
