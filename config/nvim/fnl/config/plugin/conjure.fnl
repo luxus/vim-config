@@ -64,3 +64,21 @@
 
 ;; How to map this with autocommand based on filetype??
 
+(local repl-options [:server :app])
+(var current-repl-index 0)
+
+(defn toggle-shadow-repl []
+  (vim.cmd "ConjureEval :repl/quit")
+  ;; Increment index
+  (set current-repl-index (% (+ current-repl-index 1) 2))
+  (vim.cmd (.. "ConjureShadowSelect " (. repl-options (+ current-repl-index 1)))))
+
+(let [group (vim.api.nvim_create_augroup "ShadowCljs" {:clear true})]
+  (vim.api.nvim_create_autocmd 
+       "FileType"
+       {:pattern ["clojure"]
+        :group group
+        :callback (fn [] 
+                    (vim.schedule 
+                      (fn [] (print "Adding clojure keymaps")))
+                    (vim.keymap.set :n :<localleader>rt toggle-shadow-repl {:noremap true :buffer true :desc "Toggle Shadow Repl"}))}))

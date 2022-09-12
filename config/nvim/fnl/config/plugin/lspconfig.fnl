@@ -2,14 +2,18 @@
   {autoload {nvim aniseed.nvim
              c aniseed.core
              lsp lspconfig
-             nvim-lsp-installer nvim-lsp-installer
+             mason mason
+             mason-lspconfig mason-lspconfig
              cmplsp cmp_nvim_lsp
              illuminate illuminate
              omnisharp_extended omnisharp_extended
              csharpls_extended csharpls_extended
              fidget fidget}})
 
-(nvim-lsp-installer.setup {})
+;; Migration from nvim-lsp-installer to mason
+;; https://github.com/williamboman/nvim-lsp-installer/discussions/876
+(mason.setup {:ui {:icons {:package_installed "✓"}}})
+(mason-lspconfig.setup { :ensure_installed ["omnisharp" "clangd" "tsserver" "clojure-lsp" "lemminx" "jsonls"]})
 
 (set vim.g.Illuminate_delay 500)
 
