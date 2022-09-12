@@ -188,8 +188,8 @@ augroup END")
 ;; (vim.cmd "autocmd BufReadPost,FileReadPost * normal zR")
 
 ;; There are multiple python versions installed on WSL2 Ubuntu... so set the version we want to use
-(when (= (vim.fn.has :unix) 1)
-  (set vim.g.python3_host_prog "/usr/bin/python3.8"))
+;; (when (= (vim.fn.has :unix) 1)
+;;   (set vim.g.python3_host_prog "/Users/luxus/.nix-profile/bin/python"))
 
 ;import plugin.fnl
 (require :config.plugin)
